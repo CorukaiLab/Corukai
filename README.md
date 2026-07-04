@@ -34,7 +34,7 @@ npm run build
 ## CMS
 
 - Sanity project: CoruKai
-- Project ID: `ljw11qx0`
+- Project ID: `eig4gq4g`
 - Dataset: `production`
 - Studio: https://corukai.vercel.app/studio
 
