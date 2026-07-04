@@ -1,0 +1,31 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 329" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">CoruKai personaje principal vectorial</title>
+  <desc id="desc">Version vectorial transparente del personaje principal de CoruKai, trazada para replicar el original.</desc>
+  <g stroke="#172335" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M146 40
+         C89 40 40 88 40 150
+         L40 185
+         C40 257 88 307 146 307
+         C204 307 252 257 252 185
+         L252 150
+         C252 88 203 40 146 40Z"
+      stroke-width="7.8"
+    />
+    <path d="M145 40 C132 17 110 6 88 7" stroke-width="6.8"/>
+    <path d="M148 40 C160 19 181 10 204 17" stroke-width="6.8"/>
+    <path d="M117 306 L115 321" stroke-width="6.4"/>
+    <path d="M175 306 L177 321" stroke-width="6.4"/>
+    <path d="M87 144 L87 168" stroke-width="14.5"/>
+    <path d="M205 144 L205 168" stroke-width="14.5"/>
+    <path
+      d="M162 151
+         C154 140 135 140 126 153
+         C116 167 114 193 121 213
+         C128 234 146 244 162 234
+         C169 230 172 224 174 219"
+      stroke-width="14.5"
+    />
+  </g>
+</svg>
+

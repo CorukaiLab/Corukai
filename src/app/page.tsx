@@ -1,65 +1,157 @@
-import Image from "next/image";
+import Link from "next/link";
+import { SiteHeader } from "@/components/site-header";
+
+interface FeaturedBook {
+  title: string;
+  author: string;
+  genre: string;
+  vibe: string;
+}
+
+interface RoadmapStep {
+  phase: string;
+  title: string;
+  detail: string;
+}
+
+const featuredBooks: FeaturedBook[] = [
+  {
+    title: "La rosa del Tibet",
+    author: "Lionel Davidson",
+    genre: "Aventura",
+    vibe: "Viaje oculto, misterio geografico y espiritu de descubrimiento.",
+  },
+  {
+    title: "Carta de una desconocida",
+    author: "Stefan Zweig",
+    genre: "Romance",
+    vibe: "Una emocion contenida, intensa y silenciosa.",
+  },
+  {
+    title: "Kalpa Imperial",
+    author: "Angelica Gorodischer",
+    genre: "Fantasia",
+    vibe: "Imperios, memoria y cuentos que parecen venir de otro tiempo.",
+  },
+];
+
+const roadmapSteps: RoadmapStep[] = [
+  {
+    phase: "01",
+    title: "Validar sensacion",
+    detail: "Comprobar si la home consigue que alguien quiera curiosear sin prisa.",
+  },
+  {
+    phase: "02",
+    title: "Catalogo manual",
+    detail: "Subir las primeras fichas de libros con portada, emocion, vibe y momento ideal.",
+  },
+  {
+    phase: "03",
+    title: "CMS y newsletter",
+    detail: "Conectar Sanity y MailerLite solo cuando la experiencia base este clara.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <SiteHeader />
+
+      <main>
+        <section className="hero" id="inicio">
+          <div className="hero__content">
+            <p className="eyebrow">Experiencia editorial de descubrimiento</p>
+            <h1>Leer deberia sentirse bien.</h1>
+            <p className="hero__lead">
+              CoruKai ayuda a descubrir libros desde la curiosidad, la calma y
+              la emocion del momento. No vienes a demostrar que lees: vienes a
+              encontrar algo que te apetezca vivir.
+            </p>
+
+            <div className="hero__actions" aria-label="Acciones principales">
+              <Link className="button button--primary" href="#explorar">
+                Explorar sin prisa
+              </Link>
+              <Link className="button button--secondary" href="#ruta">
+                Ver ruta MVP
+              </Link>
+            </div>
+          </div>
+
+          <aside className="hero-card" aria-label="Entrada de exploracion">
+            <span className="hero-card__label">Para empezar</span>
+            <h2>Que te apetece descubrir hoy?</h2>
+            <div className="search-mock">
+              algo tranquilo, aventura suave, volver a leer...
+            </div>
+            <div className="mood-list" aria-label="Sensaciones de ejemplo">
+              <span>Calma</span>
+              <span>Aventura</span>
+              <span>Misterio</span>
+              <span>Melancolia</span>
+            </div>
+          </aside>
+        </section>
+
+        <section className="section" id="explorar">
+          <div className="section__intro">
+            <p className="eyebrow">Primeras fichas</p>
+            <h2>Historias para probar la sensacion CoruKai.</h2>
+            <p>
+              El MVP debe empezar con pocas fichas muy cuidadas: portada
+              protagonista, contexto emocional y una decision facil.
+            </p>
+          </div>
+
+          <div className="book-grid">
+            {featuredBooks.map((book) => (
+              <article className="book-card" key={book.title}>
+                <div className="book-card__cover" aria-hidden="true">
+                  <span>{book.genre}</span>
+                </div>
+                <div className="book-card__body">
+                  <p>{book.genre}</p>
+                  <h3>{book.title}</h3>
+                  <span>{book.author}</span>
+                  <small>{book.vibe}</small>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section section--split" id="ruta">
+          <div className="section__intro">
+            <p className="eyebrow">Ruta inmediata</p>
+            <h2>Lo siguiente no es decorar mas. Es convertirlo en producto.</h2>
+            <p>
+              El objetivo ahora es pasar de maqueta bonita a MVP navegable:
+              estructura, contenido real, medicion y publicacion progresiva.
+            </p>
+          </div>
+
+          <div className="roadmap">
+            {roadmapSteps.map((step) => (
+              <article className="roadmap-card" key={step.phase}>
+                <span>{step.phase}</span>
+                <h3>{step.title}</h3>
+                <p>{step.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="newsletter">
+          <div>
+            <p className="eyebrow">Newsletter MVP</p>
+            <h2>Curiosidad tranquila, de vez en cuando.</h2>
+          </div>
+          <Link className="button button--primary" href="mailto:hola@corukai.com">
+            Quiero curiosear
+          </Link>
+        </section>
       </main>
-    </div>
+    </>
   );
 }
