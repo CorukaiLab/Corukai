@@ -26,3 +26,7 @@ npm run build
 - Tailwind CSS
 - Vercel como destino recomendado de despliegue
 
+## Despliegue
+
+- Produccion: https://corukai.vercel.app
+- Proyecto Vercel: corukailab/corukai
