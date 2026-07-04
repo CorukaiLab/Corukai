@@ -30,3 +30,14 @@ npm run build
 
 - Produccion: https://corukai.vercel.app
 - Proyecto Vercel: corukailab/corukai
+
+## CMS
+
+- Sanity project: CoruKai
+- Project ID: `ljw11qx0`
+- Dataset: `production`
+- Studio: https://corukai.vercel.app/studio
+
+```bash
+npm run sanity:validate
+```

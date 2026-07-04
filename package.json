@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:dev": "sanity dev",
+    "sanity:validate": "sanity schemas validate"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",
