@@ -1,39 +1,13 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { SiteHeader } from "@/components/site-header";
-
-interface FeaturedBook {
-  title: string;
-  author: string;
-  genre: string;
-  vibe: string;
-}
+import { getCollections, getFeaturedBooks } from "@/sanity/lib/queries";
 
 interface RoadmapStep {
   phase: string;
   title: string;
   detail: string;
 }
-
-const featuredBooks: FeaturedBook[] = [
-  {
-    title: "La rosa del Tibet",
-    author: "Lionel Davidson",
-    genre: "Aventura",
-    vibe: "Viaje oculto, misterio geografico y espiritu de descubrimiento.",
-  },
-  {
-    title: "Carta de una desconocida",
-    author: "Stefan Zweig",
-    genre: "Romance",
-    vibe: "Una emocion contenida, intensa y silenciosa.",
-  },
-  {
-    title: "Kalpa Imperial",
-    author: "Angelica Gorodischer",
-    genre: "Fantasia",
-    vibe: "Imperios, memoria y cuentos que parecen venir de otro tiempo.",
-  },
-];
 
 const roadmapSteps: RoadmapStep[] = [
   {
@@ -53,7 +27,12 @@ const roadmapSteps: RoadmapStep[] = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [featuredBooks, collections] = await Promise.all([
+    getFeaturedBooks(),
+    getCollections(),
+  ]);
+
   return (
     <>
       <SiteHeader />
@@ -73,8 +52,8 @@ export default function Home() {
               <Link className="button button--primary" href="#explorar">
                 Explorar sin prisa
               </Link>
-              <Link className="button button--secondary" href="#ruta">
-                Ver ruta MVP
+              <Link className="button button--secondary" href="/libros">
+                Ver libros
               </Link>
             </div>
           </div>
@@ -107,15 +86,44 @@ export default function Home() {
           <div className="book-grid">
             {featuredBooks.map((book) => (
               <article className="book-card" key={book.title}>
-                <div className="book-card__cover" aria-hidden="true">
+                <div
+                  className="book-card__cover"
+                  style={{ "--genre-color": book.genreColor } as CSSProperties}
+                  aria-hidden="true"
+                >
                   <span>{book.genre}</span>
                 </div>
                 <div className="book-card__body">
-                  <p>{book.genre}</p>
+                  <p>{book.primaryEmotion ?? book.genre}</p>
                   <h3>{book.title}</h3>
                   <span>{book.author}</span>
                   <small>{book.vibe}</small>
+                  <Link className="text-link" href={`/libros/${book.slug}`}>
+                    Entrar en la historia
+                  </Link>
                 </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="section__intro">
+            <p className="eyebrow">Colecciones</p>
+            <h2>Puertas de entrada por sensacion.</h2>
+            <p>
+              Las colecciones ayudan a entrar por momento vital, no por ranking.
+              Primero la sensacion, luego el libro.
+            </p>
+          </div>
+
+          <div className="collection-grid">
+            {collections.map((collection) => (
+              <article className="collection-card" key={collection.slug}>
+                <span>{collection.primaryEmotion ?? "Curiosidad"}</span>
+                <h3>{collection.title}</h3>
+                <p>{collection.description}</p>
+                <small>{collection.bookCount} libros vinculados</small>
               </article>
             ))}
           </div>

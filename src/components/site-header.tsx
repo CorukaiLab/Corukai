@@ -3,15 +3,16 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#explorar", label: "Explorar" },
-  { href: "#ruta", label: "Ruta MVP" },
+  { href: "/", label: "Inicio" },
+  { href: "/#explorar", label: "Explorar" },
+  { href: "/libros", label: "Libros" },
+  { href: "/studio", label: "Studio" },
 ];
 
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <Link className="brand" href="#inicio" aria-label="Volver al inicio">
+      <Link className="brand" href="/" aria-label="Volver al inicio">
         <Image
           alt=""
           className="brand__mark"
