@@ -1,35 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f6f2ea;
-  --paper-soft: #fff8e6;
-  --paper-raised: #fffaf0;
-  --ink: #172335;
-  --ink-soft: #314057;
-  --muted: #6c5f50;
-  --line: rgba(23, 35, 53, 0.12);
-  --wood: #a97852;
-  --amber: #d8a35d;
-  --forest: #5c6b5d;
-  --coral: #ff6b5a;
-  --shadow: 0 22px 70px rgba(77, 55, 31, 0.14);
+  --paper: #eef7f3;
+  --paper-soft: #f6fbf8;
+  --paper-raised: #fbfffc;
+  --ink: #0e2a35;
+  --ink-soft: #315460;
+  --muted: #5c7a78;
+  --line: rgba(14, 42, 53, 0.13);
+  --blue: #143b5a;
+  --green: #2f6f5e;
+  --leaf: #4d9b73;
+  --aqua: #3a8fa0;
+  --sky: #2d7fa3;
+  --mist: #dbeee8;
+  --shadow: 0 22px 70px rgba(14, 42, 53, 0.14);
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
 }
 
 :root[data-theme="night"] {
-  --paper: #0e1726;
-  --paper-soft: #172033;
-  --paper-raised: #1b2435;
-  --ink: #f3ead9;
-  --ink-soft: #d8cbb7;
-  --muted: #b8a58c;
-  --line: rgba(231, 220, 203, 0.15);
-  --wood: #d4a574;
-  --amber: #f0bf78;
-  --forest: #8fa187;
-  --coral: #ff8978;
+  --paper: #081c2b;
+  --paper-soft: #0f2f3b;
+  --paper-raised: #143d46;
+  --ink: #eaf7f2;
+  --ink-soft: #bfd9d5;
+  --muted: #91b7b0;
+  --line: rgba(196, 226, 221, 0.16);
+  --blue: #8ecae6;
+  --green: #95d5b2;
+  --leaf: #8ac9a4;
+  --aqua: #6bc0bf;
+  --sky: #6cb6d1;
+  --mist: #1f4e54;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
 }
 
@@ -48,7 +52,8 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(216, 163, 93, 0.2), transparent 34rem),
+    radial-gradient(circle at top left, rgba(77, 155, 115, 0.2), transparent 34rem),
+    radial-gradient(circle at 85% 8%, rgba(45, 127, 163, 0.18), transparent 28rem),
     linear-gradient(135deg, var(--paper-soft), var(--paper));
   color: var(--ink);
   font-family:
@@ -145,7 +150,7 @@ main {
 }
 
 .site-nav a:hover {
-  background: rgba(169, 120, 82, 0.12);
+  background: color-mix(in srgb, var(--green) 13%, transparent);
   color: var(--ink);
 }
 
@@ -155,8 +160,8 @@ main {
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper-raised) 82%, var(--amber));
-  box-shadow: 0 8px 26px rgba(77, 55, 31, 0.12);
+  background: color-mix(in srgb, var(--paper-raised) 82%, var(--mist));
+  box-shadow: 0 8px 26px rgba(14, 42, 53, 0.12);
 }
 
 .theme-toggle__button {
@@ -192,7 +197,7 @@ main {
 
 .eyebrow {
   margin: 0 0 16px;
-  color: var(--wood);
+  color: var(--green);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -283,7 +288,7 @@ h1 {
 .hero-card__label {
   display: inline-flex;
   margin-bottom: 24px;
-  color: var(--wood);
+  color: var(--green);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -302,7 +307,7 @@ h1 {
   min-height: 58px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 84%, var(--amber));
+  background: color-mix(in srgb, var(--paper) 84%, var(--green));
   color: var(--muted);
   padding: 0 20px;
   font-size: 0.96rem;
@@ -319,7 +324,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 9px 12px;
-  background: rgba(216, 163, 93, 0.12);
+  background: color-mix(in srgb, var(--green) 14%, transparent);
   color: var(--ink-soft);
   font-size: 0.84rem;
   font-weight: 700;
@@ -363,9 +368,9 @@ h1 {
   min-height: 270px;
   padding: 18px;
   background:
-    linear-gradient(145deg, rgba(23, 35, 53, 0.22), color-mix(in srgb, var(--genre-color, var(--amber)) 54%, transparent)),
-    radial-gradient(circle at 70% 25%, rgba(255, 255, 255, 0.42), transparent 9rem),
-    linear-gradient(135deg, color-mix(in srgb, var(--genre-color, var(--forest)) 44%, var(--forest)), var(--amber));
+    linear-gradient(145deg, rgba(14, 42, 53, 0.22), color-mix(in srgb, var(--genre-color, var(--green)) 54%, transparent)),
+    radial-gradient(circle at 70% 25%, rgba(255, 255, 255, 0.44), transparent 9rem),
+    linear-gradient(135deg, color-mix(in srgb, var(--genre-color, var(--blue)) 44%, var(--leaf)), var(--sky));
 }
 
 .book-card__cover span {
@@ -385,7 +390,7 @@ h1 {
 
 .book-card__body p {
   margin-bottom: 10px;
-  color: var(--coral);
+  color: var(--green);
   font-size: 0.76rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -427,7 +432,7 @@ h1 {
 }
 
 .text-link:hover {
-  color: var(--wood);
+  color: var(--green);
 }
 
 .collection-grid {
@@ -454,12 +459,12 @@ h1 {
 }
 
 .collection-card:hover {
-  border-color: color-mix(in srgb, var(--wood) 42%, var(--line));
+  border-color: color-mix(in srgb, var(--green) 42%, var(--line));
   transform: translateY(-2px);
 }
 
 .collection-card span {
-  color: var(--wood);
+  color: var(--green);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -519,7 +524,7 @@ h1 {
 }
 
 .catalog-search label {
-  color: var(--wood);
+  color: var(--green);
   font-size: 0.78rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -543,8 +548,8 @@ h1 {
 }
 
 .catalog-search input:focus {
-  border-color: var(--amber);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber) 22%, transparent);
+  border-color: var(--sky);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sky) 22%, transparent);
 }
 
 .catalog-search button {
@@ -567,7 +572,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 9px 12px;
-  background: color-mix(in srgb, var(--paper) 72%, var(--genre-color, var(--amber)));
+  background: color-mix(in srgb, var(--paper) 72%, var(--genre-color, var(--green)));
   color: var(--ink-soft);
   font-size: 0.82rem;
   font-weight: 800;
@@ -575,8 +580,8 @@ h1 {
 
 .filter-list a:hover,
 .filter-list a.is-active {
-  border-color: color-mix(in srgb, var(--genre-color, var(--amber)) 64%, var(--ink));
-  background: color-mix(in srgb, var(--genre-color, var(--amber)) 26%, var(--paper-raised));
+  border-color: color-mix(in srgb, var(--genre-color, var(--green)) 64%, var(--ink));
+  background: color-mix(in srgb, var(--genre-color, var(--sky)) 26%, var(--paper-raised));
   color: var(--ink);
 }
 
@@ -632,8 +637,8 @@ h1 {
   padding: clamp(24px, 5vw, 38px);
   background:
     radial-gradient(circle at 78% 16%, rgba(255, 255, 255, 0.48), transparent 10rem),
-    linear-gradient(145deg, color-mix(in srgb, var(--genre-color, var(--amber)) 62%, var(--paper)), var(--paper-raised) 58%),
-    linear-gradient(135deg, var(--forest), var(--amber));
+    linear-gradient(145deg, color-mix(in srgb, var(--genre-color, var(--green)) 62%, var(--paper)), var(--paper-raised) 58%),
+    linear-gradient(135deg, var(--leaf), var(--sky));
   box-shadow: var(--shadow);
 }
 
@@ -675,7 +680,7 @@ h1 {
 }
 
 .book-author {
-  color: var(--wood) !important;
+  color: var(--green) !important;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -761,7 +766,7 @@ h1 {
 }
 
 .roadmap-card span {
-  color: var(--wood);
+  color: var(--green);
   font-weight: 900;
 }
 

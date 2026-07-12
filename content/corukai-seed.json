@@ -4,8 +4,8 @@
     "_type": "genre",
     "title": "Aventura",
     "slug": { "_type": "slug", "current": "aventura" },
-    "color": "#D8A35D",
-    "visualTone": "Luz dorada, mapas, caminos, mar, montana y descubrimiento real sin ruido visual.",
+    "color": "#2F8F6B",
+    "visualTone": "Verde laguna, mapas humedos, caminos, mar sereno, montana y descubrimiento real sin ruido visual.",
     "description": "Historias para sentir viaje, riesgo amable y ganas de moverse hacia lo desconocido."
   },
   {
@@ -13,8 +13,8 @@
     "_type": "genre",
     "title": "Fantasia",
     "slug": { "_type": "slug", "current": "fantasia" },
-    "color": "#7D6AA8",
-    "visualTone": "Bibliotecas antiguas, portales discretos, runas suaves y una magia elegante.",
+    "color": "#477C9E",
+    "visualTone": "Azul bruma, bibliotecas antiguas, portales discretos, runas suaves y una magia elegante.",
     "description": "Mundos que abren una puerta sin perder sensibilidad humana."
   },
   {
@@ -22,8 +22,8 @@
     "_type": "genre",
     "title": "Misterio",
     "slug": { "_type": "slug", "current": "misterio" },
-    "color": "#35586C",
-    "visualTone": "Tinta azul, lluvia, habitaciones con pistas, lupa integrada y silencio.",
+    "color": "#163B5C",
+    "visualTone": "Azul profundo, lluvia, habitaciones con pistas, lupa integrada y silencio.",
     "description": "Libros para mirar dos veces, sospechar con calma y seguir una pista."
   },
   {
@@ -31,8 +31,8 @@
     "_type": "genre",
     "title": "Romance",
     "slug": { "_type": "slug", "current": "romance" },
-    "color": "#C86F68",
-    "visualTone": "Cartas, luz de tarde, pequenos gestos, memoria afectiva y piel editorial.",
+    "color": "#5FAE9B",
+    "visualTone": "Verde agua, cartas, luz de tarde, pequenos gestos, memoria afectiva y piel editorial.",
     "description": "Historias donde el vinculo pesa mas que la escena perfecta."
   },
   {
@@ -40,8 +40,8 @@
     "_type": "genre",
     "title": "Ensayo",
     "slug": { "_type": "slug", "current": "ensayo" },
-    "color": "#5C6B5D",
-    "visualTone": "Mesa de trabajo, cuadernos, subrayados, archivos y pensamiento respirable.",
+    "color": "#2F6F5E",
+    "visualTone": "Verde biblioteca, mesa de trabajo, cuadernos, subrayados, archivos y pensamiento respirable.",
     "description": "Ideas para cambiar la mirada sin convertir la lectura en obligacion."
   },
   {
@@ -49,8 +49,8 @@
     "_type": "genre",
     "title": "Suspenso",
     "slug": { "_type": "slug", "current": "suspenso" },
-    "color": "#6E5748",
-    "visualTone": "Sombras calidas, humo, pasillos, detalle oculto y tension contenida.",
+    "color": "#1F5E66",
+    "visualTone": "Azul petroleo, sombras frias, humo, pasillos, detalle oculto y tension contenida.",
     "description": "Tension lenta, intriga y una sensacion de algo que esta por revelarse."
   },
   {
@@ -58,8 +58,8 @@
     "_type": "genre",
     "title": "Terror",
     "slug": { "_type": "slug", "current": "terror" },
-    "color": "#7A3F4D",
-    "visualTone": "Casas silenciosas, rojo apagado, niebla, vela y amenaza sugerida.",
+    "color": "#22485C",
+    "visualTone": "Azul noche verdoso, casas silenciosas, niebla, vela fria y amenaza sugerida.",
     "description": "Sombras, inquietud y miedo literario sin saturar la experiencia."
   },
   {
@@ -67,8 +67,8 @@
     "_type": "genre",
     "title": "Ciencia ficcion",
     "slug": { "_type": "slug", "current": "ciencia-ficcion" },
-    "color": "#3F7C86",
-    "visualTone": "Azul mineral, orbitas, futuro humano, maquinas silenciosas y asombro.",
+    "color": "#2D8FA7",
+    "visualTone": "Azul mineral luminoso, orbitas, futuro humano, maquinas silenciosas y asombro.",
     "description": "Futuros posibles para pensar lo humano desde otra distancia."
   },
   {
@@ -76,7 +76,7 @@
     "_type": "emotion",
     "title": "Curiosidad",
     "slug": { "_type": "slug", "current": "curiosidad" },
-    "color": "#D8A35D",
+    "color": "#2D7FA3",
     "description": "La pequena chispa de querer mirar un poco mas."
   },
   {
@@ -84,7 +84,7 @@
     "_type": "emotion",
     "title": "Calma",
     "slug": { "_type": "slug", "current": "calma" },
-    "color": "#5C6B5D",
+    "color": "#2F6F5E",
     "description": "Lecturas para bajar el ritmo y entrar sin presion."
   },
   {
@@ -92,7 +92,7 @@
     "_type": "emotion",
     "title": "Asombro",
     "slug": { "_type": "slug", "current": "asombro" },
-    "color": "#7D6AA8",
+    "color": "#477C9E",
     "description": "Cuando una historia abre una escala mas grande que tu dia."
   },
   {
@@ -100,7 +100,7 @@
     "_type": "emotion",
     "title": "Melancolia",
     "slug": { "_type": "slug", "current": "melancolia" },
-    "color": "#C86F68",
+    "color": "#5CA7B0",
     "description": "Una emocion lenta, bella y un poco herida."
   },
   {
@@ -108,7 +108,7 @@
     "_type": "emotion",
     "title": "Descubrimiento",
     "slug": { "_type": "slug", "current": "descubrimiento" },
-    "color": "#3F7C86",
+    "color": "#4D9B73",
     "description": "La sensacion de encontrar algo que no estabas buscando."
   },
   {
@@ -116,7 +116,7 @@
     "_type": "emotion",
     "title": "Tension suave",
     "slug": { "_type": "slug", "current": "tension-suave" },
-    "color": "#6E5748",
+    "color": "#1F5E66",
     "description": "Intriga sin prisa, una sombra que acompana la lectura."
   },
   {
