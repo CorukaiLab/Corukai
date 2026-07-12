@@ -1,4 +1,5 @@
 import { groq } from "next-sanity";
+import type { QueryParams } from "@sanity/client";
 import { client } from "@/sanity/lib/client";
 
 export interface BookCardData {
@@ -6,6 +7,7 @@ export interface BookCardData {
   slug: string;
   author: string;
   genre: string;
+  genreSlug: string;
   genreColor?: string;
   primaryEmotion?: string;
   vibe?: string;
@@ -37,11 +39,24 @@ export interface CollectionCardData {
   bookCount: number;
 }
 
+export interface GenreFilterData {
+  title: string;
+  slug: string;
+  color?: string;
+}
+
+export interface CollectionDetailData extends CollectionCardData {
+  books: BookCardData[];
+  seoTitle?: string;
+  seoDescription?: string;
+}
+
 const bookFields = groq`
   title,
   "slug": slug.current,
-  "author": author->name,
-  "genre": genre->title,
+  "author": coalesce(author->name, "Autor pendiente"),
+  "genre": coalesce(genre->title, "Genero pendiente"),
+  "genreSlug": genre->slug.current,
   "genreColor": genre->color,
   "primaryEmotion": primaryEmotion->title,
   vibe,
@@ -51,7 +66,7 @@ const bookFields = groq`
 
 export async function getFeaturedBooks() {
   return client.fetch<BookCardData[]>(
-    groq`*[_type == "book" && isFeatured == true] | order(_createdAt asc) {
+    groq`*[_type == "book" && isFeatured == true && defined(slug.current)] | order(_createdAt asc) {
       ${bookFields}
     }`,
     {},
@@ -59,12 +74,28 @@ export async function getFeaturedBooks() {
   );
 }
 
-export async function getBooks() {
+interface GetBooksOptions {
+  genreSlug?: string;
+  query?: string;
+}
+
+export async function getBooks(options: GetBooksOptions = {}) {
+  const normalizedQuery = options.query?.trim();
+  const params: QueryParams = {
+    genreSlug: options.genreSlug || "",
+    searchTerm: normalizedQuery ? `${normalizedQuery}*` : "",
+  };
+
   return client.fetch<BookCardData[]>(
-    groq`*[_type == "book"] | order(genre->title asc, title asc) {
+    groq`*[
+      _type == "book" &&
+      defined(slug.current) &&
+      ($genreSlug == "" || genre->slug.current == $genreSlug) &&
+      ($searchTerm == "" || title match $searchTerm || author->name match $searchTerm || genre->title match $searchTerm || vibe match $searchTerm || shortDescription match $searchTerm)
+    ] | order(genre->title asc, title asc) {
       ${bookFields}
     }`,
-    {},
+    params,
     { next: { revalidate: 60 } },
   );
 }
@@ -100,9 +131,21 @@ export async function getBookSlugs() {
   );
 }
 
+export async function getGenres() {
+  return client.fetch<GenreFilterData[]>(
+    groq`*[_type == "genre" && defined(slug.current)] | order(title asc) {
+      title,
+      "slug": slug.current,
+      color
+    }`,
+    {},
+    { next: { revalidate: 60 } },
+  );
+}
+
 export async function getCollections() {
   return client.fetch<CollectionCardData[]>(
-    groq`*[_type == "collection"] | order(title asc) {
+    groq`*[_type == "collection" && defined(slug.current)] | order(title asc) {
       title,
       "slug": slug.current,
       description,
@@ -110,6 +153,33 @@ export async function getCollections() {
       "bookCount": count(books)
     }`,
     {},
+    { next: { revalidate: 60 } },
+  );
+}
+
+export async function getCollectionSlugs() {
+  return client.fetch<string[]>(
+    groq`*[_type == "collection" && defined(slug.current)].slug.current`,
+    {},
+    { next: { revalidate: 60 } },
+  );
+}
+
+export async function getCollectionBySlug(slug: string) {
+  return client.fetch<CollectionDetailData | null>(
+    groq`*[_type == "collection" && slug.current == $slug][0] {
+      title,
+      "slug": slug.current,
+      description,
+      "primaryEmotion": primaryEmotion->title,
+      "bookCount": count(books),
+      seoTitle,
+      seoDescription,
+      "books": books[]->{
+        ${bookFields}
+      }
+    }`,
+    { slug },
     { next: { revalidate: 60 } },
   );
 }

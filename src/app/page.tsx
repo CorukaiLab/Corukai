@@ -107,7 +107,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section" id="colecciones">
           <div className="section__intro">
             <p className="eyebrow">Colecciones</p>
             <h2>Puertas de entrada por sensacion.</h2>
@@ -119,12 +119,16 @@ export default async function Home() {
 
           <div className="collection-grid">
             {collections.map((collection) => (
-              <article className="collection-card" key={collection.slug}>
+              <Link
+                className="collection-card"
+                href={`/colecciones/${collection.slug}`}
+                key={collection.slug}
+              >
                 <span>{collection.primaryEmotion ?? "Curiosidad"}</span>
                 <h3>{collection.title}</h3>
                 <p>{collection.description}</p>
                 <small>{collection.bookCount} libros vinculados</small>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
