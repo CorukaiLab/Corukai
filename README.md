@@ -1,8 +1,18 @@
-# CoruKai
+# CoruKai web
 
-CoruKai es una experiencia cultural y editorial para descubrir libros desde la curiosidad, la calma y la emocion.
+Beta funcional de la librería sensorial CoruKai.
 
-Este repositorio contiene la futura web real de CoruKai construida con Next.js.
+## Incluye
+
+- Home editorial.
+- Catálogo de 12 historias.
+- Búsqueda y filtros.
+- Fichas de producto.
+- Cesta persistente en el navegador.
+- Endpoint de checkout con validación server-side.
+- Studio y esquema de Sanity.
+- Protección privada mediante contraseña.
+- Vercel Analytics y Speed Insights.
 
 ## Desarrollo
 
@@ -10,34 +20,35 @@ Este repositorio contiene la futura web real de CoruKai construida con Next.js.
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) para ver la app.
+La URL predeterminada es [http://localhost:3000](http://localhost:3000).
 
-## Scripts
+## Variables
+
+Copia los nombres de `.env.example` en `.env.local` y completa únicamente los valores necesarios.
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_API_VERSION`
+- `NEXT_PUBLIC_SITE_URL`
+- `CORUKAI_SITE_PASSWORD`
+- `STRIPE_SECRET_KEY`
+
+La clave de Stripe es privada y nunca debe empezar por `NEXT_PUBLIC_`.
+
+## Calidad
 
 ```bash
 npm run lint
 npm run build
-```
-
-## Stack inicial
-
-- Next.js
-- TypeScript
-- Tailwind CSS
-- Vercel como destino recomendado de despliegue
-
-## Despliegue
-
-- Produccion: https://corukai.vercel.app
-- Proyecto Vercel: corukailab/corukai
-
-## CMS
-
-- Sanity project: CoruKai
-- Project ID: `eig4gq4g`
-- Dataset: `production`
-- Studio: https://corukai.vercel.app/studio
-
-```bash
 npm run sanity:validate
 ```
+
+## Producción
+
+- Repositorio: `CorukaiLab/Corukai`
+- Vercel: `corukailab/corukai`
+- Sanity Project ID: `eig4gq4g`
+- Dataset: `production`
+- Studio: `/studio`
+
+El checkout devuelve un estado controlado mientras `STRIPE_SECRET_KEY` esté vacío. Antes de cobrar hay que completar Stripe, logística, condiciones de compra, privacidad y la revisión legal del precio fijo del libro.

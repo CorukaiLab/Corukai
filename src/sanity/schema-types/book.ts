@@ -146,6 +146,41 @@ export const book = defineType({
       type: "url",
     }),
     defineField({
+      name: "priceCents",
+      title: "Price in cents",
+      type: "number",
+      description: "Example: 1990 equals 19.90 EUR.",
+      validation: (rule) => rule.integer().positive(),
+    }),
+    defineField({
+      name: "format",
+      title: "Format",
+      type: "string",
+      options: {
+        list: ["Tapa blanda", "Tapa dura", "Bolsillo", "eBook", "Audiolibro"],
+      },
+    }),
+    defineField({
+      name: "stockStatus",
+      title: "Stock status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Available", value: "available" },
+          { title: "Affiliate only", value: "affiliate" },
+          { title: "Out of stock", value: "out-of-stock" },
+          { title: "Draft", value: "draft" },
+        ],
+      },
+      initialValue: "draft",
+    }),
+    defineField({
+      name: "stripePriceId",
+      title: "Stripe price ID",
+      type: "string",
+      description: "Optional. Keep secrets out of Sanity; only the public price ID belongs here.",
+    }),
+    defineField({
       name: "isFeatured",
       title: "Featured",
       type: "boolean",

@@ -9,6 +9,10 @@ export interface BookCardData {
   genre: string;
   genreSlug: string;
   genreColor?: string;
+  coverUrl?: string;
+  coverAlt?: string;
+  ambientUrl?: string;
+  ambientAlt?: string;
   primaryEmotion?: string;
   vibe?: string;
   shortDescription?: string;
@@ -36,6 +40,7 @@ export interface CollectionCardData {
   slug: string;
   description?: string;
   primaryEmotion?: string;
+  coverUrl?: string;
   bookCount: number;
 }
 
@@ -58,6 +63,10 @@ const bookFields = groq`
   "genre": coalesce(genre->title, "Genero pendiente"),
   "genreSlug": genre->slug.current,
   "genreColor": genre->color,
+  "coverUrl": coverImage.asset->url,
+  "coverAlt": coverImage.alt,
+  "ambientUrl": ambientImage.asset->url,
+  "ambientAlt": ambientImage.alt,
   "primaryEmotion": primaryEmotion->title,
   vibe,
   shortDescription,
@@ -150,6 +159,7 @@ export async function getCollections() {
       "slug": slug.current,
       description,
       "primaryEmotion": primaryEmotion->title,
+      "coverUrl": coverImage.asset->url,
       "bookCount": count(books)
     }`,
     {},
