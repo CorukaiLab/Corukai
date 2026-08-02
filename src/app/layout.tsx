@@ -5,6 +5,7 @@ import { CartProvider } from "@/components/cart/cart-context";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import "./library-theme.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -35,4 +36,3 @@ export default function RootLayout({
     </html>
   );
 }
-

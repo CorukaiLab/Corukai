@@ -17,10 +17,9 @@ export function SiteHeader() {
       </Link>
       <nav className="primary-nav" aria-label="Navegación principal">
         <Link href="/tienda">Descubrir</Link>
-        <Link href="/tienda?mood=Calma">Por emoción</Link>
+        <Link href="/#descubrir">Tu momento</Link>
         <CartLink />
       </nav>
     </header>
   );
 }
-

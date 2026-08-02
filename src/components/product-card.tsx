@@ -6,12 +6,17 @@ import { formatPrice, type Product } from "@/lib/catalog";
 export function ProductCard({
   product,
   priority = false,
+  compact = false,
 }: {
   product: Product;
   priority?: boolean;
+  compact?: boolean;
 }) {
   return (
-    <article className="product-card" style={{ "--accent": product.accent } as React.CSSProperties}>
+    <article
+      className={`product-card${compact ? " product-card--compact" : ""}`}
+      style={{ "--accent": product.accent } as React.CSSProperties}
+    >
       <Link className="product-cover" href={`/libros/${product.slug}`}>
         <Image
           src={product.cover}
@@ -19,7 +24,9 @@ export function ProductCard({
           width={360}
           height={540}
           priority={priority}
-          sizes="(max-width: 640px) 72vw, (max-width: 1100px) 34vw, 22vw"
+          sizes={compact
+            ? "(max-width: 520px) 44vw, (max-width: 900px) 40vw, (max-width: 1200px) 24vw, 18vw"
+            : "(max-width: 640px) 72vw, (max-width: 1100px) 34vw, 22vw"}
         />
         <span>Entrar en la historia</span>
       </Link>
@@ -32,6 +39,10 @@ export function ProductCard({
         </Link>
         <p className="product-author">{product.author}</p>
         <p className="product-hook">{product.hook}</p>
+        <p className="product-reading-signals">
+          <span>{product.readingTime}</span>
+          <span>{product.pace}</span>
+        </p>
         <div className="product-actions">
           <strong>{formatPrice(product.priceCents)}</strong>
           <AddToCartButton slug={product.slug} compact />
@@ -40,4 +51,3 @@ export function ProductCard({
     </article>
   );
 }
-
