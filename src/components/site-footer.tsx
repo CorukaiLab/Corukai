@@ -14,7 +14,13 @@ export function SiteFooter() {
         <p>La vida ya va demasiado rápido como para convertir los libros en otra obligación.</p>
       </div>
       <div className="footer-meta">
-        <p>CoruKai · beta privada</p>
+        <div>
+          <p>CoruKai · beta</p>
+          <p className="affiliate-disclosure">
+            En calidad de Afiliado de Amazon, obtengo ingresos por las compras
+            adscritas que cumplen los requisitos aplicables.
+          </p>
+        </div>
         <nav aria-label="Enlaces del pie">
           <Link href="/tienda">Tienda</Link>
           <a href="mailto:hola@corukai.com">Contacto</a>
@@ -23,4 +29,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-

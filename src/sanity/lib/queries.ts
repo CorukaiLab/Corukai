@@ -17,6 +17,7 @@ export interface BookCardData {
   vibe?: string;
   shortDescription?: string;
   idealMoment?: string;
+  affiliateLink?: string;
 }
 
 export interface BookDetailData extends BookCardData {
@@ -70,7 +71,8 @@ const bookFields = groq`
   "primaryEmotion": primaryEmotion->title,
   vibe,
   shortDescription,
-  idealMoment
+  idealMoment,
+  affiliateLink
 `;
 
 export async function getFeaturedBooks() {

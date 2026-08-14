@@ -22,6 +22,7 @@ export type Product = {
   pages?: number;
   creativeSpark: string;
   isbn?: string;
+  affiliateUrl?: string;
 };
 
 export const PRODUCTS: Product[] = [

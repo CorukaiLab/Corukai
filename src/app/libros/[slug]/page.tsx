@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AffiliateLink } from "@/components/affiliate-link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { ProductCard } from "@/components/product-card";
 import { formatPrice, getProduct, PRODUCTS } from "@/lib/catalog";
@@ -92,6 +93,17 @@ export default async function ProductPage({
             <span>{product.format} · precio beta</span>
           </div>
           <AddToCartButton slug={product.slug} />
+          {product.affiliateUrl && (
+            <AffiliateLink
+              className="button button--ink"
+              href={product.affiliateUrl}
+              slug={product.slug}
+              genre={product.genre}
+              placement="ficha"
+            >
+              Ver disponibilidad en Amazon <span aria-hidden="true">↗</span>
+            </AffiliateLink>
+          )}
           <p className="purchase-note">
             La cesta ya funciona. El cobro se activará al conectar la cuenta comercial de Stripe.
           </p>
