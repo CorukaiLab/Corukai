@@ -122,6 +122,15 @@ export default async function ProductPage({
         </aside>
       </section>
 
+      <section className="coru-recommendation" aria-labelledby="coru-recommendation-title">
+        <div className="coru-recommendation__stamp" aria-hidden="true">C</div>
+        <div>
+          <p className="eyebrow">La sugerencia de Coru</p>
+          <h2 id="coru-recommendation-title">Por qué lo pondría hoy en tu mesa.</h2>
+        </div>
+        <p className="coru-recommendation__note">{product.coruNote}</p>
+      </section>
+
       <section className="creative-prompt">
         <p className="eyebrow">La lectura continúa fuera del libro</p>
         <p className="creative-prompt__mark" aria-hidden="true">✦</p>

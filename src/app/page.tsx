@@ -11,17 +11,21 @@ const entryPoints = [
   { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral" },
 ];
 
-const selected = [PRODUCTS[3], PRODUCTS[14], PRODUCTS[20], PRODUCTS[10]];
-const librarySelection = [
-  PRODUCTS[0],
-  PRODUCTS[3],
-  PRODUCTS[6],
-  PRODUCTS[9],
-  PRODUCTS[12],
-  PRODUCTS[16],
-  PRODUCTS[18],
-  PRODUCTS[21],
-];
+function selectProducts(slugs: string[]) {
+  return slugs.map((slug) => PRODUCTS.find((product) => product.slug === slug)).filter(Boolean) as typeof PRODUCTS;
+}
+
+const selected = selectProducts(["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
+const librarySelection = selectProducts([
+  "hacia-rutas-salvajes",
+  "imperio-final",
+  "nosotros-en-la-luna",
+  "paciente-silenciosa",
+  "infinito-junco",
+  "problema-tres-cuerpos",
+  "peninsula-casas-vacias",
+  "nuestra-parte-noche",
+]);
 
 export default function Home() {
   return (

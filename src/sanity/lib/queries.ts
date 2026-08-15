@@ -17,6 +17,12 @@ export interface BookCardData {
   vibe?: string;
   shortDescription?: string;
   idealMoment?: string;
+  coruNote?: string;
+  readingTime?: string;
+  readingPace?: string;
+  storyEntry?: string;
+  creativeSpark?: string;
+  isbn?: string;
   affiliateLink?: string;
 }
 
@@ -72,12 +78,18 @@ const bookFields = groq`
   vibe,
   shortDescription,
   idealMoment,
+  coruNote,
+  readingTime,
+  readingPace,
+  storyEntry,
+  creativeSpark,
+  isbn,
   affiliateLink
 `;
 
 export async function getFeaturedBooks() {
   return client.fetch<BookCardData[]>(
-    groq`*[_type == "book" && isFeatured == true && defined(slug.current)] | order(_createdAt asc) {
+    groq`*[_type == "book" && isFeatured == true && stockStatus != "retired" && defined(slug.current)] | order(_createdAt asc) {
       ${bookFields}
     }`,
     {},
@@ -100,6 +112,7 @@ export async function getBooks(options: GetBooksOptions = {}) {
   return client.fetch<BookCardData[]>(
     groq`*[
       _type == "book" &&
+      stockStatus != "retired" &&
       defined(slug.current) &&
       ($genreSlug == "" || genre->slug.current == $genreSlug) &&
       ($searchTerm == "" || title match $searchTerm || author->name match $searchTerm || genre->title match $searchTerm || vibe match $searchTerm || shortDescription match $searchTerm)
@@ -113,7 +126,7 @@ export async function getBooks(options: GetBooksOptions = {}) {
 
 export async function getBookBySlug(slug: string) {
   return client.fetch<BookDetailData | null>(
-    groq`*[_type == "book" && slug.current == $slug][0] {
+    groq`*[_type == "book" && stockStatus != "retired" && slug.current == $slug][0] {
       ${bookFields},
       originalTitle,
       publicationYear,

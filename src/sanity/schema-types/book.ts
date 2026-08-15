@@ -36,6 +36,12 @@ export const book = defineType({
       type: "number",
     }),
     defineField({
+      name: "isbn",
+      title: "ISBN de la edición",
+      type: "string",
+      description: "ISBN exacto de la edición cuya portada y enlace se muestran.",
+    }),
+    defineField({
       name: "genre",
       title: "Genre",
       type: "reference",
@@ -112,6 +118,37 @@ export const book = defineType({
       type: "string",
     }),
     defineField({
+      name: "coruNote",
+      title: "La sugerencia de Coru",
+      type: "text",
+      rows: 4,
+      description: "Recomendación editorial personal y honesta, escrita en primera persona.",
+    }),
+    defineField({
+      name: "readingTime",
+      title: "Tiempo de lectura",
+      type: "string",
+      options: { list: ["Una tarde", "Varias noches", "Sin prisa"] },
+    }),
+    defineField({
+      name: "readingPace",
+      title: "Ritmo",
+      type: "string",
+      options: { list: ["Sereno", "Envolvente", "Intenso"] },
+    }),
+    defineField({
+      name: "storyEntry",
+      title: "Puerta de entrada",
+      type: "string",
+      options: { list: ["Volver", "Viajar", "Sentir", "Pensar", "Crear"] },
+    }),
+    defineField({
+      name: "creativeSpark",
+      title: "Chispa creativa",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
       name: "forWhom",
       title: "For whom",
       type: "text",
@@ -170,6 +207,7 @@ export const book = defineType({
           { title: "Affiliate only", value: "affiliate" },
           { title: "Out of stock", value: "out-of-stock" },
           { title: "Draft", value: "draft" },
+          { title: "Retired", value: "retired" },
         ],
       },
       initialValue: "draft",
