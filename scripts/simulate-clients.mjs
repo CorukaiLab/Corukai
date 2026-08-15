@@ -11,9 +11,9 @@ const books = [
   "proyecto-hail-mary",
   "hamnet",
   "nuestra-parte-noche",
-  "libreria-livingstone",
-  "infraordinario",
-  "mas-que-humano",
+  "conquista-felicidad",
+  "siddhartha",
+  "mendel-libros",
 ];
 const filters = [
   "genre=Aventura&entry=Viajar",

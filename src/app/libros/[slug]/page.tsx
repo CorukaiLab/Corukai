@@ -40,9 +40,17 @@ export default async function ProductPage({
   const product = getProduct(slug);
   if (!product) notFound();
 
-  const related = PRODUCTS.filter(
-    (item) => item.slug !== product.slug && (item.genre === product.genre || item.mood === product.mood),
-  ).slice(0, 3);
+  const related = PRODUCTS.filter((item) => item.slug !== product.slug)
+    .map((item) => ({
+      item,
+      affinity:
+        (item.genre === product.genre ? 3 : 0) +
+        (item.mood === product.mood ? 2 : 0) +
+        (item.entry === product.entry ? 1 : 0),
+    }))
+    .sort((a, b) => b.affinity - a.affinity)
+    .slice(0, 3)
+    .map(({ item }) => item);
 
   const structuredData = {
     "@context": "https://schema.org",
