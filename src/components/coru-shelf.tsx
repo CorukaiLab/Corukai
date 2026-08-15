@@ -8,10 +8,10 @@ export function CoruShelf({ products }: { products: Product[] }) {
       <header className="coru-shelf__heading">
         <div className="coru-shelf__portrait" aria-hidden="true">C</div>
         <div>
-          <p className="eyebrow">La balda de Coru</p>
-          <h2 id="coru-shelf-title">Tres libros que pondría hoy en tus manos.</h2>
+          <p className="eyebrow">La balda de Coru · Selección temporal</p>
+          <h2 id="coru-shelf-title">Tres libros fuera de los 24.</h2>
         </div>
-        <p>No son los tres mejores. Son tres puertas distintas para volver a disfrutar escogiendo.</p>
+        <p>Durante unas semanas, Coru deja tres hallazgos junto al catálogo fijo. Después llegarán otros.</p>
       </header>
       <div className="coru-shelf__books">
         {products.map((product, index) => (
@@ -21,7 +21,7 @@ export function CoruShelf({ products }: { products: Product[] }) {
             key={product.slug}
             style={{ "--accent": product.accent, "--shelf-index": index } as React.CSSProperties}
           >
-            <span className="coru-shelf__number">0{index + 1}</span>
+            <span className="coru-shelf__stamp">Recomendación de Coru</span>
             <Image
               src={product.cover}
               alt={`Portada de ${product.title}`}
@@ -31,7 +31,7 @@ export function CoruShelf({ products }: { products: Product[] }) {
             />
             <span className="coru-shelf__label">
               <b>{product.title}</b>
-              <small>{product.genre} · {product.mood}</small>
+              <small>{product.genre} · {product.mood} · Temporal</small>
             </span>
           </Link>
         ))}

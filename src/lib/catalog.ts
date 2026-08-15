@@ -245,6 +245,39 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
+// Editorial guests rotate independently from the fixed 24-book catalogue.
+export const CORU_PICKS: Product[] = [
+  {
+    slug: "libreria-livingstone", title: "La librería del señor Livingstone", author: "Mónica Gutiérrez", genre: "Romance", mood: "Calidez", priceCents: 1790,
+    cover: "/assets/covers/libreria-livingstone.jpg", accent: "#F56B50", format: "Tapa blanda", year: 2019, pages: 320,
+    hook: "Una librería londinense y personajes a los que apetece volver.",
+    description: "Una historia amable sobre segundas oportunidades, conversación y la sensación de encontrar refugio entre libros.",
+    idealMoment: "Cuando necesitas que una historia te reciba.", readingTime: "Varias noches", pace: "Sereno", entry: "Volver",
+    creativeSpark: "Diseñar el rincón perfecto para una conversación.",
+    coruNote: "La dejaría unas semanas en mi balda porque entiende algo esencial de CoruKai: una librería también puede sentirse como un lugar al que volver.",
+  },
+  {
+    slug: "infraordinario", title: "Lo infraordinario", author: "Georges Perec", genre: "Ensayo", mood: "Claridad", priceCents: 1490,
+    cover: "/assets/covers/infraordinario.jpg", accent: "#63B7C9", format: "Tapa blanda", year: 1989, pages: 128,
+    hook: "Aprender a mirar lo cotidiano hasta que vuelva a ser extraño.",
+    description: "Textos breves que convierten calles, objetos y hábitos en materia de observación y juego creativo.",
+    idealMoment: "Una mañana lenta con un cuaderno cerca.", readingTime: "Una tarde", pace: "Sereno", entry: "Crear",
+    creativeSpark: "Inventariar todo lo que ocurre mientras no ocurre nada.",
+    coruNote: "Es mi invitado para las almas creativas y para quienes creen que no lo son: demuestra que una mirada atenta ya es una forma de crear.",
+  },
+  {
+    slug: "mas-que-humano", title: "Más que humano", author: "Theodore Sturgeon", genre: "Ciencia ficción", mood: "Asombro", priceCents: 1690,
+    cover: "/assets/covers/mas-que-humano.jpg", accent: "#6FC6B1", format: "Tapa blanda", year: 1953, pages: 256,
+    hook: "Personas incompletas que juntas pueden convertirse en algo nuevo.",
+    description: "Ciencia ficción humana y extraña sobre identidad, evolución y pertenencia, escrita desde la fragilidad.",
+    idealMoment: "Cuando quieres ideas grandes con personajes cercanos.", readingTime: "Varias noches", pace: "Envolvente", entry: "Pensar",
+    creativeSpark: "Diseñar una inteligencia hecha de talentos imperfectos.",
+    coruNote: "Lo elijo temporalmente porque convierte una gran idea de ciencia ficción en una pregunta íntima: qué aparece cuando dejamos de estar solos.",
+  },
+];
+
+export const ALL_PRODUCTS: Product[] = [...PRODUCTS, ...CORU_PICKS];
+
 export const MOODS = [...new Set(PRODUCTS.map((product) => product.mood))];
 export const GENRES = [...new Set(PRODUCTS.map((product) => product.genre))];
 export const READING_TIMES = [...new Set(PRODUCTS.map((product) => product.readingTime))];
@@ -252,7 +285,7 @@ export const READING_PACES = [...new Set(PRODUCTS.map((product) => product.pace)
 export const STORY_ENTRIES = [...new Set(PRODUCTS.map((product) => product.entry))];
 
 export function getProduct(slug: string) {
-  return PRODUCTS.find((product) => product.slug === slug);
+  return ALL_PRODUCTS.find((product) => product.slug === slug);
 }
 
 export function formatPrice(priceCents: number) {

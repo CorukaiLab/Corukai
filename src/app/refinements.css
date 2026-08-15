@@ -2,12 +2,13 @@
 .primary-nav .library-link {
   min-height: 42px;
   gap: 10px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--coral);
   padding: 0 8px 0 16px;
-  color: var(--paper-bright);
-  background: var(--ink);
+  color: var(--ink);
+  background: var(--coral);
   font-family: var(--display);
   font-size: 1rem;
+  font-weight: 700;
   transition: color 180ms ease, background-color 180ms ease, transform 180ms var(--ease);
 }
 
@@ -27,10 +28,10 @@
   height: 27px;
   place-items: center;
   border-radius: 50%;
-  color: var(--ink);
-  background: var(--yellow);
+  color: var(--paper-bright);
+  background: var(--ink);
   font-family: var(--sans);
-  font-size: 0.68rem;
+  font-size: 0.9rem;
   font-weight: 900;
 }
 
@@ -271,13 +272,14 @@
   filter: drop-shadow(20px 24px 20px rgba(0, 0, 0, 0.34));
 }
 
-.coru-shelf__number {
+.coru-shelf__stamp {
   position: absolute;
-  top: -30px;
+  top: -34px;
   left: 0;
   color: var(--accent);
-  font-family: var(--display);
-  font-size: 2rem;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .coru-shelf__label {

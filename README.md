@@ -6,6 +6,7 @@ Beta funcional de la librería sensorial CoruKai.
 
 - Home editorial.
 - Catálogo de 24 historias.
+- Balda editorial independiente con tres recomendaciones temporales de Coru.
 - Búsqueda y filtros.
 - Fichas de producto.
 - Cesta persistente en el navegador.

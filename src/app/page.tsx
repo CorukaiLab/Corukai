@@ -4,7 +4,7 @@ import { DiscoverySearch } from "@/components/discovery-search";
 import { InteractiveLibrary } from "@/components/interactive-library";
 import { ProductCard } from "@/components/product-card";
 import { CoruShelf } from "@/components/coru-shelf";
-import { PRODUCTS } from "@/lib/catalog";
+import { CORU_PICKS, PRODUCTS } from "@/lib/catalog";
 
 const entryPoints = [
   { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe" },
@@ -17,7 +17,6 @@ function selectProducts(slugs: string[]) {
 }
 
 const selected = selectProducts(["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
-const coruSelection = selectProducts(["hacia-rutas-salvajes", "piranesi", "seda"]);
 const librarySelection = selectProducts([
   "hacia-rutas-salvajes",
   "imperio-final",
@@ -33,6 +32,8 @@ export default function Home() {
   return (
     <main>
       <InteractiveLibrary products={librarySelection} />
+
+      <CoruShelf products={CORU_PICKS} />
 
       <section className="home-thesis" aria-label="La promesa CoruKai">
         <p>Sin rankings.</p><p>Sin prisa.</p><p>Con una razón para abrir cada libro.</p>
@@ -53,8 +54,6 @@ export default function Home() {
       </section>
 
       <DiscoverySearch products={PRODUCTS} />
-
-      <CoruShelf products={coruSelection} />
 
       <section className="curiosity-scene">
         <Image src="/assets/editorial/curiosity-table.webp" alt="Cuaderno, brújula, libros y objetos creativos sobre una mesa azul noche" fill sizes="100vw" />

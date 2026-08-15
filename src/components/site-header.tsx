@@ -19,7 +19,7 @@ export function SiteHeader() {
         <Link href="/">Inicio</Link>
         <Link href="/#descubrir">Encuéntrame un libro</Link>
         <Link className="library-link" href="/tienda">
-          La biblioteca <span aria-hidden="true">24</span>
+          La biblioteca <span aria-hidden="true">↗</span>
         </Link>
         <CartLink />
       </nav>

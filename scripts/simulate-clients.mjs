@@ -11,6 +11,9 @@ const books = [
   "proyecto-hail-mary",
   "hamnet",
   "nuestra-parte-noche",
+  "libreria-livingstone",
+  "infraordinario",
+  "mas-que-humano",
 ];
 const filters = [
   "genre=Aventura&entry=Viajar",
@@ -38,11 +41,12 @@ async function request(path, clientId, step) {
 }
 
 async function simulateClient(clientId) {
-  const index = clientId % books.length;
+  const bookIndex = clientId % books.length;
+  const filterIndex = clientId % filters.length;
   const journey = [
     ["/", "home"],
-    [`/tienda?${filters[index]}`, "filtro"],
-    [`/libros/${books[index]}`, "ficha"],
+    [`/tienda?${filters[filterIndex]}`, "filtro"],
+    [`/libros/${books[bookIndex]}`, "ficha"],
     ["/cesta", "estante"],
   ];
   const timings = [];

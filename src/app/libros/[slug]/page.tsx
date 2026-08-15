@@ -5,10 +5,10 @@ import { notFound } from "next/navigation";
 import { AffiliateLink } from "@/components/affiliate-link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { ProductCard } from "@/components/product-card";
-import { formatPrice, getProduct, PRODUCTS } from "@/lib/catalog";
+import { ALL_PRODUCTS, formatPrice, getProduct, PRODUCTS } from "@/lib/catalog";
 
 export function generateStaticParams() {
-  return PRODUCTS.map((product) => ({ slug: product.slug }));
+  return ALL_PRODUCTS.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({

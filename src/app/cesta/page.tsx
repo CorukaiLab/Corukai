@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/components/cart/cart-context";
 import { AffiliateLink } from "@/components/affiliate-link";
-import { formatPrice, PRODUCTS } from "@/lib/catalog";
+import { ALL_PRODUCTS, formatPrice } from "@/lib/catalog";
 
 export default function CartPage() {
   const { items, remove, clear } = useCart();
   const lines = items.flatMap((item) => {
-    const product = PRODUCTS.find((entry) => entry.slug === item.slug);
+    const product = ALL_PRODUCTS.find((entry) => entry.slug === item.slug);
     return product ? [{ ...item, product }] : [];
   });
   const total = lines.reduce(
