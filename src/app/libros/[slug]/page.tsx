@@ -105,7 +105,8 @@ export default async function ProductPage({
             </AffiliateLink>
           )}
           <p className="purchase-note">
-            La cesta ya funciona. El cobro se activará al conectar la cuenta comercial de Stripe.
+            Guarda el libro en tu estante. Amazon confirmará después la edición,
+            el precio vigente, la disponibilidad, el pago y el envío.
           </p>
         </div>
       </section>

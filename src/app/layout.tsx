@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 import "./library-theme.css";
+import "./refinements.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -22,16 +23,34 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isVercel = Boolean(process.env.VERCEL);
+
   return (
     <html lang="es">
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/editorial/library-wall-desktop.webp"
+          media="(min-width: 761px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/editorial/library-wall-mobile.webp"
+          media="(max-width: 760px)"
+          fetchPriority="high"
+        />
+      </head>
       <body>
         <CartProvider>
           <SiteHeader />
           {children}
           <SiteFooter />
         </CartProvider>
-        <Analytics />
-        <SpeedInsights />
+        {isVercel ? <Analytics /> : null}
+        {isVercel ? <SpeedInsights /> : null}
       </body>
     </html>
   );

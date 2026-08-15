@@ -41,6 +41,8 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
   }, [entry, genre, mood, pace, products, q, time]);
 
   const activeFilters = [genre, mood, time, pace, entry].filter(Boolean).length + (q ? 1 : 0);
+  const activeLabels = [genre, mood, time, pace, entry, q ? `“${q}”` : ""].filter(Boolean);
+  const lead = filtered[0];
   const reset = () => {
     setQ(""); setGenre(""); setMood(""); setTime(""); setPace(""); setEntry("");
   };
@@ -65,9 +67,20 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
       </aside>
 
       <div className="catalog-results">
-        <header className="catalog-results__header" aria-live="polite">
-          <p><strong>{filtered.length}</strong> {filtered.length === 1 ? "historia" : "historias"}</p>
-          <p>No están ordenadas por popularidad, sino por posibilidad.</p>
+        <header className="catalog-results__header catalog-bridge" aria-live="polite">
+          <div className="catalog-bridge__selection">
+            <span>Tu selección</span>
+            <div>
+              {activeLabels.length
+                ? activeLabels.map((label) => <b key={label}>{label}</b>)
+                : <b>Todo el catálogo</b>}
+            </div>
+          </div>
+          <span className="catalog-bridge__line" aria-hidden="true" />
+          <div className="catalog-bridge__result">
+            <p><strong>{filtered.length}</strong> {filtered.length === 1 ? "historia" : "historias"}</p>
+            {lead && <span>Primera coincidencia: {lead.title}</span>}
+          </div>
         </header>
         {filtered.length ? (
           <div className="catalog-grid">

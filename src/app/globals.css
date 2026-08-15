@@ -527,7 +527,7 @@ img {
 
 .product-kicker {
   margin: 0 0 12px;
-  color: color-mix(in srgb, var(--accent) 68%, var(--ink));
+  color: color-mix(in srgb, var(--accent) 42%, var(--ink));
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -2179,7 +2179,7 @@ img {
 }
 
 .creative-spark span {
-  color: var(--coral);
+  color: var(--yellow);
   font-family: var(--sans);
   font-size: 0.68rem;
   font-weight: 900;

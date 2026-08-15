@@ -16,8 +16,11 @@ export function SiteHeader() {
         <span>CoruKai</span>
       </Link>
       <nav className="primary-nav" aria-label="Navegación principal">
-        <Link href="/tienda">Descubrir</Link>
-        <Link href="/#descubrir">Tu momento</Link>
+        <Link href="/">Inicio</Link>
+        <Link href="/#descubrir">Encuéntrame un libro</Link>
+        <Link className="library-link" href="/tienda">
+          La biblioteca <span aria-hidden="true">24</span>
+        </Link>
         <CartLink />
       </nav>
     </header>

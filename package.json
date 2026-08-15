@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:clients": "node scripts/simulate-clients.mjs",
     "sanity:dev": "sanity dev",
     "sanity:validate": "sanity schemas validate"
   },

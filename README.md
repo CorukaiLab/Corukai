@@ -5,11 +5,12 @@ Beta funcional de la librería sensorial CoruKai.
 ## Incluye
 
 - Home editorial.
-- Catálogo de 12 historias.
+- Catálogo de 24 historias.
 - Búsqueda y filtros.
 - Fichas de producto.
 - Cesta persistente en el navegador.
-- Endpoint de checkout con validación server-side.
+- Estante local y salida transparente hacia Amazon Afiliados.
+- Endpoint de Stripe reservado para una futura venta directa.
 - Studio y esquema de Sanity.
 - Protección privada mediante contraseña.
 - Vercel Analytics y Speed Insights.

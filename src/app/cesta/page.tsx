@@ -2,14 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { useCart } from "@/components/cart/cart-context";
+import { AffiliateLink } from "@/components/affiliate-link";
 import { formatPrice, PRODUCTS } from "@/lib/catalog";
 
 export default function CartPage() {
-  const { items, remove, setQuantity, clear } = useCart();
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { items, remove, clear } = useCart();
   const lines = items.flatMap((item) => {
     const product = PRODUCTS.find((entry) => entry.slug === item.slug);
     return product ? [{ ...item, product }] : [];
@@ -19,34 +17,12 @@ export default function CartPage() {
     0,
   );
 
-  async function checkout() {
-    setLoading(true);
-    setMessage("");
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
-      });
-      const data = (await response.json()) as { url?: string; message?: string };
-      if (!response.ok || !data.url) {
-        setMessage(data.message || "No se pudo iniciar el pago.");
-        return;
-      }
-      window.location.href = data.url;
-    } catch {
-      setMessage("No se pudo conectar con el pago. Inténtalo de nuevo.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <main className="cart-page">
       <header className="cart-heading">
-        <p className="eyebrow">Tu mesa de lectura</p>
-        <h1>Mi selección.</h1>
-        <p>Puedes cambiar de idea. Aquí no hay temporizadores ni urgencia.</p>
+        <p className="eyebrow">Tu balda provisional</p>
+        <h1>Mi estante.</h1>
+        <p>Guarda posibilidades aquí. Cuando una encaje, comprobarás su edición, precio y disponibilidad en Amazon.</p>
       </header>
 
       {lines.length === 0 ? (
@@ -71,37 +47,28 @@ export default function CartPage() {
                   <h2>{product.title}</h2>
                   <span>{product.author}</span>
                 </div>
-                <label>
-                  <span>Cantidad</span>
-                  <input
-                    type="number"
-                    min="1"
-                    max="9"
-                    value={quantity}
-                    onChange={(event) => setQuantity(product.slug, Number(event.target.value))}
-                  />
-                </label>
                 <strong>{formatPrice(product.priceCents * quantity)}</strong>
+                {product.affiliateUrl ? (
+                  <AffiliateLink href={product.affiliateUrl} slug={product.slug} genre={product.genre} placement="cesta" className="cart-amazon-link">
+                    Ver esta edición en Amazon <span aria-hidden="true">↗</span>
+                  </AffiliateLink>
+                ) : <span className="cart-link-pending">Enlace en preparación</span>}
                 <button type="button" onClick={() => remove(product.slug)}>Quitar</button>
               </article>
             ))}
           </section>
           <aside className="cart-summary">
-            <p className="eyebrow">Resumen</p>
-            <div><span>Libros</span><strong>{formatPrice(total)}</strong></div>
-            <div><span>Envío</span><strong>Se calcula después</strong></div>
+            <p className="eyebrow">Cómo comprar</p>
+            <div><span>Libros guardados</span><strong>{lines.length}</strong></div>
+            <div><span>Referencia estimada</span><strong>{formatPrice(total)}</strong></div>
             <hr />
-            <div className="cart-total"><span>Total provisional</span><strong>{formatPrice(total)}</strong></div>
-            <button className="button button--coral" type="button" disabled={loading} onClick={checkout}>
-              {loading ? "Preparando…" : "Continuar al pago"} <span aria-hidden="true">→</span>
-            </button>
-            {message && <p className="checkout-message" role="status">{message}</p>}
+            <p className="cart-summary__explanation">Amazon gestiona la cesta final, el precio vigente, el pago y el envío. Abre cada libro y añádelo allí; CoruKai nunca recibe tus datos bancarios.</p>
+            <Link className="button button--coral" href="/tienda">Seguir descubriendo <span aria-hidden="true">→</span></Link>
             <button className="clear-cart" type="button" onClick={clear}>Vaciar selección</button>
-            <p className="purchase-note">Pago seguro mediante Stripe cuando la cuenta comercial esté configurada.</p>
+            <p className="purchase-note">Los precios mostrados son orientativos hasta consultar Amazon.</p>
           </aside>
         </div>
       )}
     </main>
   );
 }
-

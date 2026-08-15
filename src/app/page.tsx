@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DiscoverySearch } from "@/components/discovery-search";
 import { InteractiveLibrary } from "@/components/interactive-library";
 import { ProductCard } from "@/components/product-card";
+import { CoruShelf } from "@/components/coru-shelf";
 import { PRODUCTS } from "@/lib/catalog";
 
 const entryPoints = [
@@ -16,6 +17,7 @@ function selectProducts(slugs: string[]) {
 }
 
 const selected = selectProducts(["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
+const coruSelection = selectProducts(["hacia-rutas-salvajes", "piranesi", "seda"]);
 const librarySelection = selectProducts([
   "hacia-rutas-salvajes",
   "imperio-final",
@@ -52,19 +54,7 @@ export default function Home() {
 
       <DiscoverySearch products={PRODUCTS} />
 
-      <section className="editorial-pick">
-        <div className="editorial-pick__copy">
-          <p className="eyebrow">La elección de esta semana</p>
-          <h2>Una expedición que empieza antes de abrir el libro.</h2>
-          <p><em>La rosa del Tibet</em> es aventura, misterio geográfico y una promesa de lugar secreto. Para cuando necesitas recordar que aún quedan puertas.</p>
-          <Link className="button button--ink" href="/libros/rosa-tibet">Abrir esta historia <span aria-hidden="true">↗</span></Link>
-        </div>
-        <div className="editorial-pick__cover">
-          <span className="edition-mark">CORU<br />KAI<br />01</span>
-          <Image src="/assets/covers/rosa-tibet.jpg" alt="Portada de La rosa del Tibet" width={420} height={630} sizes="(max-width: 800px) 68vw, 32vw" />
-        </div>
-        <p className="editorial-pick__aside">Sin puntuaciones. Sin “deberías”. Solo la información que ayuda a decidir.</p>
-      </section>
+      <CoruShelf products={coruSelection} />
 
       <section className="curiosity-scene">
         <Image src="/assets/editorial/curiosity-table.webp" alt="Cuaderno, brújula, libros y objetos creativos sobre una mesa azul noche" fill sizes="100vw" />

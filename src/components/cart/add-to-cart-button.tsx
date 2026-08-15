@@ -10,8 +10,9 @@ export function AddToCartButton({
   slug: string;
   compact?: boolean;
 }) {
-  const { add } = useCart();
+  const { add, items } = useCart();
   const [added, setAdded] = useState(false);
+  const isOnShelf = items.some((item) => item.slug === slug);
 
   function handleAdd() {
     add(slug);
@@ -25,9 +26,8 @@ export function AddToCartButton({
       type="button"
       onClick={handleAdd}
     >
-      {added ? "Añadido" : "Añadir a mi selección"}
-      <span aria-hidden="true">{added ? "✓" : "+"}</span>
+      {added || isOnShelf ? "En mi estante" : "Guardar en mi estante"}
+      <span aria-hidden="true">{added || isOnShelf ? "✓" : "+"}</span>
     </button>
   );
 }
-

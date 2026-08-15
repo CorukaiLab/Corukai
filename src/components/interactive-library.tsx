@@ -60,7 +60,7 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
                 className="library-book"
                 type="button"
                 aria-pressed={isActive}
-                aria-label={`Mostrar ${product.title}, ${product.genre}`}
+                title={`Mostrar ${product.title}, ${product.genre}`}
                 onMouseEnter={() => setActiveSlug(product.slug)}
                 onFocus={() => setActiveSlug(product.slug)}
                 onClick={() => setActiveSlug(product.slug)}

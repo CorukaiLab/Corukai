@@ -100,7 +100,7 @@ export function DiscoverySearch({ products }: { products: Product[] }) {
       </div>
 
       <div className="discovery-result" aria-live="polite">
-        <div className="discovery-result__number" aria-hidden="true">{hasChoices ? "01" : "?"}</div>
+        <div className="discovery-result__number" aria-hidden="true">{hasChoices ? "Tu libro" : "¿?"}</div>
         <div className="discovery-result__cover">
           <Image src={lead.cover} alt={`Portada de ${lead.title}`} width={300} height={450} sizes="(max-width: 700px) 42vw, 18vw" />
         </div>

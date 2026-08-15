@@ -20,12 +20,23 @@ type CartContextValue = {
   count: number;
   add: (slug: string) => void;
   remove: (slug: string) => void;
-  setQuantity: (slug: string, quantity: number) => void;
   clear: () => void;
 };
 
 const STORAGE_KEY = "corukai-selection-v1";
 const CartContext = createContext<CartContextValue | null>(null);
+
+function readStoredItems(value: string): CartItem[] {
+  const parsed: unknown = JSON.parse(value);
+  if (!Array.isArray(parsed)) return [];
+
+  const slugs = parsed.flatMap((item) => {
+    if (!item || typeof item !== "object" || !("slug" in item)) return [];
+    return typeof item.slug === "string" && item.slug ? [item.slug] : [];
+  });
+
+  return [...new Set(slugs)].map((slug) => ({ slug, quantity: 1 }));
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -35,7 +46,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     queueMicrotask(() => {
       try {
         const saved = window.localStorage.getItem(STORAGE_KEY);
-        if (saved) setItems(JSON.parse(saved) as CartItem[]);
+        if (saved) setItems(readStoredItems(saved));
       } catch {
         window.localStorage.removeItem(STORAGE_KEY);
       } finally {
@@ -54,11 +65,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((current) => {
       const existing = current.find((item) => item.slug === slug);
       if (!existing) return [...current, { slug, quantity: 1 }];
-      return current.map((item) =>
-        item.slug === slug
-          ? { ...item, quantity: Math.min(item.quantity + 1, 9) }
-          : item,
-      );
+      return current;
     });
   }, []);
 
@@ -66,25 +73,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((current) => current.filter((item) => item.slug !== slug));
   }, []);
 
-  const setQuantity = useCallback((slug: string, quantity: number) => {
-    if (quantity <= 0) {
-      setItems((current) => current.filter((item) => item.slug !== slug));
-      return;
-    }
-    setItems((current) =>
-      current.map((item) =>
-        item.slug === slug
-          ? { ...item, quantity: Math.min(Math.floor(quantity), 9) }
-          : item,
-      ),
-    );
-  }, []);
-
   const clear = useCallback(() => setItems([]), []);
-  const count = items.reduce((total, item) => total + item.quantity, 0);
+  const count = items.length;
   const value = useMemo(
-    () => ({ items, count, add, remove, setQuantity, clear }),
-    [items, count, add, remove, setQuantity, clear],
+    () => ({ items, count, add, remove, clear }),
+    [items, count, add, remove, clear],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
