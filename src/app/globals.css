@@ -608,20 +608,26 @@ img {
 }
 
 .add-button--compact {
+  display: inline-grid;
   width: 44px;
+  min-width: 44px;
+  height: 44px;
   min-height: 44px;
+  align-content: center;
   justify-content: center;
+  place-items: center;
   overflow: hidden;
   padding: 0;
   white-space: nowrap;
 }
 
 .add-button--compact span {
+  display: block;
+  width: 1em;
+  height: 1em;
   font-size: 1.2rem;
-}
-
-.add-button--compact:not(:hover) {
-  font-size: 0;
+  line-height: 1;
+  text-align: center;
 }
 
 .manifesto-strip {

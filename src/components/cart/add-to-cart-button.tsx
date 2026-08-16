@@ -13,6 +13,8 @@ export function AddToCartButton({
   const { add, items } = useCart();
   const [added, setAdded] = useState(false);
   const isOnShelf = items.some((item) => item.slug === slug);
+  const isSaved = added || isOnShelf;
+  const label = isSaved ? "En mi estante" : "Guardar en mi estante";
 
   function handleAdd() {
     add(slug);
@@ -25,9 +27,11 @@ export function AddToCartButton({
       className={compact ? "add-button add-button--compact" : "add-button"}
       type="button"
       onClick={handleAdd}
+      aria-label={compact ? label : undefined}
+      title={compact ? label : undefined}
     >
-      {added || isOnShelf ? "En mi estante" : "Guardar en mi estante"}
-      <span aria-hidden="true">{added || isOnShelf ? "✓" : "+"}</span>
+      {!compact && label}
+      <span aria-hidden="true">{isSaved ? "✓" : "+"}</span>
     </button>
   );
 }
