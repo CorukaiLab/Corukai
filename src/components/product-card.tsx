@@ -12,6 +12,8 @@ export function ProductCard({
   priority?: boolean;
   compact?: boolean;
 }) {
+  const idealMoment = product.idealMoment.replace(/^Cuando\s+/u, "");
+
   return (
     <article
       className={`product-card${compact ? " product-card--compact" : ""}`}
@@ -31,6 +33,11 @@ export function ProductCard({
             : "(max-width: 640px) 72vw, (max-width: 1100px) 34vw, 22vw"}
         />
         <span className="product-cover__action">Entrar en la historia</span>
+        <span className="product-paper-slip">
+          <small>Para cuando…</small>
+          <strong>{idealMoment}</strong>
+          <b>Ver ficha <span aria-hidden="true">→</span></b>
+        </span>
       </Link>
       <div className="product-copy">
         <p className="product-kicker">

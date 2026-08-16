@@ -52,7 +52,16 @@ export default async function ProductPage({
     }))
     .sort((a, b) => b.affinity - a.affinity)
     .slice(0, 3)
-    .map(({ item }) => item);
+    .map(({ item }) => ({
+      item,
+      reason: item.mood === product.mood
+        ? `La misma sensación: ${item.mood.toLocaleLowerCase("es")}`
+        : item.genre === product.genre
+          ? `Otra forma de entrar en ${item.genre.toLocaleLowerCase("es")}`
+          : item.entry === product.entry
+            ? `También puede ayudarte a ${item.entry.toLocaleLowerCase("es")}`
+            : "Una forma distinta de continuar",
+    }));
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -111,47 +120,49 @@ export default async function ProductPage({
             <div><dt>Ritmo</dt><dd>{product.pace}</dd></div>
             <div><dt>Entrada</dt><dd>{product.entry}</dd></div>
           </dl>
-          <div className="detail-price">
-            <strong>{formatPrice(product.priceCents)}</strong>
-            <span>precio orientativo · Amazon confirma el importe vigente</span>
-          </div>
-          {product.affiliateUrl && (
-            <AffiliateLink
-              className="button button--ink"
-              href={product.affiliateUrl}
-              slug={product.slug}
-              genre={product.genre}
-              placement="ficha"
-            >
-              Ver disponibilidad en Amazon <span aria-hidden="true">↗</span>
-            </AffiliateLink>
-          )}
-          <AddToCartButton slug={product.slug} />
-          {!product.affiliateUrl && (
-            <p className="availability-pending"><strong>Compra en preparación.</strong> Puedes guardarlo ahora; añadiremos el enlace de la edición española cuando esté verificado.</p>
-          )}
-          <p className="purchase-note">
-            La compra se completa en Amazon. CoruKai no cobra ni recibe tus datos bancarios.
-          </p>
+          <section className="detail-commerce" aria-label="Edición y compra">
+            <div className="detail-commerce__heading">
+              <p className="eyebrow">La edición de referencia</p>
+              <div className="detail-price">
+                <strong>{formatPrice(product.priceCents)}</strong>
+                <span>precio orientativo</span>
+              </div>
+            </div>
+            <dl className="detail-commerce__facts">
+              <div><dt>Formato</dt><dd>{product.format}</dd></div>
+              <div><dt>Extensión</dt><dd>{product.pages ? `${product.pages} páginas` : "Por confirmar"}</dd></div>
+            </dl>
+            <div className="detail-commerce__actions">
+              {product.affiliateUrl && (
+                <AffiliateLink
+                  className="button button--ink"
+                  href={product.affiliateUrl}
+                  slug={product.slug}
+                  genre={product.genre}
+                  placement="ficha"
+                >
+                  Ver disponibilidad en Amazon <span aria-hidden="true">↗</span>
+                </AffiliateLink>
+              )}
+              <AddToCartButton slug={product.slug} />
+            </div>
+            {!product.affiliateUrl && (
+              <p className="availability-pending"><strong>Compra en preparación.</strong> Puedes guardarlo ahora; añadiremos el enlace de la edición española cuando esté verificado.</p>
+            )}
+            <p className="purchase-note"><b>Enlace pagado.</b> La compra se completa en Amazon. CoruKai no cobra ni recibe tus datos bancarios.</p>
+          </section>
         </div>
       </section>
 
-      <section className="edition-ledger" aria-labelledby="edition-ledger-title">
-        <header>
-          <p className="eyebrow">La edición, sin letra pequeña</p>
-          <h2 id="edition-ledger-title">Datos para elegir sin sorpresas.</h2>
-        </header>
-        <dl>
-          {editionFacts.map((fact, index) => (
-            <div key={fact.label}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="edition-ledger__note">Los datos corresponden a la edición usada como referencia. Antes de comprar, Amazon mostrará editorial, traducción, formato, precio y disponibilidad definitivos.</p>
-      </section>
+      <nav className="detail-route" aria-label="Recorrido por la ficha">
+        <a href="#encaje"><span>Antes</span><b>¿Encaja conmigo?</b></a>
+        <a href="#edicion"><span>El objeto</span><b>¿Qué edición compro?</b></a>
+        <a href="#despues"><span>Después</span><b>¿Qué me deja?</b></a>
+      </nav>
+
+      <header className="detail-act-marker" id="encaje">
+        <span>Acto I</span><p>Antes de abrirlo</p><h2>¿Encaja conmigo?</h2>
+      </header>
 
       <section className="decision-section">
         <p className="decision-number">01</p>
@@ -164,21 +175,6 @@ export default async function ProductPage({
           <strong>{product.idealMoment}</strong>
         </aside>
       </section>
-
-      <section className="coru-recommendation" aria-labelledby="coru-recommendation-title">
-        <div className="coru-recommendation__book">
-          <Image src={product.cover} alt="" width={210} height={315} sizes="170px" loading="eager" fetchPriority="low" />
-        </div>
-        <div className="coru-recommendation__intro">
-          <p className="eyebrow">La sugerencia de Coru</p>
-          <h2 id="coru-recommendation-title">Por qué lo pondría hoy en tu mesa.</h2>
-        </div>
-        <div className="coru-recommendation__note"><b>Coru</b><p>“{product.coruNote}”</p><span>Una nota dejada junto al libro</span></div>
-      </section>
-
-      <ChapterTransition chapter="VI" eyebrow="La última página no cierra aquí" title="Ahora la historia te devuelve una pregunta." tone="aloe" />
-
-      <CreativeSparkCard slug={product.slug} prompt={product.creativeSpark} />
 
       <section className="honest-section">
         <div>
@@ -197,6 +193,46 @@ export default async function ProductPage({
         </div>
       </section>
 
+      <header className="detail-act-marker detail-act-marker--dark" id="edicion">
+        <span>Acto II</span><p>El libro como objeto</p><h2>¿Qué edición compro?</h2>
+      </header>
+
+      <section className="edition-ledger" aria-labelledby="edition-ledger-title">
+        <header>
+          <p className="eyebrow">La edición, sin letra pequeña</p>
+          <h2 id="edition-ledger-title">Datos para elegir sin sorpresas.</h2>
+        </header>
+        <dl>
+          {editionFacts.map((fact, index) => (
+            <div key={fact.label}>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="edition-ledger__note">Los datos corresponden a la edición usada como referencia. Antes de comprar, Amazon mostrará editorial, traducción, formato, precio y disponibilidad definitivos.</p>
+      </section>
+
+      <header className="detail-act-marker" id="despues">
+        <span>Acto III</span><p>Después de cerrarlo</p><h2>¿Qué me deja?</h2>
+      </header>
+
+      <section className="coru-recommendation" aria-labelledby="coru-recommendation-title">
+        <div className="coru-recommendation__book">
+          <Image src={product.cover} alt="" width={210} height={315} sizes="170px" loading="eager" fetchPriority="low" />
+        </div>
+        <div className="coru-recommendation__intro">
+          <p className="eyebrow">La sugerencia de Coru</p>
+          <h2 id="coru-recommendation-title">Por qué lo pondría hoy en tu mesa.</h2>
+        </div>
+        <div className="coru-recommendation__note"><b>Coru</b><p>“{product.coruNote}”</p><span>Una nota dejada junto al libro</span></div>
+      </section>
+
+      <ChapterTransition chapter="VI" eyebrow="La última página no cierra aquí" title="Ahora la historia te devuelve una pregunta." tone="aloe" />
+
+      <CreativeSparkCard slug={product.slug} prompt={product.creativeSpark} />
+
       {related.length > 0 && (
         <section className="related-section">
           <header>
@@ -204,7 +240,12 @@ export default async function ProductPage({
             <h2>Hay otras formas de entrar.</h2>
           </header>
           <div className="catalog-grid catalog-grid--related">
-            {related.map((item) => <ProductCard key={item.slug} product={item} compact />)}
+            {related.map(({ item, reason }) => (
+              <div className="related-echo" key={item.slug}>
+                <p><span>Si te quedas con…</span><b>{reason}</b></p>
+                <ProductCard product={item} compact />
+              </div>
+            ))}
           </div>
         </section>
       )}

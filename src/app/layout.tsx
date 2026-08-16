@@ -8,6 +8,7 @@ import "./globals.css";
 import "./library-theme.css";
 import "./refinements.css";
 import "./selected-direction.css";
+import "./catalog-product-selection.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),

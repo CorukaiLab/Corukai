@@ -15,6 +15,27 @@ type InitialFilters = {
   entry?: string;
 };
 
+const ENTRY_PATHS = [
+  {
+    label: "Salir de aquí",
+    description: "Viajes, mundos y lugares que ensanchan el día.",
+    filter: { entry: "Viajar" },
+    covers: ["hacia-rutas-salvajes", "piranesi"],
+  },
+  {
+    label: "Bajar el ruido",
+    description: "Historias serenas para leer sin correr.",
+    filter: { pace: "Sereno" },
+    covers: ["siddhartha", "seda"],
+  },
+  {
+    label: "Volver a crear",
+    description: "Extrañeza, asombro e ideas que dejan una chispa.",
+    filter: { entry: "Crear" },
+    covers: ["piranesi", "kalpa-imperial"],
+  },
+] as const;
+
 function unique(products: Product[], key: keyof Pick<Product, "genre" | "mood" | "readingTime" | "pace" | "entry">) {
   return [...new Set(products.map((product) => product[key]))];
 }
@@ -49,6 +70,12 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
     setQ(""); setGenre(""); setMood(""); setTime(""); setPace(""); setEntry("");
   };
 
+  const applyEntryPath = (path: (typeof ENTRY_PATHS)[number]) => {
+    reset();
+    if ("entry" in path.filter) setEntry(path.filter.entry);
+    if ("pace" in path.filter) setPace(path.filter.pace);
+  };
+
   useEffect(() => {
     if (!isFiltersOpen) return;
     const previousOverflow = document.body.style.overflow;
@@ -65,6 +92,35 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
 
   return (
     <section className="catalog-explorer" aria-label="Explorar el catálogo">
+      <section className="catalog-entry" aria-labelledby="catalog-entry-title">
+        <div className="catalog-entry__search">
+          <p className="eyebrow">La mesa de consulta</p>
+          <h2 id="catalog-entry-title">Puedes buscar.<br />También puedes pasear.</h2>
+          <label>
+            <span aria-hidden="true">⌕</span>
+            <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="Un título, una autora, una sensación…" />
+          </label>
+          <p>Si ya sabes algo, escríbelo. Si todavía no, entra por uno de estos pasillos.</p>
+        </div>
+        <div className="catalog-entry__aisles" aria-label="Pasillos editoriales">
+          {ENTRY_PATHS.map((path, index) => {
+            const covers = path.covers
+              .map((slug) => products.find((product) => product.slug === slug))
+              .filter((product): product is Product => Boolean(product));
+            return (
+              <button type="button" onClick={() => applyEntryPath(path)} key={path.label}>
+                <span className="catalog-entry__aisle-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <span className="catalog-entry__aisle-copy"><strong>{path.label}</strong><small>{path.description}</small></span>
+                <span className="catalog-entry__aisle-covers" aria-hidden="true">
+                  {covers.map((product) => <Image src={product.cover} alt="" width={74} height={110} key={product.slug} />)}
+                </span>
+                <span className="catalog-entry__aisle-arrow" aria-hidden="true">→</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
       <button
         className="filter-mobile-trigger"
         type="button"
@@ -92,7 +148,7 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
             <p className="eyebrow">Tu brújula</p>
             <strong>{activeFilters ? `${activeFilters} pistas activas` : "Empieza por una pista"}</strong>
           </div>
-          <button className="filter-close" type="button" onClick={() => setIsFiltersOpen(false)}>Ver resultados</button>
+          <button className="filter-close" type="button" aria-label="Cerrar filtros" onClick={() => setIsFiltersOpen(false)}>Cerrar</button>
         </div>
         <label className="filter-search">
           <span>Buscar una palabra, autor o lugar</span>
@@ -108,6 +164,10 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
           <button className="filter-apply" type="button" onClick={() => setIsFiltersOpen(false)}>Mostrar {filtered.length} {filtered.length === 1 ? "historia" : "historias"}</button>
         </div>
       </aside>
+      <div className={`filter-mobile-actions ${isFiltersOpen ? "is-open" : ""}`} aria-hidden={!isFiltersOpen}>
+        {activeFilters > 0 && <button className="filter-reset" type="button" onClick={reset}>Borrar pistas</button>}
+        <button className="filter-apply" type="button" onClick={() => setIsFiltersOpen(false)}>Mostrar {filtered.length} {filtered.length === 1 ? "historia" : "historias"}</button>
+      </div>
 
       <div className="catalog-results">
         <header className="catalog-results__header catalog-bridge" aria-live="polite">
@@ -121,8 +181,15 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
           </div>
           <span className="catalog-bridge__line" aria-hidden="true" />
           <div className="catalog-bridge__result">
-            <p><strong>{filtered.length}</strong> {filtered.length === 1 ? "historia" : "historias"}</p>
-            {lead && <span>Primera coincidencia: {lead.title}</span>}
+            {lead ? (
+              <>
+                <Image src={lead.cover} alt="" width={42} height={64} aria-hidden="true" />
+                <div>
+                  <p><strong>{filtered.length}</strong> {filtered.length === 1 ? "historia" : "historias"}</p>
+                  <span>Primera coincidencia: <b>{lead.title}</b></span>
+                </div>
+              </>
+            ) : <p><strong>0</strong> historias</p>}
           </div>
         </header>
         {filtered.length ? (
