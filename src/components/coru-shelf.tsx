@@ -4,7 +4,7 @@ import type { Product } from "@/lib/catalog";
 
 export function CoruShelf({ products }: { products: Product[] }) {
   return (
-    <section className="coru-shelf" aria-labelledby="coru-shelf-title">
+    <section className="coru-shelf" id="balda-coru" aria-labelledby="coru-shelf-title">
       <header className="coru-shelf__heading">
         <div className="coru-shelf__portrait" aria-hidden="true">C</div>
         <div>

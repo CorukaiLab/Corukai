@@ -4,6 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AffiliateLink } from "@/components/affiliate-link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { ChapterTransition } from "@/components/chapter-transition";
+import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
 import { ALL_PRODUCTS, formatPrice, getProduct, PRODUCTS } from "@/lib/catalog";
 
@@ -61,13 +63,25 @@ export default async function ProductPage({
     datePublished: String(product.year),
     image: product.cover,
     description: product.hook,
-    offers: {
-      "@type": "Offer",
-      priceCurrency: "EUR",
-      price: (product.priceCents / 100).toFixed(2),
-      availability: "https://schema.org/PreOrder",
-    },
+    ...(product.affiliateUrl ? {
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        price: (product.priceCents / 100).toFixed(2),
+        availability: "https://schema.org/InStock",
+        url: product.affiliateUrl,
+      },
+    } : {}),
   };
+
+  const editionFacts = [
+    { label: "Formato de referencia", value: product.format },
+    { label: "Extensión", value: product.pages ? `${product.pages} páginas` : "Por confirmar" },
+    { label: "Primera publicación", value: String(product.year) },
+    { label: "ISBN de referencia", value: product.isbn || "Según edición" },
+    { label: "Editorial y traducción", value: "Se confirman con la edición enlazada" },
+    { label: "Disponibilidad", value: product.affiliateUrl ? "Consultar en Amazon" : "Enlace en preparación" },
+  ];
 
   return (
     <main className="detail-page" style={{ "--accent": product.accent } as React.CSSProperties}>
@@ -80,7 +94,8 @@ export default async function ProductPage({
             alt={`Portada de ${product.title}`}
             width={520}
             height={780}
-            priority
+            loading="eager"
+            fetchPriority="high"
             sizes="(max-width: 760px) 72vw, 38vw"
           />
           <span>{product.year}</span>
@@ -98,9 +113,8 @@ export default async function ProductPage({
           </dl>
           <div className="detail-price">
             <strong>{formatPrice(product.priceCents)}</strong>
-            <span>{product.format} · precio beta</span>
+            <span>precio orientativo · Amazon confirma el importe vigente</span>
           </div>
-          <AddToCartButton slug={product.slug} />
           {product.affiliateUrl && (
             <AffiliateLink
               className="button button--ink"
@@ -112,11 +126,31 @@ export default async function ProductPage({
               Ver disponibilidad en Amazon <span aria-hidden="true">↗</span>
             </AffiliateLink>
           )}
+          <AddToCartButton slug={product.slug} />
+          {!product.affiliateUrl && (
+            <p className="availability-pending"><strong>Compra en preparación.</strong> Puedes guardarlo ahora; añadiremos el enlace de la edición española cuando esté verificado.</p>
+          )}
           <p className="purchase-note">
-            Guarda el libro en tu estante. Amazon confirmará después la edición,
-            el precio vigente, la disponibilidad, el pago y el envío.
+            La compra se completa en Amazon. CoruKai no cobra ni recibe tus datos bancarios.
           </p>
         </div>
+      </section>
+
+      <section className="edition-ledger" aria-labelledby="edition-ledger-title">
+        <header>
+          <p className="eyebrow">La edición, sin letra pequeña</p>
+          <h2 id="edition-ledger-title">Datos para elegir sin sorpresas.</h2>
+        </header>
+        <dl>
+          {editionFacts.map((fact, index) => (
+            <div key={fact.label}>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="edition-ledger__note">Los datos corresponden a la edición usada como referencia. Antes de comprar, Amazon mostrará editorial, traducción, formato, precio y disponibilidad definitivos.</p>
       </section>
 
       <section className="decision-section">
@@ -132,22 +166,19 @@ export default async function ProductPage({
       </section>
 
       <section className="coru-recommendation" aria-labelledby="coru-recommendation-title">
-        <div className="coru-recommendation__stamp" aria-hidden="true">C</div>
-        <div>
+        <div className="coru-recommendation__book">
+          <Image src={product.cover} alt="" width={210} height={315} sizes="170px" loading="eager" fetchPriority="low" />
+        </div>
+        <div className="coru-recommendation__intro">
           <p className="eyebrow">La sugerencia de Coru</p>
           <h2 id="coru-recommendation-title">Por qué lo pondría hoy en tu mesa.</h2>
         </div>
-        <p className="coru-recommendation__note">{product.coruNote}</p>
+        <div className="coru-recommendation__note"><b>Coru</b><p>“{product.coruNote}”</p><span>Una nota dejada junto al libro</span></div>
       </section>
 
-      <section className="creative-prompt">
-        <p className="eyebrow">La lectura continúa fuera del libro</p>
-        <p className="creative-prompt__mark" aria-hidden="true">✦</p>
-        <div>
-          <h2>Una chispa para llevarte.</h2>
-          <p>{product.creativeSpark}</p>
-        </div>
-      </section>
+      <ChapterTransition chapter="VI" eyebrow="La última página no cierra aquí" title="Ahora la historia te devuelve una pregunta." tone="aloe" />
+
+      <CreativeSparkCard slug={product.slug} prompt={product.creativeSpark} />
 
       <section className="honest-section">
         <div>

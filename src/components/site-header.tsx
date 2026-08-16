@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CartLink } from "@/components/cart/cart-link";
+import { MobileNavigation } from "@/components/mobile-navigation";
 
 export function SiteHeader() {
   return (
@@ -16,13 +17,18 @@ export function SiteHeader() {
         <span>CoruKai</span>
       </Link>
       <nav className="primary-nav" aria-label="Navegación principal">
-        <Link href="/">Inicio</Link>
-        <Link href="/#descubrir">Encuéntrame un libro</Link>
-        <Link className="library-link" href="/tienda">
-          La biblioteca <span aria-hidden="true">↗</span>
+        <Link className="home-link" href="/">Inicio</Link>
+        <Link className="discovery-link" href="/#descubrir">
+          Descubrir
         </Link>
-        <CartLink />
+        <Link className="library-link" href="/tienda">
+          Biblioteca
+        </Link>
       </nav>
+      <div className="header-actions">
+        <CartLink />
+      </div>
+      <MobileNavigation />
     </header>
   );
 }

@@ -18,6 +18,8 @@ export function ProductCard({
       style={{ "--accent": product.accent } as React.CSSProperties}
     >
       <Link className="product-cover" href={`/libros/${product.slug}`}>
+        <span className="product-object-index" aria-hidden="true">{product.year}</span>
+        <span className="product-object-seal" aria-hidden="true">C</span>
         <Image
           src={product.cover}
           alt={`Portada de ${product.title}`}
@@ -28,7 +30,7 @@ export function ProductCard({
             ? "(max-width: 520px) 44vw, (max-width: 900px) 40vw, (max-width: 1200px) 24vw, 18vw"
             : "(max-width: 640px) 72vw, (max-width: 1100px) 34vw, 22vw"}
         />
-        <span>Entrar en la historia</span>
+        <span className="product-cover__action">Entrar en la historia</span>
       </Link>
       <div className="product-copy">
         <p className="product-kicker">

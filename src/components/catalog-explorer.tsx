@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { ProductCard } from "@/components/product-card";
 import type { Product } from "@/lib/catalog";
 
@@ -25,6 +26,7 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
   const [time, setTime] = useState(initial.time || "");
   const [pace, setPace] = useState(initial.pace || "");
   const [entry, setEntry] = useState(initial.entry || "");
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLocaleLowerCase("es");
@@ -47,12 +49,50 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
     setQ(""); setGenre(""); setMood(""); setTime(""); setPace(""); setEntry("");
   };
 
+  useEffect(() => {
+    if (!isFiltersOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsFiltersOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isFiltersOpen]);
+
   return (
     <section className="catalog-explorer" aria-label="Explorar el catálogo">
-      <aside className="filter-studio">
+      <button
+        className="filter-mobile-trigger"
+        type="button"
+        aria-controls="catalog-filters"
+        aria-expanded={isFiltersOpen}
+        onClick={() => setIsFiltersOpen(true)}
+      >
+        <span><b>Tu brújula</b>{activeLabels.length ? activeLabels.join(" · ") : "Todos los libros"}</span>
+        <strong>{activeFilters ? `${activeFilters} activas` : "Filtrar"} <span aria-hidden="true">↗</span></strong>
+      </button>
+      <button
+        className={`filter-backdrop ${isFiltersOpen ? "is-open" : ""}`}
+        type="button"
+        aria-label="Cerrar filtros"
+        tabIndex={isFiltersOpen ? 0 : -1}
+        onClick={() => setIsFiltersOpen(false)}
+      />
+      <aside
+        className={`filter-studio ${isFiltersOpen ? "is-open" : ""}`}
+        id="catalog-filters"
+        aria-label="Filtros del catálogo"
+      >
         <div className="filter-studio__heading">
-          <p className="eyebrow">Tu brújula</p>
-          <strong>{activeFilters ? `${activeFilters} pistas activas` : "Empieza por una pista"}</strong>
+          <div>
+            <p className="eyebrow">Tu brújula</p>
+            <strong>{activeFilters ? `${activeFilters} pistas activas` : "Empieza por una pista"}</strong>
+          </div>
+          <button className="filter-close" type="button" onClick={() => setIsFiltersOpen(false)}>Ver resultados</button>
         </div>
         <label className="filter-search">
           <span>Buscar una palabra, autor o lugar</span>
@@ -63,7 +103,10 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
         <FilterGroup label="Tiempo" value={time} options={unique(products, "readingTime")} onChange={setTime} />
         <FilterGroup label="Ritmo" value={pace} options={unique(products, "pace")} onChange={setPace} />
         <FilterGroup label="La historia puede…" value={entry} options={unique(products, "entry")} onChange={setEntry} />
-        {activeFilters > 0 && <button className="filter-reset" type="button" onClick={reset}>Borrar las pistas</button>}
+        <div className="filter-studio__actions">
+          {activeFilters > 0 && <button className="filter-reset" type="button" onClick={reset}>Borrar las pistas</button>}
+          <button className="filter-apply" type="button" onClick={() => setIsFiltersOpen(false)}>Mostrar {filtered.length} {filtered.length === 1 ? "historia" : "historias"}</button>
+        </div>
       </aside>
 
       <div className="catalog-results">
@@ -85,13 +128,30 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
         {filtered.length ? (
           <div className="catalog-grid">
             {filtered.map((product, index) => (
-              <ProductCard key={product.slug} product={product} priority={index < 4} compact />
+              <Fragment key={product.slug}>
+                <ProductCard product={product} priority={index < 5} compact />
+                {(index + 1) % 8 === 0 && index < filtered.length - 1 ? (
+                  <aside className="catalog-coru-note">
+                    <span aria-hidden="true">C</span>
+                    <p className="eyebrow">Una nota entre estantes</p>
+                    <blockquote>
+                      {index < 9
+                        ? "Si hoy todo pesa, empieza por una historia que no te pida correr."
+                        : "Cambiar de género también es una forma de volver a tener curiosidad."}
+                    </blockquote>
+                    <Link href="/#balda-coru">Ver la balda temporal de Coru <b aria-hidden="true">→</b></Link>
+                  </aside>
+                ) : null}
+              </Fragment>
             ))}
           </div>
         ) : (
           <div className="empty-state">
+            <div className="empty-state__lamp" aria-hidden="true" />
+            <Image src="/assets/brand/corukai-normal.svg" alt="" width={64} height={74} />
             <p className="eyebrow">Demasiadas pistas</p>
-            <h2>Ese libro aún no está en nuestra mesa.</h2>
+            <h2>Esta balda todavía está vacía.</h2>
+            <p>Quita una pista y dejamos que aparezcan más puertas.</p>
             <button className="button button--ink" type="button" onClick={reset}>Abrir de nuevo la búsqueda</button>
             <Link className="text-link" href="/">Volver a la Home</Link>
           </div>

@@ -35,11 +35,12 @@ export function AffiliateLink({
         className={className}
         href={href}
         rel="sponsored nofollow"
+        target="_blank"
         onClick={handleClick}
       >
         {children}
       </a>
-      <small>Enlace pagado</small>
+      <small>Enlace pagado · la compra se completa en Amazon</small>
     </span>
   );
 }

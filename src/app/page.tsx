@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChapterTransition } from "@/components/chapter-transition";
 import { DiscoverySearch } from "@/components/discovery-search";
+import { EditorialShowcase } from "@/components/editorial-showcase";
 import { InteractiveLibrary } from "@/components/interactive-library";
-import { ProductCard } from "@/components/product-card";
 import { CoruShelf } from "@/components/coru-shelf";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import { CORU_PICKS, PRODUCTS } from "@/lib/catalog";
 
 const entryPoints = [
-  { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe" },
-  { number: "02", title: "Necesito salir", text: "Lugares, ideas y decisiones para cambiar de aire sin convertirlo en una huida.", href: "/tienda?entry=Viajar", className: "entry--yellow" },
-  { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral" },
+  { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe", image: "/assets/editorial/curiosity-table.webp" },
+  { number: "02", title: "Necesito salir", text: "Lugares, ideas y decisiones para cambiar de aire sin convertirlo en una huida.", href: "/tienda?entry=Viajar", className: "entry--yellow", image: "/assets/editorial/hero-ritual.png" },
+  { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral", image: "/assets/editorial/library-wall-mobile.webp" },
 ];
 
 function selectProducts(slugs: string[]) {
@@ -35,6 +37,8 @@ export default function Home() {
 
       <CoruShelf products={CORU_PICKS} />
 
+      <DiscoverySearch products={PRODUCTS} />
+
       <section className="home-thesis" aria-label="La promesa CoruKai">
         <p>Sin rankings.</p><p>Sin prisa.</p><p>Con una razón para abrir cada libro.</p>
       </section>
@@ -47,13 +51,14 @@ export default function Home() {
         <div className="entry-grid">
           {entryPoints.map((entry) => (
             <Link className={`entry-panel ${entry.className}`} href={entry.href} key={entry.title}>
+              <Image src={entry.image} alt="" fill sizes="(max-width: 760px) 100vw, 32vw" />
               <span>{entry.number}</span><div><h3>{entry.title}</h3><p>{entry.text}</p></div><b aria-hidden="true">→</b>
             </Link>
           ))}
         </div>
       </section>
 
-      <DiscoverySearch products={PRODUCTS} />
+      <ChapterTransition chapter="IV" eyebrow="Siguiente capítulo" title="La lectura también puede dejar algo en tus manos." tone="coral" />
 
       <section className="curiosity-scene">
         <Image src="/assets/editorial/curiosity-table.webp" alt="Cuaderno, brújula, libros y objetos creativos sobre una mesa azul noche" fill sizes="100vw" />
@@ -66,15 +71,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="shelf-section">
-        <header className="shelf-heading">
-          <div><p className="eyebrow">Historias con una razón para estar aquí</p><h2>Cuatro puertas.<br />Cuatro ritmos.</h2></div>
-          <Link className="text-link" href="/tienda">Ver las 24 historias →</Link>
-        </header>
-        <div className="home-products">
-          {selected.map((product, index) => <ProductCard key={product.slug} product={product} priority={index < 2} />)}
-        </div>
-      </section>
+      <EditorialShowcase products={selected} />
 
       <section className="human-curation">
         <p className="human-curation__number">24</p>
@@ -82,14 +79,7 @@ export default function Home() {
         <p>Empezamos con tres libros por género. Cada uno aporta una voz, una atmósfera o una forma distinta de mirar. Creceremos sin convertir la elección en ruido.</p>
       </section>
 
-      <section className="newsletter-section">
-        <div><p className="eyebrow">Una pequeña dosis de curiosidad</p><h2>Una historia para este momento.</h2></div>
-        <form className="newsletter-form">
-          <label htmlFor="email">Tu correo</label>
-          <div><input id="email" name="email" type="email" placeholder="nombre@correo.com" required /><button type="submit">Quiero recibirla <span aria-hidden="true">→</span></button></div>
-          <p>Quincenal. Una recomendación, una conexión cultural y una chispa creativa. Sin ruido.</p>
-        </form>
-      </section>
+      <NewsletterSignup />
     </main>
   );
 }

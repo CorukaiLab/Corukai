@@ -61,7 +61,7 @@ export function DiscoverySearch({ products }: { products: Product[] }) {
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Una isla, una carta, un misterio lento…"
+            placeholder="Isla, carta, misterio lento…"
           />
         </label>
 

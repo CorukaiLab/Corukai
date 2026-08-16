@@ -14,17 +14,32 @@ export function SiteFooter() {
         <p>La vida ya va demasiado rápido como para convertir los libros en otra obligación.</p>
       </div>
       <div className="footer-meta">
-        <div>
+        <div className="footer-identity">
           <p>CoruKai · beta</p>
           <p className="affiliate-disclosure">
             En calidad de Afiliado de Amazon, obtengo ingresos por las compras
             adscritas que cumplen los requisitos aplicables.
           </p>
         </div>
-        <nav aria-label="Enlaces del pie">
-          <Link href="/tienda">Tienda</Link>
-          <a href="mailto:hola@corukai.com">Contacto</a>
-        </nav>
+        <div className="footer-links">
+          <nav aria-label="Descubrir">
+            <strong>Descubrir</strong>
+            <Link href="/#descubrir">Encuéntrame un libro</Link>
+            <Link href="/tienda">Biblioteca</Link>
+            <Link href="/cesta">Mi estante</Link>
+          </nav>
+          <nav aria-label="Información">
+            <strong>Información</strong>
+            <Link href="/afiliacion">Cómo funciona la compra</Link>
+            <a href="mailto:hola@corukai.com">Contacto</a>
+          </nav>
+          <nav aria-label="Legal">
+            <strong>Legal</strong>
+            <Link href="/aviso-legal">Aviso legal</Link>
+            <Link href="/privacidad">Privacidad</Link>
+            <Link href="/cookies">Cookies</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );
