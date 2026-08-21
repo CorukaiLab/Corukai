@@ -120,14 +120,13 @@
     "description": "Intriga sin prisa, una sombra que acompana la lectura."
   },
   {
-    "_id": "author-lionel-davidson",
+    "_id": "author-isabel-allende",
     "_type": "author",
-    "name": "Lionel Davidson",
-    "slug": { "_type": "slug", "current": "lionel-davidson" },
-    "country": "Reino Unido",
-    "birthYear": 1922,
-    "deathYear": 2009,
-    "bio": "Novelista britanico de aventuras y espionaje, con una mirada muy fisica del viaje y el peligro."
+    "name": "Isabel Allende",
+    "slug": { "_type": "slug", "current": "isabel-allende" },
+    "country": "Chile",
+    "birthYear": 1942,
+    "bio": "Novelista chilena de proyeccion internacional, reconocida por unir memoria, aventura y realismo magico."
   },
   {
     "_id": "author-angelica-gorodischer",
@@ -180,26 +179,28 @@
     "bio": "Autora de una fantasia temprana, extrana y sofisticada, con textura de cuento y ciudad imposible."
   },
   {
-    "_id": "book-rosa-tibet",
+    "_id": "book-ciudad-bestias",
     "_type": "book",
-    "title": "La rosa del Tibet",
-    "slug": { "_type": "slug", "current": "rosa-tibet" },
-    "author": { "_type": "reference", "_ref": "author-lionel-davidson" },
-    "publicationYear": 1962,
+    "title": "La ciudad de las bestias",
+    "slug": { "_type": "slug", "current": "ciudad-bestias" },
+    "author": { "_type": "reference", "_ref": "author-isabel-allende" },
+    "publicationYear": 2002,
     "genre": { "_type": "reference", "_ref": "genre-aventura" },
     "primaryEmotion": { "_type": "reference", "_ref": "emotion-descubrimiento" },
     "emotions": [{ "_type": "reference", "_ref": "emotion-curiosidad" }],
-    "vibe": "Viaje oculto, misterio geografico y espiritu de descubrimiento.",
-    "shortDescription": "Una aventura con pulso clasico, montanas, busqueda y una promesa de lugar secreto.",
-    "whyRead": "Porque tiene esa energia de mapa antiguo: no busca parecer importante, solo llevarte lejos.",
-    "idealMoment": "Una tarde libre, con ganas de viaje y cero prisa.",
-    "forWhom": "Para quien quiere aventura real, atmosfera y un misterio que se recorre paso a paso.",
-    "notForWhom": "Quizas no si buscas ritmo de thriller moderno o accion constante.",
-    "curiosity": "Es una buena puerta de entrada para probar si CoruKai debe sentirse como exploracion.",
-    "relatedMovies": ["El hombre que pudo reinar", "Siete anos en el Tibet"],
+    "vibe": "Selva amazonica, expedicion, naturaleza y realismo magico.",
+    "shortDescription": "Una aventura accesible y sensorial donde la exploracion se mezcla con el mito.",
+    "whyRead": "Porque combina una gran expedicion con amistad, curiosidad y una mirada viva hacia la naturaleza.",
+    "idealMoment": "Cuando necesitas que el mundo vuelva a parecer grande.",
+    "forWhom": "Para quien quiere aventura, misterio y asombro sin entrar en una saga exigente.",
+    "notForWhom": "Quizas no si buscas una aventura adulta de tono completamente realista.",
+    "curiosity": "Es el primer volumen de las Memorias del Aguila y el Jaguar.",
+    "relatedMovies": ["El libro de la selva", "Las aventuras de Tintin"],
+    "isbn": "9788497935692",
+    "affiliateLink": "https://link.amazon/B0cP2161z",
     "isFeatured": true,
-    "seoTitle": "La rosa del Tibet en CoruKai",
-    "seoDescription": "Una ficha emocional de La rosa del Tibet para descubrir si encaja con tu momento lector."
+    "seoTitle": "La ciudad de las bestias en CoruKai",
+    "seoDescription": "Una aventura amazonica de Isabel Allende para recuperar el asombro y las ganas de explorar."
   },
   {
     "_id": "book-kalpa-imperial",
@@ -319,7 +320,7 @@
     "description": "Viajes reales e imaginarios, lugares remotos y personajes que cambian de horizonte.",
     "primaryEmotion": { "_type": "reference", "_ref": "emotion-descubrimiento" },
     "books": [
-      { "_type": "reference", "_ref": "book-rosa-tibet" },
+      { "_type": "reference", "_ref": "book-ciudad-bestias" },
       { "_type": "reference", "_ref": "book-vendaval-jamaica" }
     ],
     "seoTitle": "Aventuras para perderte un rato",

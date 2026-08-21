@@ -26,7 +26,44 @@ export type Product = {
   affiliateUrl?: string;
 };
 
-export const PRODUCTS: Product[] = [
+const AFFILIATE_URLS: Record<string, string> = {
+  "hacia-rutas-salvajes": "https://link.amazon/B09RKtKHG",
+  shogun: "https://link.amazon/B0hmZICz7",
+  "ciudad-bestias": "https://link.amazon/B0cP2161z",
+  "imperio-final": "https://link.amazon/B0hz9QZdX",
+  piranesi: "https://link.amazon/B00Hywgbk",
+  "kalpa-imperial": "https://link.amazon/B04pdSJXl",
+  "nosotros-en-la-luna": "https://link.amazon/B0fYGSPTz",
+  seda: "https://link.amazon/B0f7J5P7F",
+  "carta-desconocida": "https://link.amazon/B0hen4Bbi",
+  "paciente-silenciosa": "https://link.amazon/B02y6uFad",
+  "camara-maravillas": "https://link.amazon/B0cATpWbg",
+  "mr-ripley": "https://link.amazon/B050AKtlk",
+  "infinito-junco": "https://link.amazon/B0gqmvogU",
+  "utilidad-inutil": "https://link.amazon/B07RBn5wI",
+  "historia-lectura": "https://link.amazon/B08W5Dva3",
+  "problema-tres-cuerpos": "https://link.amazon/B01YoxV6B",
+  "proyecto-hail-mary": "https://link.amazon/B03IvErSM",
+  "estacion-transito": "https://link.amazon/B0aUiNNbe",
+  "peninsula-casas-vacias": "https://link.amazon/B0754UwE9",
+  hamnet: "https://link.amazon/B0bJlfLI9",
+  samurai: "https://link.amazon/B08P8NomP",
+  "nuestra-parte-noche": "https://link.amazon/B05eSsVDK",
+  "cadaver-exquisito": "https://link.amazon/B0bu1dJpa",
+  sauces: "https://link.amazon/B0fQxmgdm",
+  "conquista-felicidad": "https://link.amazon/B0bVsGNj3",
+  siddhartha: "https://link.amazon/B0hQsz9eb",
+  "mendel-libros": "https://link.amazon/B0bbsH3uR",
+};
+
+function withAffiliateLinks(products: Product[]): Product[] {
+  return products.map((product) => ({
+    ...product,
+    affiliateUrl: AFFILIATE_URLS[product.slug],
+  }));
+}
+
+export const PRODUCTS = withAffiliateLinks([
   {
     slug: "hacia-rutas-salvajes", title: "Hacia rutas salvajes", author: "Jon Krakauer", genre: "Aventura", mood: "Libertad", priceCents: 1295,
     cover: "/assets/covers/hacia-rutas-salvajes.jpg", accent: "#F1D56A", format: "Bolsillo", year: 1996, pages: 304,
@@ -46,13 +83,14 @@ export const PRODUCTS: Product[] = [
     coruNote: "La elegiría cuando no quieras visitar otro lugar, sino habitarlo durante semanas y aprender sus reglas desde cero.", isbn: "9788466376983",
   },
   {
-    slug: "rosa-tibet", title: "La rosa del Tibet", author: "Lionel Davidson", genre: "Aventura", mood: "Asombro", priceCents: 1990,
-    cover: "/assets/covers/rosa-tibet.jpg", accent: "#F1D56A", format: "Tapa blanda", year: 1962, pages: 384,
-    hook: "Una expedición secreta para cuando necesitas que el mundo vuelva a parecer grande.",
-    description: "Montañas, búsqueda y una promesa de lugar oculto. Aventura clásica con un pulso espiritual y geográfico poco frecuente.",
-    idealMoment: "Un fin de semana con tiempo para desaparecer.", readingTime: "Varias noches", pace: "Envolvente", entry: "Viajar",
-    creativeSpark: "Cartografiar un lugar que no existe.",
-    coruNote: "Esta es mi puerta menos obvia del género: para quien quiere aventura clásica con un misterio que parece escondido en el paisaje.",
+    slug: "ciudad-bestias", title: "La ciudad de las bestias", author: "Isabel Allende", genre: "Aventura", mood: "Asombro", priceCents: 995,
+    cover: "/assets/covers/ciudad-bestias.jpg", accent: "#F1D56A", format: "Bolsillo", year: 2002, pages: 304,
+    hook: "Amazonas, naturaleza y una expedición donde la realidad empieza a mezclarse con el mito.",
+    description: "Una aventura accesible y sensorial que combina exploración, amistad y realismo mágico sin perder el impulso de descubrir.",
+    idealMoment: "Cuando necesitas que el mundo vuelva a parecer grande.", readingTime: "Varias noches", pace: "Envolvente", entry: "Viajar",
+    creativeSpark: "Dibujar una criatura que solo podría existir en un lugar todavía sin cartografiar.",
+    coruNote: "La elegiría para quien quiere una expedición con selva, misterio y corazón: reconocible, pero todavía capaz de despertar asombro.",
+    isbn: "9788497935692",
   },
   {
     slug: "imperio-final", title: "El imperio final", author: "Brandon Sanderson", genre: "Fantasía", mood: "Energía", priceCents: 1695,
@@ -243,10 +281,10 @@ export const PRODUCTS: Product[] = [
     creativeSpark: "Describir un paisaje como si tuviera intención.",
     coruNote: "Es mi hallazgo de terror para quien prefiere que el miedo nazca del paisaje y continúe creciendo sin mostrarlo todo.",
   },
-];
+]);
 
 // Editorial guests rotate independently from the fixed 24-book catalogue.
-export const CORU_PICKS: Product[] = [
+export const CORU_PICKS = withAffiliateLinks([
   {
     slug: "conquista-felicidad", title: "La conquista de la felicidad", author: "Bertrand Russell", genre: "Ensayo", mood: "Claridad", priceCents: 1295,
     cover: "/assets/covers/conquista-felicidad.webp", accent: "#63B7C9", format: "Tapa blanda", year: 1930, pages: 224,
@@ -277,7 +315,7 @@ export const CORU_PICKS: Product[] = [
     coruNote: "Coru lo elige porque convierte el amor por los libros en una historia profundamente humana, sin idealizar lo que ocurre cuando una sociedad deja de cuidar.",
     isbn: "9788496834903",
   },
-];
+]);
 
 export const ALL_PRODUCTS: Product[] = [...PRODUCTS, ...CORU_PICKS];
 

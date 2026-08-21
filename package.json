@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:clients": "node scripts/simulate-clients.mjs",
+    "test:affiliates": "node --experimental-strip-types scripts/validate-affiliate-links.mjs",
     "sanity:dev": "sanity dev",
     "sanity:validate": "sanity schemas validate"
   },
