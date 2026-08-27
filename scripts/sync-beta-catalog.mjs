@@ -1,7 +1,7 @@
 import { createReadStream } from "node:fs";
 import path from "node:path";
 import { getCliClient } from "sanity/cli";
-import { PRODUCTS } from "../src/lib/catalog.ts";
+import { ALL_PRODUCTS, PRODUCTS } from "../src/lib/catalog.ts";
 
 const client = getCliClient({ apiVersion: "2026-07-04" });
 const root = process.cwd();
@@ -100,7 +100,7 @@ async function ensureCover(book, existing) {
   return asset._id;
 }
 
-for (const [index, book] of PRODUCTS.entries()) {
+for (const [index, book] of ALL_PRODUCTS.entries()) {
   const { authorId, genreId, emotionId } = await ensureReferenceDocuments(book);
   const bookId = `book-${book.slug}`;
   const existing = await client.getDocument(bookId);
@@ -131,9 +131,10 @@ for (const [index, book] of PRODUCTS.entries()) {
       },
       publicationYear: book.year,
       ...(book.isbn ? { isbn: book.isbn } : {}),
+      ...(book.pages ? { pages: book.pages } : {}),
       priceCents: book.priceCents,
       format: book.format,
-      stockStatus: "draft",
+      stockStatus: "affiliate",
       vibe: book.hook,
       shortDescription: book.description,
       whyRead: book.description,
@@ -143,14 +144,20 @@ for (const [index, book] of PRODUCTS.entries()) {
       readingPace: book.pace,
       storyEntry: book.entry,
       creativeSpark: book.creativeSpark,
-      isFeatured: index < 8,
+      affiliateLink: book.affiliateUrl,
+      isFeatured: !book.isCoruPick && index < 8,
+      isCoruPick: book.isCoruPick,
+      catalogOrder: index,
       seoTitle: `${book.title} | CoruKai`,
       seoDescription: `${book.hook} Descubre si encaja con tu momento lector en CoruKai.`,
     })
-    .unset(book.isbn ? [] : ["isbn"])
+    .unset([
+      ...(book.isbn ? [] : ["isbn"]),
+      ...(book.pages ? [] : ["pages"]),
+    ])
     .commit({ autoGenerateArrayKeys: true });
 
-  console.log(`Synced ${index + 1}/${PRODUCTS.length}: ${book.title}`);
+  console.log(`Synced ${index + 1}/${ALL_PRODUCTS.length}: ${book.title}`);
 }
 
 for (const bookId of retiredBookIds) {
@@ -160,4 +167,4 @@ for (const bookId of retiredBookIds) {
   console.log(`Retired: ${bookId}`);
 }
 
-console.log(`Done. ${PRODUCTS.length} beta books synchronized.`);
+console.log(`Done. ${PRODUCTS.length} catalogue books and ${ALL_PRODUCTS.length - PRODUCTS.length} Coru picks synchronized.`);

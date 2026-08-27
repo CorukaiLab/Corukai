@@ -1,30 +1,7 @@
-export type ReadingTime = "Una tarde" | "Varias noches" | "Sin prisa";
-export type ReadingPace = "Sereno" | "Envolvente" | "Intenso";
-export type StoryEntry = "Volver" | "Viajar" | "Sentir" | "Pensar" | "Crear";
+// Migration seed only. Runtime pages must read products from Sanity.
+import type { Product } from "@/lib/products";
 
-export type Product = {
-  slug: string;
-  title: string;
-  author: string;
-  genre: string;
-  mood: string;
-  priceCents: number;
-  cover: string;
-  accent: string;
-  hook: string;
-  description: string;
-  idealMoment: string;
-  format: string;
-  year: number;
-  readingTime: ReadingTime;
-  pace: ReadingPace;
-  entry: StoryEntry;
-  pages?: number;
-  creativeSpark: string;
-  coruNote: string;
-  isbn?: string;
-  affiliateUrl?: string;
-};
+type SeedProduct = Omit<Product, "affiliateUrl" | "isCoruPick">;
 
 const AFFILIATE_URLS: Record<string, string> = {
   "hacia-rutas-salvajes": "https://link.amazon/B09RKtKHG",
@@ -56,10 +33,11 @@ const AFFILIATE_URLS: Record<string, string> = {
   "mendel-libros": "https://link.amazon/B0bbsH3uR",
 };
 
-function withAffiliateLinks(products: Product[]): Product[] {
+function withAffiliateLinks(products: SeedProduct[]): Product[] {
   return products.map((product) => ({
     ...product,
     affiliateUrl: AFFILIATE_URLS[product.slug],
+    isCoruPick: false,
   }));
 }
 
@@ -315,20 +293,6 @@ export const CORU_PICKS = withAffiliateLinks([
     coruNote: "Coru lo elige porque convierte el amor por los libros en una historia profundamente humana, sin idealizar lo que ocurre cuando una sociedad deja de cuidar.",
     isbn: "9788496834903",
   },
-]);
+]).map((product) => ({ ...product, isCoruPick: true }));
 
 export const ALL_PRODUCTS: Product[] = [...PRODUCTS, ...CORU_PICKS];
-
-export const MOODS = [...new Set(PRODUCTS.map((product) => product.mood))];
-export const GENRES = [...new Set(PRODUCTS.map((product) => product.genre))];
-export const READING_TIMES = [...new Set(PRODUCTS.map((product) => product.readingTime))];
-export const READING_PACES = [...new Set(PRODUCTS.map((product) => product.pace))];
-export const STORY_ENTRIES = [...new Set(PRODUCTS.map((product) => product.entry))];
-
-export function getProduct(slug: string) {
-  return ALL_PRODUCTS.find((product) => product.slug === slug);
-}
-
-export function formatPrice(priceCents: number) {
-  return new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(priceCents / 100);
-}

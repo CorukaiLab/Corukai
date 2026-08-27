@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { ProductCard } from "@/components/product-card";
-import type { Product } from "@/lib/catalog";
+import type { Product } from "@/lib/products";
 
 type InitialFilters = {
   q?: string;

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
-import type { Product } from "@/lib/catalog";
+import type { Product } from "@/lib/products";
 
 const shelfShape = [
   { height: 238, width: 46, tilt: -1 },

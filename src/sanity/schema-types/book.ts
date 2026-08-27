@@ -36,6 +36,13 @@ export const book = defineType({
       type: "number",
     }),
     defineField({
+      name: "pages",
+      title: "Number of pages",
+      type: "number",
+      description: "Page count for the linked reference edition.",
+      validation: (rule) => rule.integer().positive(),
+    }),
+    defineField({
       name: "isbn",
       title: "ISBN de la edición",
       type: "string",
@@ -223,6 +230,20 @@ export const book = defineType({
       title: "Featured",
       type: "boolean",
       initialValue: false,
+    }),
+    defineField({
+      name: "isCoruPick",
+      title: "Coru editorial pick",
+      type: "boolean",
+      description: "Shows the book in the temporary Coru shelf instead of the permanent catalogue.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "catalogOrder",
+      title: "Catalogue order",
+      type: "number",
+      description: "Stable editorial order used by the storefront.",
+      validation: (rule) => rule.integer().min(0),
     }),
     defineField({
       name: "seoTitle",

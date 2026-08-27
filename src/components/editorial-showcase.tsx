@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type CSSProperties } from "react";
-import type { Product } from "@/lib/catalog";
+import type { Product } from "@/lib/products";
 
 export function EditorialShowcase({ products }: { products: Product[] }) {
   const [activeSlug, setActiveSlug] = useState(products[0]?.slug ?? "");

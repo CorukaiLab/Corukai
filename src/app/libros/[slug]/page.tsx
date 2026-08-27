@@ -7,10 +7,12 @@ import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { ChapterTransition } from "@/components/chapter-transition";
 import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
-import { ALL_PRODUCTS, formatPrice, getProduct, PRODUCTS } from "@/lib/catalog";
+import { formatPrice } from "@/lib/products";
+import { getAllProducts, getCatalogProducts, getProductBySlug } from "@/sanity/lib/queries";
 
-export function generateStaticParams() {
-  return ALL_PRODUCTS.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const products = await getAllProducts();
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({
@@ -19,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: product.title,
@@ -39,10 +41,13 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const [product, products] = await Promise.all([
+    getProductBySlug(slug),
+    getCatalogProducts(),
+  ]);
   if (!product) notFound();
 
-  const related = PRODUCTS.filter((item) => item.slug !== product.slug)
+  const related = products.filter((item) => item.slug !== product.slug)
     .map((item) => ({
       item,
       affinity:

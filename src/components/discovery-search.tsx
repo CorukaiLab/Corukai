@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Product, ReadingTime, StoryEntry } from "@/lib/catalog";
+import type { Product, ReadingTime, StoryEntry } from "@/lib/products";
 
 const timeOptions: ReadingTime[] = ["Una tarde", "Varias noches", "Sin prisa"];
 const moodOptions = ["Calidez", "Asombro", "Curiosidad", "Inquietud", "Melancolía"];

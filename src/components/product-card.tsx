@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
-import { formatPrice, type Product } from "@/lib/catalog";
+import { formatPrice, type Product } from "@/lib/products";
 
 export function ProductCard({
   product,

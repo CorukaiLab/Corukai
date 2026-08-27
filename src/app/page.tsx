@@ -6,7 +6,8 @@ import { EditorialShowcase } from "@/components/editorial-showcase";
 import { InteractiveLibrary } from "@/components/interactive-library";
 import { CoruShelf } from "@/components/coru-shelf";
 import { NewsletterSignup } from "@/components/newsletter-signup";
-import { CORU_PICKS, PRODUCTS } from "@/lib/catalog";
+import type { Product } from "@/lib/products";
+import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
 
 const entryPoints = [
   { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe", image: "/assets/editorial/curiosity-table.webp" },
@@ -14,30 +15,34 @@ const entryPoints = [
   { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral", image: "/assets/editorial/library-wall-mobile.webp" },
 ];
 
-function selectProducts(slugs: string[]) {
-  return slugs.map((slug) => PRODUCTS.find((product) => product.slug === slug)).filter(Boolean) as typeof PRODUCTS;
+function selectProducts(products: Product[], slugs: string[]) {
+  return slugs.map((slug) => products.find((product) => product.slug === slug)).filter(Boolean) as Product[];
 }
 
-const selected = selectProducts(["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
-const librarySelection = selectProducts([
-  "hacia-rutas-salvajes",
-  "imperio-final",
-  "nosotros-en-la-luna",
-  "paciente-silenciosa",
-  "infinito-junco",
-  "problema-tres-cuerpos",
-  "peninsula-casas-vacias",
-  "nuestra-parte-noche",
-]);
+export default async function Home() {
+  const [products, coruPicks] = await Promise.all([
+    getCatalogProducts(),
+    getCoruPicks(),
+  ]);
+  const selected = selectProducts(products, ["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
+  const librarySelection = selectProducts(products, [
+    "hacia-rutas-salvajes",
+    "imperio-final",
+    "nosotros-en-la-luna",
+    "paciente-silenciosa",
+    "infinito-junco",
+    "problema-tres-cuerpos",
+    "peninsula-casas-vacias",
+    "nuestra-parte-noche",
+  ]);
 
-export default function Home() {
   return (
     <main>
       <InteractiveLibrary products={librarySelection} />
 
-      <CoruShelf products={CORU_PICKS} />
+      <CoruShelf products={coruPicks} />
 
-      <DiscoverySearch products={PRODUCTS} />
+      <DiscoverySearch products={products} />
 
       <section className="home-thesis" aria-label="La promesa CoruKai">
         <p>Sin rankings.</p><p>Sin prisa.</p><p>Con una razón para abrir cada libro.</p>

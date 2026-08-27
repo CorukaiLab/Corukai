@@ -1,6 +1,7 @@
 import { groq } from "next-sanity";
 import type { QueryParams } from "@sanity/client";
 import { client } from "@/sanity/lib/client";
+import type { Product } from "@/lib/products";
 
 export interface BookCardData {
   title: string;
@@ -86,6 +87,74 @@ const bookFields = groq`
   isbn,
   affiliateLink
 `;
+
+const productFields = groq`
+  "slug": slug.current,
+  title,
+  "author": author->name,
+  "genre": genre->title,
+  "mood": primaryEmotion->title,
+  priceCents,
+  "cover": coverImage.asset->url,
+  "accent": coalesce(genre->color, "#17182B"),
+  "hook": vibe,
+  "description": shortDescription,
+  idealMoment,
+  format,
+  "year": publicationYear,
+  readingTime,
+  "pace": readingPace,
+  "entry": storyEntry,
+  pages,
+  creativeSpark,
+  coruNote,
+  isbn,
+  "affiliateUrl": affiliateLink,
+  "isCoruPick": coalesce(isCoruPick, false)
+`;
+
+const activeProductFilter = groq`
+  _type == "book" &&
+  stockStatus in ["available", "affiliate"] &&
+  defined(slug.current) &&
+  defined(author->name) &&
+  defined(genre->title) &&
+  defined(primaryEmotion->title) &&
+  defined(coverImage.asset) &&
+  defined(priceCents)
+`;
+
+export async function getAllProducts() {
+  return client.fetch<Product[]>(
+    groq`*[${activeProductFilter}] | order(catalogOrder asc) { ${productFields} }`,
+    {},
+    { next: { revalidate: 60, tags: ["products"] } },
+  );
+}
+
+export async function getCatalogProducts() {
+  return client.fetch<Product[]>(
+    groq`*[${activeProductFilter} && coalesce(isCoruPick, false) == false] | order(catalogOrder asc) { ${productFields} }`,
+    {},
+    { next: { revalidate: 60, tags: ["products"] } },
+  );
+}
+
+export async function getCoruPicks() {
+  return client.fetch<Product[]>(
+    groq`*[${activeProductFilter} && isCoruPick == true] | order(catalogOrder asc) { ${productFields} }`,
+    {},
+    { next: { revalidate: 60, tags: ["products"] } },
+  );
+}
+
+export async function getProductBySlug(slug: string) {
+  return client.fetch<Product | null>(
+    groq`*[${activeProductFilter} && slug.current == $slug][0] { ${productFields} }`,
+    { slug },
+    { next: { revalidate: 60, tags: ["products", `product:${slug}`] } },
+  );
+}
 
 export async function getFeaturedBooks() {
   return client.fetch<BookCardData[]>(

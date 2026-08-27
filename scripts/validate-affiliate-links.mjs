@@ -1,16 +1,27 @@
-import { ALL_PRODUCTS } from "../src/lib/catalog.ts";
+import { createClient } from "@sanity/client";
 
 const expectedProducts = 27;
-const localChecks = ALL_PRODUCTS.map((product) => ({
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "eig4gq4g",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-07-04",
+  useCdn: false,
+});
+
+const products = await client.fetch(`*[
+  _type == "book" && stockStatus in ["available", "affiliate"]
+] | order(catalogOrder asc) { "slug": slug.current, "href": affiliateLink }`);
+
+const sanityChecks = products.map((product) => ({
   slug: product.slug,
-  href: product.affiliateUrl,
-  hasLink: Boolean(product.affiliateUrl),
-  approvedShortDomain: product.affiliateUrl
-    ? new URL(product.affiliateUrl).hostname === "link.amazon"
+  href: product.href,
+  hasLink: Boolean(product.href),
+  approvedShortDomain: product.href
+    ? new URL(product.href).hostname === "link.amazon"
     : false,
 }));
 
-const duplicateLinks = localChecks
+const duplicateLinks = sanityChecks
   .filter((entry) => entry.href)
   .filter((entry, index, entries) => entries.findIndex((candidate) => candidate.href === entry.href) !== index)
   .map((entry) => entry.slug);
@@ -44,8 +55,8 @@ async function checkRedirect(entry) {
 }
 
 const remoteChecks = [];
-for (let index = 0; index < localChecks.length; index += 4) {
-  remoteChecks.push(...await Promise.all(localChecks.slice(index, index + 4).map(checkRedirect)));
+for (let index = 0; index < sanityChecks.length; index += 4) {
+  remoteChecks.push(...await Promise.all(sanityChecks.slice(index, index + 4).map(checkRedirect)));
 }
 
 const failures = remoteChecks.filter((entry) => (
@@ -54,9 +65,9 @@ const failures = remoteChecks.filter((entry) => (
 
 const report = {
   expectedProducts,
-  products: ALL_PRODUCTS.length,
-  configuredLinks: localChecks.filter((entry) => entry.hasLink).length,
-  uniqueLinks: new Set(localChecks.map((entry) => entry.href).filter(Boolean)).size,
+  products: products.length,
+  configuredLinks: sanityChecks.filter((entry) => entry.hasLink).length,
+  uniqueLinks: new Set(sanityChecks.map((entry) => entry.href).filter(Boolean)).size,
   duplicateLinks,
   successfulRedirects: remoteChecks.length - failures.length,
   failures,
@@ -65,7 +76,7 @@ const report = {
 console.log(JSON.stringify(report, null, 2));
 
 if (
-  ALL_PRODUCTS.length !== expectedProducts ||
+  products.length !== expectedProducts ||
   report.configuredLinks !== expectedProducts ||
   duplicateLinks.length > 0 ||
   failures.length > 0

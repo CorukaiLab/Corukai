@@ -16,6 +16,12 @@ Beta funcional de la librería sensorial CoruKai.
 - Protección privada mediante contraseña.
 - Vercel Analytics y Speed Insights.
 
+## Fuente de contenido
+
+Sanity (`eig4gq4g`, dataset `production`) es la única fuente de contenido en ejecución. Home, Biblioteca, fichas, cesta y validación de checkout consultan los mismos 27 registros: 24 libros de catálogo y 3 recomendaciones temporales de Coru.
+
+`src/lib/catalog.ts` se conserva únicamente como instantánea de la migración inicial y no puede importarse desde rutas o componentes. Cualquier cambio editorial posterior debe hacerse en Sanity Studio.
+
 ## Desarrollo
 
 ```bash
@@ -43,6 +49,7 @@ La clave de Stripe es privada y nunca debe empezar por `NEXT_PUBLIC_`.
 npm run lint
 npm run build
 npm run sanity:validate
+npm run test:affiliates
 ```
 
 ## Producción

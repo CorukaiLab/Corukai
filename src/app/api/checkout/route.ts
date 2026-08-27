@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ALL_PRODUCTS } from "@/lib/catalog";
+import { getAllProducts } from "@/sanity/lib/queries";
 
 type CheckoutBody = {
   items?: Array<{ slug?: string; quantity?: number }>;
@@ -28,8 +28,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "La selección está vacía o no es válida." }, { status: 400 });
   }
 
+  const products = await getAllProducts();
   const validated = body.items.map((item) => {
-    const product = ALL_PRODUCTS.find((entry) => entry.slug === item.slug);
+    const product = products.find((entry) => entry.slug === item.slug);
     const quantity = Math.min(Math.max(Math.floor(item.quantity || 0), 1), 9);
     return product ? { product, quantity } : null;
   });

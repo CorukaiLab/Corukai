@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CatalogExplorer } from "@/components/catalog-explorer";
-import { PRODUCTS } from "@/lib/catalog";
+import { getCatalogProducts } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Descubrir libros por cómo quieres sentirte",
@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; mood?: string; genre?: string; time?: string; pace?: string; entry?: string }> }) {
   const params = await searchParams;
+  const products = await getCatalogProducts();
   return (
     <main className="shop-page">
       <section className="shop-intro">
@@ -16,7 +17,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         <h1>Busca menos.<br />Encuentra mejor.</h1>
         <p>Combina una sensación, el tiempo que tienes y lo que quieres que haga la historia. El género es una pista, no una frontera.</p>
       </section>
-      <CatalogExplorer products={PRODUCTS} initial={params} />
+      <CatalogExplorer products={products} initial={params} />
     </main>
   );
 }
