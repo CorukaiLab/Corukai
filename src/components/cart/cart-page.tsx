@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AffiliateLink } from "@/components/affiliate-link";
 import { useCart } from "@/components/cart/cart-context";
+import { trackCoruEvent } from "@/lib/analytics";
 import { formatPrice, type Product } from "@/lib/products";
 
 export function CartPage({ products }: { products: Product[] }) {
@@ -16,6 +17,16 @@ export function CartPage({ products }: { products: Product[] }) {
     (sum, line) => sum + line.product.priceCents * line.quantity,
     0,
   );
+
+  function handleRemove(slug: string) {
+    remove(slug);
+    trackCoruEvent("shelf_remove", { product: slug, placement: "cesta" });
+  }
+
+  function handleClear() {
+    trackCoruEvent("shelf_clear", { items: lines.length, placement: "cesta" });
+    clear();
+  }
 
   return (
     <main className="cart-page">
@@ -48,7 +59,7 @@ export function CartPage({ products }: { products: Product[] }) {
                     Ver esta edición en Amazon <span aria-hidden="true">↗</span>
                   </AffiliateLink>
                 ) : <span className="cart-link-pending">Enlace en preparación</span>}
-                <button type="button" onClick={() => remove(product.slug)}>Quitar</button>
+                <button type="button" onClick={() => handleRemove(product.slug)}>Quitar</button>
               </article>
             ))}
           </section>
@@ -59,7 +70,7 @@ export function CartPage({ products }: { products: Product[] }) {
             <hr />
             <p className="cart-summary__explanation">Amazon gestiona la cesta final, el precio vigente, el pago y el envío. Abre cada libro y añádelo allí; CoruKai nunca recibe tus datos bancarios.</p>
             <Link className="button button--coral" href="/tienda">Seguir descubriendo <span aria-hidden="true">→</span></Link>
-            <button className="clear-cart" type="button" onClick={clear}>Vaciar selección</button>
+            <button className="clear-cart" type="button" onClick={handleClear}>Vaciar selección</button>
             <p className="purchase-note">Los precios mostrados son orientativos hasta consultar Amazon.</p>
           </aside>
         </div>

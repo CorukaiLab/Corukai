@@ -5,6 +5,8 @@ import { getCatalogProducts } from "@/sanity/lib/queries";
 export const metadata: Metadata = {
   title: "Descubrir libros por cómo quieres sentirte",
   description: "Explora 24 libros seleccionados por emoción, tiempo, ritmo, género e intención de lectura.",
+  alternates: { canonical: "/tienda" },
+  openGraph: { url: "/tienda" },
 };
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; mood?: string; genre?: string; time?: string; pace?: string; entry?: string }> }) {

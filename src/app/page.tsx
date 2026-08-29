@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ChapterTransition } from "@/components/chapter-transition";
@@ -7,6 +8,7 @@ import { InteractiveLibrary } from "@/components/interactive-library";
 import { CoruShelf } from "@/components/coru-shelf";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import type { Product } from "@/lib/products";
+import { absoluteUrl } from "@/lib/site";
 import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
 
 const entryPoints = [
@@ -14,6 +16,11 @@ const entryPoints = [
   { number: "02", title: "Necesito salir", text: "Lugares, ideas y decisiones para cambiar de aire sin convertirlo en una huida.", href: "/tienda?entry=Viajar", className: "entry--yellow", image: "/assets/editorial/hero-ritual.png" },
   { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral", image: "/assets/editorial/library-wall-mobile.webp" },
 ];
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { url: "/" },
+};
 
 function selectProducts(products: Product[], slugs: string[]) {
   return slugs.map((slug) => products.find((product) => product.slug === slug)).filter(Boolean) as Product[];
@@ -35,9 +42,30 @@ export default async function Home() {
     "peninsula-casas-vacias",
     "nuestra-parte-noche",
   ]);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": absoluteUrl("/#organization"),
+        name: "CoruKai",
+        url: absoluteUrl("/"),
+        logo: absoluteUrl("/assets/brand/corukai-normal.svg"),
+      },
+      {
+        "@type": "WebSite",
+        "@id": absoluteUrl("/#website"),
+        name: "CoruKai",
+        url: absoluteUrl("/"),
+        inLanguage: "es-ES",
+        publisher: { "@id": absoluteUrl("/#organization") },
+      },
+    ],
+  };
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <InteractiveLibrary products={librarySelection} />
 
       <CoruShelf products={coruPicks} />

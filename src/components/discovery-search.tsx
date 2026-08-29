@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { trackCoruEvent } from "@/lib/analytics";
 import type { Product, ReadingTime, StoryEntry } from "@/lib/products";
 
 const timeOptions: ReadingTime[] = ["Una tarde", "Varias noches", "Sin prisa"];
@@ -111,13 +112,21 @@ export function DiscoverySearch({ products }: { products: Product[] }) {
           <p>{lead.hook}</p>
           <p className="creative-spark"><span>Chispa creativa</span>{lead.creativeSpark}</p>
           <div className="discovery-result__actions">
-            <Link className="button button--coral" href={`/libros/${lead.slug}`}>Entrar en esta historia <span aria-hidden="true">↗</span></Link>
+            <Link
+              className="button button--coral"
+              href={`/libros/${lead.slug}`}
+              onClick={() => trackCoruEvent("product_open", { product: lead.slug, genre: lead.genre, placement: "home_discovery" })}
+            >Entrar en esta historia <span aria-hidden="true">↗</span></Link>
             <Link className="text-link text-link--light" href={`/tienda?${shopParams.toString()}`}>Ver todas las coincidencias</Link>
           </div>
         </div>
         <div className="discovery-alternatives" aria-label="Otras dos posibilidades">
           {matches.slice(1).map((product) => (
-            <Link href={`/libros/${product.slug}`} key={product.slug}>
+            <Link
+              href={`/libros/${product.slug}`}
+              key={product.slug}
+              onClick={() => trackCoruEvent("product_open", { product: product.slug, genre: product.genre, placement: "home_alternative" })}
+            >
               <span>{product.genre}</span>
               <strong>{product.title}</strong>
               <small>{product.readingTime} · {product.pace}</small>

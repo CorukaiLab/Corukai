@@ -109,6 +109,8 @@ const productFields = groq`
   creativeSpark,
   coruNote,
   isbn,
+  seoTitle,
+  seoDescription,
   "affiliateUrl": affiliateLink,
   "isCoruPick": coalesce(isCoruPick, false)
 `;
@@ -129,6 +131,22 @@ export async function getAllProducts() {
     groq`*[${activeProductFilter}] | order(catalogOrder asc) { ${productFields} }`,
     {},
     { next: { revalidate: 60, tags: ["products"] } },
+  );
+}
+
+export interface SitemapProduct {
+  slug: string;
+  updatedAt: string;
+}
+
+export async function getSitemapProducts() {
+  return client.fetch<SitemapProduct[]>(
+    groq`*[${activeProductFilter}] | order(catalogOrder asc) {
+      "slug": slug.current,
+      "updatedAt": _updatedAt
+    }`,
+    {},
+    { next: { revalidate: 3600, tags: ["products"] } },
   );
 }
 

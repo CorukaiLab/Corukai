@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { ProductCard } from "@/components/product-card";
+import { trackCoruEvent } from "@/lib/analytics";
 import type { Product } from "@/lib/products";
 
 type InitialFilters = {
@@ -45,6 +46,7 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
   const [pace, setPace] = useState(initial.pace || "");
   const [entry, setEntry] = useState(initial.entry || "");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const lastTrackedSearch = useRef("");
 
   const filtered = useMemo(() => {
     const query = q.trim().toLocaleLowerCase("es");
@@ -67,11 +69,37 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
     setQ(""); setGenre(""); setMood(""); setTime(""); setPace(""); setEntry("");
   };
 
+  const handleReset = () => {
+    trackCoruEvent("catalog_reset", { active_filters: activeFilters, results: filtered.length });
+    reset();
+  };
+
   const applyEntryPath = (path: (typeof ENTRY_PATHS)[number]) => {
     reset();
     if ("entry" in path.filter) setEntry(path.filter.entry);
     if ("pace" in path.filter) setPace(path.filter.pace);
+    trackCoruEvent("catalog_path", { path: path.label });
   };
+
+  useEffect(() => {
+    const normalizedQuery = q.trim();
+    if (normalizedQuery.length < 2) {
+      lastTrackedSearch.current = "";
+      return;
+    }
+    if (lastTrackedSearch.current === normalizedQuery) return;
+
+    const timeout = window.setTimeout(() => {
+      lastTrackedSearch.current = normalizedQuery;
+      trackCoruEvent("catalog_search", {
+        query_length: normalizedQuery.length,
+        results: filtered.length,
+        placement: "biblioteca",
+      });
+    }, 650);
+
+    return () => window.clearTimeout(timeout);
+  }, [filtered.length, q]);
 
   useEffect(() => {
     if (!isFiltersOpen) return;
@@ -142,18 +170,18 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
           <span>Buscar una palabra, autor o lugar</span>
           <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="Ej. isla, Zweig, extrañeza…" />
         </label>
-        <FilterGroup label="Género" value={genre} options={unique(products, "genre")} onChange={setGenre} />
-        <FilterGroup label="Sensación" value={mood} options={unique(products, "mood")} onChange={setMood} />
-        <FilterGroup label="Tiempo" value={time} options={unique(products, "readingTime")} onChange={setTime} />
-        <FilterGroup label="Ritmo" value={pace} options={unique(products, "pace")} onChange={setPace} />
-        <FilterGroup label="La historia puede…" value={entry} options={unique(products, "entry")} onChange={setEntry} />
+        <FilterGroup filterKey="genero" label="Género" value={genre} options={unique(products, "genre")} onChange={setGenre} />
+        <FilterGroup filterKey="sensacion" label="Sensación" value={mood} options={unique(products, "mood")} onChange={setMood} />
+        <FilterGroup filterKey="tiempo" label="Tiempo" value={time} options={unique(products, "readingTime")} onChange={setTime} />
+        <FilterGroup filterKey="ritmo" label="Ritmo" value={pace} options={unique(products, "pace")} onChange={setPace} />
+        <FilterGroup filterKey="entrada" label="La historia puede…" value={entry} options={unique(products, "entry")} onChange={setEntry} />
         <div className="filter-studio__actions">
-          {activeFilters > 0 && <button className="filter-reset" type="button" onClick={reset}>Borrar las pistas</button>}
+          {activeFilters > 0 && <button className="filter-reset" type="button" onClick={handleReset}>Borrar las pistas</button>}
           <button className="filter-apply" type="button" onClick={() => setIsFiltersOpen(false)}>Mostrar {filtered.length} {filtered.length === 1 ? "historia" : "historias"}</button>
         </div>
       </aside>
       <div className={`filter-mobile-actions ${isFiltersOpen ? "is-open" : ""}`} aria-hidden={!isFiltersOpen}>
-        {activeFilters > 0 && <button className="filter-reset" type="button" onClick={reset}>Borrar pistas</button>}
+        {activeFilters > 0 && <button className="filter-reset" type="button" onClick={handleReset}>Borrar pistas</button>}
         <button className="filter-apply" type="button" onClick={() => setIsFiltersOpen(false)}>Mostrar {filtered.length} {filtered.length === 1 ? "historia" : "historias"}</button>
       </div>
 
@@ -166,7 +194,7 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
                 ? activeLabels.map((label) => <b key={label}>{label}</b>)
                 : <b>Todo el catálogo</b>}
               {activeFilters > 0 && (
-                <button className="catalog-bridge__reset" type="button" onClick={reset}>
+                <button className="catalog-bridge__reset" type="button" onClick={handleReset}>
                   <span aria-hidden="true">×</span> Quitar filtros
                 </button>
               )}
@@ -212,7 +240,7 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
             <p className="eyebrow">Demasiadas pistas</p>
             <h2>Esta balda todavía está vacía.</h2>
             <p>Quita una pista y dejamos que aparezcan más puertas.</p>
-            <button className="button button--ink" type="button" onClick={reset}>Abrir de nuevo la búsqueda</button>
+            <button className="button button--ink" type="button" onClick={handleReset}>Abrir de nuevo la búsqueda</button>
             <Link className="text-link" href="/">Volver a la Home</Link>
           </div>
         )}
@@ -221,13 +249,22 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
   );
 }
 
-function FilterGroup({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
+function FilterGroup({ filterKey, label, value, options, onChange }: { filterKey: string; label: string; value: string; options: string[]; onChange: (value: string) => void }) {
   return (
     <fieldset className="filter-group">
       <legend>{label}</legend>
       <div>
         {options.map((option) => (
-          <button type="button" aria-pressed={value === option} onClick={() => onChange(value === option ? "" : option)} key={option}>
+          <button
+            type="button"
+            aria-pressed={value === option}
+            onClick={() => {
+              const nextValue = value === option ? "" : option;
+              onChange(nextValue);
+              trackCoruEvent("catalog_filter", { filter: filterKey, value: nextValue || "quitado" });
+            }}
+            key={option}
+          >
             {option}
           </button>
         ))}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { trackCoruEvent } from "@/lib/analytics";
 
 interface NewsletterResponse {
   message?: string;
@@ -28,6 +29,7 @@ export function NewsletterSignup() {
       if (!response.ok) throw new Error(data.message || "No hemos podido guardar tu correo.");
       setStatus("success");
       setMessage(data.message || "Ya estás dentro. La próxima carta llegará sin hacer ruido.");
+      trackCoruEvent("newsletter_signup", { placement: "home" });
       form.reset();
     } catch (error) {
       setStatus("error");

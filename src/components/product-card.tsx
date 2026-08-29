@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { TrackedBookLink } from "@/components/tracked-book-link";
 import { formatPrice, type Product } from "@/lib/products";
 
 export function ProductCard({
@@ -19,7 +19,7 @@ export function ProductCard({
       className={`product-card${compact ? " product-card--compact" : ""}`}
       style={{ "--accent": product.accent } as React.CSSProperties}
     >
-      <Link className="product-cover" href={`/libros/${product.slug}`}>
+      <TrackedBookLink className="product-cover" slug={product.slug} genre={product.genre} placement="catalog_cover">
         <span className="product-object-index" aria-hidden="true">{product.year}</span>
         <span className="product-object-seal" aria-hidden="true">C</span>
         <Image
@@ -38,14 +38,14 @@ export function ProductCard({
           <strong>{idealMoment}</strong>
           <b>Ver ficha <span aria-hidden="true">→</span></b>
         </span>
-      </Link>
+      </TrackedBookLink>
       <div className="product-copy">
         <p className="product-kicker">
           {product.genre} · {product.mood}
         </p>
-        <Link href={`/libros/${product.slug}`}>
+        <TrackedBookLink slug={product.slug} genre={product.genre} placement="catalog_title">
           <h2>{product.title}</h2>
-        </Link>
+        </TrackedBookLink>
         <p className="product-author">{product.author}</p>
         <p className="product-hook">{product.hook}</p>
         <p className="product-reading-signals">
@@ -54,7 +54,7 @@ export function ProductCard({
         </p>
         <div className="product-actions">
           <strong>{formatPrice(product.priceCents)}</strong>
-          <AddToCartButton slug={product.slug} compact />
+          <AddToCartButton slug={product.slug} placement="catalogo" compact />
         </div>
       </div>
     </article>

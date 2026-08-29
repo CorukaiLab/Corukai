@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LegalDocument } from "@/components/legal-document";
 
-export const metadata: Metadata = { title: "Aviso legal" };
+export const metadata: Metadata = { title: "Aviso legal", alternates: { canonical: "/aviso-legal" } };
 
 export default function LegalNoticePage() {
   return (

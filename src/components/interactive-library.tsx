@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
+import { trackCoruEvent } from "@/lib/analytics";
 import type { Product } from "@/lib/products";
 
 const shelfShape = [
@@ -89,7 +90,10 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
             <p>{activeProduct.genre} · {activeProduct.mood}</p>
             <h2>{activeProduct.title}</h2>
             <span>{activeProduct.author}</span>
-            <Link href={`/libros/${activeProduct.slug}`}>
+            <Link
+              href={`/libros/${activeProduct.slug}`}
+              onClick={() => trackCoruEvent("product_open", { product: activeProduct.slug, genre: activeProduct.genre, placement: "home_shelf" })}
+            >
               Abrir esta puerta <span aria-hidden="true">→</span>
             </Link>
           </div>

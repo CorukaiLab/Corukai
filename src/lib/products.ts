@@ -23,6 +23,8 @@ export type Product = {
   creativeSpark: string;
   coruNote: string;
   isbn?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   affiliateUrl?: string;
   isCoruPick: boolean;
 };

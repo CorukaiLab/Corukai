@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test:clients": "node scripts/simulate-clients.mjs",
     "test:affiliates": "node --env-file=.env.local scripts/validate-affiliate-links.mjs",
+    "audit:catalog": "sanity exec scripts/verify-beta-catalog.mjs --with-user-token && npm run test:affiliates",
     "sanity:dev": "sanity dev",
     "sanity:validate": "sanity schemas validate"
   },

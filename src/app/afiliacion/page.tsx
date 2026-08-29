@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { LegalDocument } from "@/components/legal-document";
 
-export const metadata: Metadata = { title: "Cómo funciona la compra y la afiliación" };
+export const metadata: Metadata = {
+  title: "Cómo funciona la compra y la afiliación",
+  alternates: { canonical: "/afiliacion" },
+};
 
 export default function AffiliateInfoPage() {
   return (

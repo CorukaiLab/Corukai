@@ -1,55 +1,135 @@
+import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { getCliClient } from "sanity/cli";
-import { ALL_PRODUCTS } from "../src/lib/catalog.ts";
 
+const EXPECTED_PRODUCTS = 27;
+const EXPECTED_CATALOGUE = 24;
+const EXPECTED_CORU_PICKS = 3;
 const client = getCliClient({ apiVersion: "2026-07-04" });
 
-const result = await client.fetch(`{
-  "active": count(*[_type == "book" && stockStatus in ["available", "affiliate"]]),
-  "catalogue": count(*[_type == "book" && stockStatus in ["available", "affiliate"] && coalesce(isCoruPick, false) == false]),
-  "coruPicks": count(*[_type == "book" && stockStatus in ["available", "affiliate"] && isCoruPick == true]),
-  "retired": count(*[_type == "book" && stockStatus == "retired"]),
-  "withCoruNote": count(*[_type == "book" && stockStatus in ["available", "affiliate"] && defined(coruNote)]),
-  "withCover": count(*[_type == "book" && stockStatus in ["available", "affiliate"] && defined(coverImage.asset)]),
-  "withAffiliateLink": count(*[_type == "book" && stockStatus in ["available", "affiliate"] && defined(affiliateLink)])
+const books = await client.fetch(`*[
+  _type == "book" && stockStatus in ["available", "affiliate"]
+] | order(catalogOrder asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  "author": author->name,
+  "genre": genre->title,
+  "emotion": primaryEmotion->title,
+  publicationYear,
+  pages,
+  isbn,
+  priceCents,
+  format,
+  vibe,
+  shortDescription,
+  idealMoment,
+  coruNote,
+  readingTime,
+  readingPace,
+  storyEntry,
+  creativeSpark,
+  affiliateLink,
+  catalogOrder,
+  "isCoruPick": coalesce(isCoruPick, false),
+  "coverUrl": coverImage.asset->url,
+  "coverAlt": coverImage.alt,
+  "coverWidth": coverImage.asset->metadata.dimensions.width,
+  "coverHeight": coverImage.asset->metadata.dimensions.height
 }`);
 
-const incomplete = await client.fetch(`*[
-  _type == "book" &&
-  stockStatus in ["available", "affiliate"] &&
-  (!defined(title) || !defined(slug.current) || !defined(author->name) ||
-   !defined(genre->title) || !defined(primaryEmotion->title) ||
-   !defined(coverImage.asset) || !defined(priceCents) || !defined(format) ||
-   !defined(publicationYear) || !defined(vibe) || !defined(shortDescription) ||
-   !defined(idealMoment) || !defined(coruNote) || !defined(readingTime) ||
-   !defined(readingPace) || !defined(storyEntry) || !defined(creativeSpark) ||
-   !defined(affiliateLink) || !defined(catalogOrder))
-] | order(title asc) { _id, title, "slug": slug.current, stockStatus }`);
+const requiredFields = [
+  "title", "slug", "author", "genre", "emotion", "publicationYear",
+  "priceCents", "format", "vibe", "shortDescription", "idealMoment",
+  "coruNote", "readingTime", "readingPace", "storyEntry", "creativeSpark",
+  "affiliateLink", "catalogOrder", "coverUrl",
+];
 
-const remoteProducts = await client.fetch(`*[
-  _type == "book" && stockStatus in ["available", "affiliate"]
-] { "slug": slug.current, affiliateLink }`);
-
-const remoteBySlug = new Map(remoteProducts.map((book) => [book.slug, book.affiliateLink]));
-const mismatchedLinks = ALL_PRODUCTS.flatMap((book) => {
-  const remoteLink = remoteBySlug.get(book.slug);
-  return remoteLink === book.affiliateUrl
-    ? []
-    : [{ slug: book.slug, expected: book.affiliateUrl, actual: remoteLink ?? null }];
-});
-
-console.log(JSON.stringify(result, null, 2));
-if (incomplete.length > 0) console.log(JSON.stringify({ incomplete }, null, 2));
-if (mismatchedLinks.length > 0) console.log(JSON.stringify({ mismatchedLinks }, null, 2));
-
-if (
-  result.active !== 27 ||
-  result.catalogue !== 24 ||
-  result.coruPicks !== 3 ||
-  result.withCoruNote !== 27 ||
-  result.withCover !== 27 ||
-  result.withAffiliateLink !== 27 ||
-  incomplete.length > 0 ||
-  mismatchedLinks.length > 0
-) {
-  throw new Error("The beta catalog is incomplete.");
+function duplicateValues(field) {
+  const values = books.map((book) => book[field]).filter((value) => value !== undefined && value !== null && value !== "");
+  return [...new Set(values.filter((value, index) => values.indexOf(value) !== index))];
 }
+
+const incomplete = books.flatMap((book) => {
+  const missing = requiredFields.filter((field) => book[field] === undefined || book[field] === null || book[field] === "");
+  return missing.length ? [{ slug: book.slug || book._id, missing }] : [];
+});
+const invalidPrices = books.filter((book) => !Number.isInteger(book.priceCents) || book.priceCents < 300 || book.priceCents > 10000).map((book) => book.slug);
+const weakCovers = books.filter((book) => !book.coverWidth || !book.coverHeight || book.coverWidth < 250 || book.coverHeight < 350).map((book) => book.slug);
+const invalidAffiliateLinks = books.filter((book) => {
+  try {
+    return new URL(book.affiliateLink).hostname !== "link.amazon";
+  } catch {
+    return true;
+  }
+}).map((book) => book.slug);
+const duplicateSlugs = duplicateValues("slug");
+const duplicateOrders = duplicateValues("catalogOrder");
+const duplicateLinks = duplicateValues("affiliateLink");
+const catalogue = books.filter((book) => !book.isCoruPick);
+const coruPicks = books.filter((book) => book.isCoruPick);
+const isbnCoverage = books.filter((book) => book.isbn).length;
+
+const summary = {
+  active: books.length,
+  catalogue: catalogue.length,
+  coruPicks: coruPicks.length,
+  completeRecords: books.length - incomplete.length,
+  validCovers: books.length - weakCovers.length,
+  affiliateLinks: books.length - invalidAffiliateLinks.length,
+  isbnCoverage,
+  duplicateSlugs,
+  duplicateOrders,
+  duplicateLinks,
+  invalidPrices,
+  weakCovers,
+  invalidAffiliateLinks,
+  incomplete,
+};
+
+const passed = books.length === EXPECTED_PRODUCTS
+  && catalogue.length === EXPECTED_CATALOGUE
+  && coruPicks.length === EXPECTED_CORU_PICKS
+  && incomplete.length === 0
+  && invalidPrices.length === 0
+  && weakCovers.length === 0
+  && invalidAffiliateLinks.length === 0
+  && duplicateSlugs.length === 0
+  && duplicateOrders.length === 0
+  && duplicateLinks.length === 0;
+
+const generatedAt = new Intl.DateTimeFormat("es-ES", { dateStyle: "long", timeStyle: "short", timeZone: "Europe/Madrid" }).format(new Date());
+const rows = books.map((book) => `| ${book.catalogOrder} | ${book.title} | ${book.author} | ${book.genre} | ${(book.priceCents / 100).toFixed(2)} € | ${book.isbn || "Pendiente"} | ${book.isCoruPick ? "Coru" : "Catálogo"} |`).join("\n");
+const report = `# Salud del catálogo CoruKai
+
+Generado: ${generatedAt}
+
+## Resultado
+
+**${passed ? "APTO" : "REVISAR"}** para la beta comercial.
+
+| Comprobación | Resultado |
+|---|---:|
+| Libros activos | ${books.length} / ${EXPECTED_PRODUCTS} |
+| Catálogo permanente | ${catalogue.length} / ${EXPECTED_CATALOGUE} |
+| Recomendaciones de Coru | ${coruPicks.length} / ${EXPECTED_CORU_PICKS} |
+| Fichas completas | ${books.length - incomplete.length} / ${books.length} |
+| Portadas válidas | ${books.length - weakCovers.length} / ${books.length} |
+| Enlaces configurados | ${books.length - invalidAffiliateLinks.length} / ${books.length} |
+| ISBN informados | ${isbnCoverage} / ${books.length} |
+
+Los precios son orientativos y deben contrastarse manualmente con Amazon cuando se cambie una edición. La auditoría de redirecciones se ejecuta por separado con \`npm run test:affiliates\`.
+
+## Inventario
+
+| Orden | Libro | Autor | Género | Precio orientativo | ISBN | Sección |
+|---:|---|---|---|---:|---|---|
+${rows}
+`;
+
+const reportPath = resolve("reports/catalog-health.md");
+mkdirSync(dirname(reportPath), { recursive: true });
+writeFileSync(reportPath, report, "utf8");
+
+console.log(JSON.stringify({ passed, report: reportPath, ...summary }, null, 2));
+if (!passed) process.exitCode = 1;

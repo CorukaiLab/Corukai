@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LegalDocument } from "@/components/legal-document";
 
-export const metadata: Metadata = { title: "Privacidad" };
+export const metadata: Metadata = { title: "Privacidad", alternates: { canonical: "/privacidad" } };
 
 export default function PrivacyPage() {
   return (

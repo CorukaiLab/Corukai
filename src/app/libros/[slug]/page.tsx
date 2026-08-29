@@ -7,7 +7,9 @@ import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { ChapterTransition } from "@/components/chapter-transition";
 import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
+import { ProductViewTracker } from "@/components/product-view-tracker";
 import { formatPrice } from "@/lib/products";
+import { absoluteUrl } from "@/lib/site";
 import { getAllProducts, getCatalogProducts, getProductBySlug } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
@@ -24,11 +26,13 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
-    title: product.title,
-    description: product.hook,
+    title: product.seoTitle || product.title,
+    description: product.seoDescription || product.hook,
+    alternates: { canonical: `/libros/${product.slug}` },
     openGraph: {
       title: `${product.title} · ${product.author}`,
-      description: product.hook,
+      description: product.seoDescription || product.hook,
+      url: `/libros/${product.slug}`,
       images: [{ url: product.cover, alt: `Portada de ${product.title}` }],
       type: "book",
     },
@@ -70,22 +74,17 @@ export default async function ProductPage({
 
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": ["Book", "Product"],
+    "@type": "Book",
+    "@id": absoluteUrl(`/libros/${product.slug}#book`),
+    url: absoluteUrl(`/libros/${product.slug}`),
     name: product.title,
     author: { "@type": "Person", name: product.author },
     genre: product.genre,
     datePublished: String(product.year),
     image: product.cover,
-    description: product.hook,
-    ...(product.affiliateUrl ? {
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "EUR",
-        price: (product.priceCents / 100).toFixed(2),
-        availability: "https://schema.org/InStock",
-        url: product.affiliateUrl,
-      },
-    } : {}),
+    description: product.seoDescription || product.hook,
+    inLanguage: "es",
+    ...(product.isbn ? { isbn: product.isbn } : {}),
   };
 
   const editionFacts = [
@@ -100,6 +99,7 @@ export default async function ProductPage({
   return (
     <main className="detail-page" style={{ "--accent": product.accent } as React.CSSProperties}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+      <ProductViewTracker slug={product.slug} genre={product.genre} />
       <section className="detail-hero">
         <div className="detail-cover-stage">
           <p>{product.genre}</p>
@@ -149,7 +149,7 @@ export default async function ProductPage({
                   Ver disponibilidad en Amazon <span aria-hidden="true">↗</span>
                 </AffiliateLink>
               )}
-              <AddToCartButton slug={product.slug} />
+              <AddToCartButton slug={product.slug} placement="ficha" />
             </div>
             {!product.affiliateUrl && (
               <p className="availability-pending"><strong>Compra en preparación.</strong> Puedes guardarlo ahora; añadiremos el enlace de la edición española cuando esté verificado.</p>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { TrackedBookLink } from "@/components/tracked-book-link";
 import type { Product } from "@/lib/products";
 
 export function CoruShelf({ products }: { products: Product[] }) {
@@ -15,9 +15,11 @@ export function CoruShelf({ products }: { products: Product[] }) {
       </header>
       <div className="coru-shelf__books">
         {products.map((product, index) => (
-          <Link
+          <TrackedBookLink
             className="coru-shelf__book"
-            href={`/libros/${product.slug}`}
+            slug={product.slug}
+            genre={product.genre}
+            placement="coru_shelf"
             key={product.slug}
             style={{ "--accent": product.accent, "--shelf-index": index } as React.CSSProperties}
           >
@@ -33,7 +35,7 @@ export function CoruShelf({ products }: { products: Product[] }) {
               <b>{product.title}</b>
               <small>{product.genre} · {product.mood} · Temporal</small>
             </span>
-          </Link>
+          </TrackedBookLink>
         ))}
       </div>
       <div className="coru-shelf__plank" aria-hidden="true" />

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, type CSSProperties } from "react";
+import { trackCoruEvent } from "@/lib/analytics";
 import type { Product } from "@/lib/products";
 
 export function EditorialShowcase({ products }: { products: Product[] }) {
@@ -39,7 +40,10 @@ export function EditorialShowcase({ products }: { products: Product[] }) {
             <h3>{activeProduct.title}</h3>
             <span>{activeProduct.author}</span>
             <blockquote>“{activeProduct.hook}”</blockquote>
-            <Link href={`/libros/${activeProduct.slug}`}>Abrir esta historia <span aria-hidden="true">↗</span></Link>
+            <Link
+              href={`/libros/${activeProduct.slug}`}
+              onClick={() => trackCoruEvent("product_open", { product: activeProduct.slug, genre: activeProduct.genre, placement: "home_showcase" })}
+            >Abrir esta historia <span aria-hidden="true">↗</span></Link>
           </div>
         </article>
 

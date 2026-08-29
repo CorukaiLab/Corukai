@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import { useCart } from "@/components/cart/cart-context";
+import { trackCoruEvent } from "@/lib/analytics";
 
 export function AddToCartButton({
   slug,
+  placement = "ficha",
   compact = false,
 }: {
   slug: string;
+  placement?: "catalogo" | "ficha";
   compact?: boolean;
 }) {
   const { add, items } = useCart();
@@ -18,6 +21,7 @@ export function AddToCartButton({
 
   function handleAdd() {
     add(slug);
+    if (!isOnShelf) trackCoruEvent("shelf_add", { product: slug, placement });
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1400);
   }
