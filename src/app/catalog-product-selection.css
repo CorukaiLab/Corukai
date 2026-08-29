@@ -3,9 +3,9 @@
 .catalog-entry {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
-  min-height: 530px;
-  margin-bottom: clamp(34px, 5vw, 72px);
+  grid-template-columns: minmax(320px, 0.8fr) minmax(480px, 1.2fr);
+  min-height: 216px;
+  margin-bottom: clamp(22px, 3vw, 42px);
   color: var(--library-paper-bright);
   background: var(--library-blue);
 }
@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   border-right: 1px solid rgba(255, 250, 240, 0.25);
-  padding: clamp(42px, 6vw, 90px);
+  padding: clamp(28px, 2.5vw, 34px);
 }
 
 .catalog-entry__search .eyebrow {
@@ -24,12 +24,12 @@
 }
 
 .catalog-entry__search h2 {
-  max-width: 9ch;
-  margin: 15px 0 34px;
+  max-width: 12ch;
+  margin: 7px 0 20px;
   font-family: var(--display);
-  font-size: clamp(3.2rem, 5.2vw, 6.7rem);
+  font-size: clamp(2.15rem, 3.5vw, 3.8rem);
   font-weight: 500;
-  line-height: 0.88;
+  line-height: 0.9;
 }
 
 .catalog-entry__search label {
@@ -37,15 +37,15 @@
   width: 100%;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   border-bottom: 2px solid var(--library-paper-bright);
-  padding: 8px 0 13px;
+  padding: 5px 0 9px;
 }
 
 .catalog-entry__search label > span {
   color: var(--library-gold);
   font-family: var(--display);
-  font-size: 2rem;
+  font-size: 1.55rem;
 }
 
 .catalog-entry__search input {
@@ -55,37 +55,30 @@
   color: var(--library-paper-bright);
   background: transparent;
   font-family: var(--display);
-  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
 }
 
 .catalog-entry__search input::placeholder {
   color: rgba(255, 250, 240, 0.62);
 }
 
-.catalog-entry__search > p:last-child {
-  max-width: 45ch;
-  margin: 22px 0 0;
-  color: rgba(255, 250, 240, 0.68);
-  font-size: 0.78rem;
-  line-height: 1.6;
-}
-
 .catalog-entry__aisles {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .catalog-entry__aisles > button {
   position: relative;
-  display: grid;
+  display: flex;
   min-width: 0;
-  grid-template-columns: 42px minmax(150px, 1fr) auto 34px;
-  align-items: center;
-  gap: clamp(12px, 2vw, 30px);
+  min-height: 216px;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 14px;
   overflow: hidden;
   border: 0;
-  border-bottom: 1px solid rgba(255, 250, 240, 0.25);
-  padding: 18px clamp(20px, 3vw, 46px);
+  border-right: 1px solid rgba(255, 250, 240, 0.25);
+  padding: 25px clamp(15px, 1.8vw, 26px) 20px;
   color: inherit;
   background: transparent;
   text-align: left;
@@ -94,7 +87,7 @@
 }
 
 .catalog-entry__aisles > button:last-child {
-  border-bottom: 0;
+  border-right: 0;
 }
 
 .catalog-entry__aisles > button:hover,
@@ -104,11 +97,9 @@
 }
 
 .catalog-entry__aisle-number {
-  align-self: start;
-  padding-top: 7px;
   color: var(--coral);
   font-family: var(--display);
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .catalog-entry__aisles > button:hover .catalog-entry__aisle-number,
@@ -118,19 +109,22 @@
 
 .catalog-entry__aisle-copy {
   display: grid;
-  gap: 8px;
+  gap: 9px;
+  margin-top: auto;
 }
 
 .catalog-entry__aisle-copy strong {
+  max-width: 9ch;
   font-family: var(--display);
-  font-size: clamp(1.8rem, 2.8vw, 3.4rem);
+  font-size: clamp(1.35rem, 1.8vw, 1.8rem);
   font-weight: 500;
   line-height: 0.95;
 }
 
 .catalog-entry__aisle-copy small {
-  max-width: 36ch;
+  max-width: 24ch;
   color: rgba(255, 250, 240, 0.65);
+  font-size: 0.68rem;
   line-height: 1.45;
 }
 
@@ -139,39 +133,15 @@
   color: color-mix(in srgb, var(--library-blue) 72%, transparent);
 }
 
-.catalog-entry__aisle-covers {
-  position: relative;
-  display: block;
-  width: 104px;
-  height: 112px;
-}
-
-.catalog-entry__aisle-covers img {
-  position: absolute;
-  top: 50%;
-  width: 68px;
-  height: 102px;
-  object-fit: cover;
-  box-shadow: 6px 7px 0 rgba(0, 0, 0, 0.2);
-  transform: translateY(-50%) rotate(-3deg);
-  transition: transform 180ms ease;
-}
-
-.catalog-entry__aisle-covers img:last-child {
-  right: 0;
-  transform: translateY(-50%) rotate(4deg);
-}
-
-.catalog-entry__aisles > button:hover img:first-child {
-  transform: translate(-9px, -50%) rotate(-6deg);
-}
-
-.catalog-entry__aisles > button:hover img:last-child {
-  transform: translate(7px, -50%) rotate(7deg);
-}
-
 .catalog-entry__aisle-arrow {
+  align-self: flex-end;
+  color: var(--library-gold);
   font-size: 1.5rem;
+}
+
+.catalog-entry__aisles > button:hover .catalog-entry__aisle-arrow,
+.catalog-entry__aisles > button:focus-visible .catalog-entry__aisle-arrow {
+  color: var(--library-blue);
 }
 
 .catalog-bridge__result {
@@ -455,25 +425,15 @@
 
 @media (max-width: 1050px) {
   .catalog-entry {
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: minmax(280px, 0.75fr) minmax(430px, 1.25fr);
   }
 
   .catalog-entry__search {
-    padding: 48px 32px;
+    padding: 28px 24px;
   }
 
   .catalog-entry__aisles > button {
-    grid-template-columns: 32px minmax(120px, 1fr) 70px 24px;
-    padding-inline: 20px;
-  }
-
-  .catalog-entry__aisle-covers {
-    width: 70px;
-  }
-
-  .catalog-entry__aisle-covers img {
-    width: 53px;
-    height: 82px;
+    padding-inline: 15px;
   }
 
   .detail-commerce__actions {
@@ -489,25 +449,35 @@
   }
 
   .catalog-entry__search {
-    min-height: 470px;
+    min-height: 0;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 250, 240, 0.25);
-    padding: 64px 22px 48px;
+    padding: 28px 22px 26px;
   }
 
   .catalog-entry__search h2 {
-    font-size: clamp(3.5rem, 16vw, 5.5rem);
+    max-width: 12ch;
+    margin-bottom: 18px;
+    font-size: clamp(2.35rem, 11vw, 3.7rem);
+  }
+
+  .catalog-entry__aisles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .catalog-entry__aisles > button {
-    min-height: 150px;
-    grid-template-columns: 28px minmax(0, 1fr) 74px 20px;
-    gap: 10px;
-    padding: 18px 16px;
+    min-height: 132px;
+    gap: 8px;
+    border-right: 1px solid rgba(255, 250, 240, 0.25);
+    padding: 14px 10px 12px;
+  }
+
+  .catalog-entry__aisles > button:last-child {
+    border-right: 0;
   }
 
   .catalog-entry__aisle-copy strong {
-    font-size: clamp(1.65rem, 8vw, 2.4rem);
+    font-size: clamp(0.98rem, 4vw, 1.2rem);
   }
 
   .catalog-entry__aisle-copy small {
@@ -683,7 +653,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .catalog-entry__aisles > button,
-  .catalog-entry__aisle-covers img,
   .product-paper-slip {
     transition: none;
   }

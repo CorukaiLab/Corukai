@@ -20,19 +20,16 @@ const ENTRY_PATHS = [
     label: "Salir de aquí",
     description: "Viajes, mundos y lugares que ensanchan el día.",
     filter: { entry: "Viajar" },
-    covers: ["hacia-rutas-salvajes", "piranesi"],
   },
   {
     label: "Bajar el ruido",
     description: "Historias serenas para leer sin correr.",
     filter: { pace: "Sereno" },
-    covers: ["siddhartha", "seda"],
   },
   {
     label: "Volver a crear",
     description: "Extrañeza, asombro e ideas que dejan una chispa.",
     filter: { entry: "Crear" },
-    covers: ["piranesi", "kalpa-imperial"],
   },
 ] as const;
 
@@ -95,29 +92,20 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
       <section className="catalog-entry" aria-labelledby="catalog-entry-title">
         <div className="catalog-entry__search">
           <p className="eyebrow">La mesa de consulta</p>
-          <h2 id="catalog-entry-title">Puedes buscar.<br />También puedes pasear.</h2>
+          <h2 id="catalog-entry-title">¿Qué te apetece encontrar?</h2>
           <label>
             <span aria-hidden="true">⌕</span>
-            <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="Un título, una autora, una sensación…" />
+            <input value={q} onChange={(event) => setQ(event.target.value)} placeholder="Título, autora o sensación…" />
           </label>
-          <p>Si ya sabes algo, escríbelo. Si todavía no, entra por uno de estos pasillos.</p>
         </div>
         <div className="catalog-entry__aisles" aria-label="Pasillos editoriales">
-          {ENTRY_PATHS.map((path, index) => {
-            const covers = path.covers
-              .map((slug) => products.find((product) => product.slug === slug))
-              .filter((product): product is Product => Boolean(product));
-            return (
-              <button type="button" onClick={() => applyEntryPath(path)} key={path.label}>
-                <span className="catalog-entry__aisle-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <span className="catalog-entry__aisle-copy"><strong>{path.label}</strong><small>{path.description}</small></span>
-                <span className="catalog-entry__aisle-covers" aria-hidden="true">
-                  {covers.map((product) => <Image src={product.cover} alt="" width={74} height={110} key={product.slug} />)}
-                </span>
-                <span className="catalog-entry__aisle-arrow" aria-hidden="true">→</span>
-              </button>
-            );
-          })}
+          {ENTRY_PATHS.map((path, index) => (
+            <button type="button" onClick={() => applyEntryPath(path)} key={path.label}>
+              <span className="catalog-entry__aisle-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <span className="catalog-entry__aisle-copy"><strong>{path.label}</strong><small>{path.description}</small></span>
+              <span className="catalog-entry__aisle-arrow" aria-hidden="true">→</span>
+            </button>
+          ))}
         </div>
       </section>
 
