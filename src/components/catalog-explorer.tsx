@@ -165,6 +165,11 @@ export function CatalogExplorer({ products, initial = {} }: { products: Product[
               {activeLabels.length
                 ? activeLabels.map((label) => <b key={label}>{label}</b>)
                 : <b>Todo el catálogo</b>}
+              {activeFilters > 0 && (
+                <button className="catalog-bridge__reset" type="button" onClick={reset}>
+                  <span aria-hidden="true">×</span> Quitar filtros
+                </button>
+              )}
             </div>
           </div>
           <span className="catalog-bridge__line" aria-hidden="true" />
