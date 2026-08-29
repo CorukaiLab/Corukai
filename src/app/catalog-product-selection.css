@@ -208,6 +208,81 @@
   transition: opacity 180ms ease, transform 260ms var(--ease), box-shadow 220ms ease;
 }
 
+/* The catalogue reveal behaves like a quiet note, not a second moving cover. */
+.catalog-grid .product-card--compact .product-cover::after {
+  border-width: 5px;
+}
+
+.catalog-grid .product-card--compact .product-cover > .product-object-index {
+  top: 10px;
+  right: auto;
+  bottom: auto;
+  left: 10px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  color: var(--library-paper-bright);
+  background: transparent;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.catalog-grid .product-card--compact .product-cover > .product-object-seal {
+  top: 9px;
+  right: 9px;
+  bottom: auto;
+  left: auto;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  color: var(--library-paper-bright);
+  background: transparent;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.catalog-grid .product-card--compact .product-cover img {
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.catalog-grid .product-card--compact .product-cover:hover img,
+.catalog-grid .product-card--compact .product-cover:focus-visible img {
+  filter: saturate(1.04);
+  transform: translateY(-3px) scale(1.01);
+}
+
+.catalog-grid .product-card--compact .product-paper-slip {
+  top: auto;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  height: auto;
+  min-height: 88px;
+  padding: 12px 14px;
+  box-shadow: 4px 5px 0 rgba(23, 24, 43, 0.2);
+  transform: translateY(8px);
+  transition: opacity 150ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.catalog-grid .product-card--compact .product-paper-slip strong {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  line-height: 1.18;
+  -webkit-line-clamp: 2;
+}
+
+.catalog-grid .product-card--compact .product-paper-slip > b {
+  margin-top: 8px;
+}
+
+.catalog-grid .product-card--compact .product-cover:hover .product-paper-slip,
+.catalog-grid .product-card--compact .product-cover:focus-visible .product-paper-slip {
+  box-shadow: 5px 6px 0 rgba(23, 24, 43, 0.22);
+  transform: translateY(0);
+}
+
 .product-paper-slip small {
   color: var(--coral);
   font-size: 0.58rem;

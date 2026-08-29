@@ -144,7 +144,10 @@
 
 .catalog-bridge__selection {
   display: grid;
+  align-self: center;
+  justify-items: center;
   gap: 7px;
+  text-align: center;
 }
 
 .catalog-bridge__selection > span,
@@ -157,6 +160,7 @@
 
 .catalog-bridge__selection > div {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
 }

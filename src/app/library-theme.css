@@ -193,7 +193,7 @@ body {
 
 .library-book:hover,
 .library-book:focus-visible,
-.library-book[aria-pressed="true"] {
+.library-book[aria-current="true"] {
   z-index: 2;
   filter: saturate(1.16) brightness(1.06);
   box-shadow: inset 5px 0 rgba(255, 250, 240, 0.22), 13px 20px 25px rgba(5, 10, 18, 0.38);
@@ -204,7 +204,7 @@ body {
   outline-color: var(--library-gold);
 }
 
-.library-book[aria-pressed="true"] {
+.library-book[aria-current="true"] {
   box-shadow: inset 5px 0 rgba(255, 250, 240, 0.28), 13px 20px 25px rgba(5, 10, 18, 0.42), 0 0 0 2px var(--library-paper-bright);
 }
 
@@ -585,7 +585,7 @@ body {
 
   .library-book:hover,
   .library-book:focus-visible,
-  .library-book[aria-pressed="true"] {
+  .library-book[aria-current="true"] {
     transform: translateY(-10px) rotate(0);
   }
 

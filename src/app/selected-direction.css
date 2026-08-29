@@ -596,8 +596,8 @@
 /* 15B: the current shelf now visibly pulls a volume towards the reader. */
 .library-book:hover,
 .library-book:focus-visible,
-.library-book[aria-pressed="true"] {
-  transform: translateY(-22px) translateX(6px) rotate(0);
+.library-book[aria-current="true"] {
+  transform: translateY(-14px) rotate(0);
 }
 
 .library-preview {

@@ -57,20 +57,20 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
             } as CSSProperties;
 
             return (
-              <button
+              <Link
                 className="library-book"
-                type="button"
-                aria-pressed={isActive}
-                title={`Mostrar ${product.title}, ${product.genre}`}
+                href={`/libros/${product.slug}`}
+                aria-current={isActive ? "true" : undefined}
+                title={`Abrir ${product.title}, ${product.genre}`}
                 onMouseEnter={() => setActiveSlug(product.slug)}
                 onFocus={() => setActiveSlug(product.slug)}
-                onClick={() => setActiveSlug(product.slug)}
+                onClick={() => trackCoruEvent("product_open", { product: product.slug, genre: product.genre, placement: "home_shelf_spine" })}
                 style={style}
                 key={product.slug}
               >
                 <span className="library-book__title">{product.title}</span>
                 <span className="library-book__mark" aria-hidden="true">C</span>
-              </button>
+              </Link>
             );
           })}
         </div>
