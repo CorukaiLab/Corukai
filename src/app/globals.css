@@ -11,6 +11,8 @@
   --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
   --sans: Aptos, "Segoe UI", Arial, sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-gentle: cubic-bezier(0.25, 1, 0.5, 1);
+  --control-shadow: 0 8px 20px rgba(17, 29, 49, 0.12);
 }
 
 * {
@@ -28,6 +30,17 @@ body {
   font-family: var(--sans);
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+blockquote {
+  text-wrap: pretty;
 }
 
 body,
@@ -89,6 +102,11 @@ img {
   font-family: var(--display);
   font-size: 1.6rem;
   font-weight: 700;
+  transition: opacity 180ms ease;
+}
+
+.brand:hover {
+  opacity: 0.74;
 }
 
 .brand img {
@@ -129,6 +147,11 @@ img {
 }
 
 .primary-nav > a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.primary-nav > a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -175,11 +198,19 @@ img {
   transition:
     transform 180ms var(--ease),
     background-color 180ms ease,
-    color 180ms ease;
+    color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.button:hover {
+.button:hover,
+.button:focus-visible {
+  box-shadow: var(--control-shadow);
   transform: translateY(-2px);
+}
+
+.button:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 .button--coral {
@@ -206,6 +237,12 @@ img {
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
   font-weight: 700;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  color: var(--coral);
 }
 
 .text-link--light {
@@ -465,7 +502,8 @@ img {
   place-items: center;
   overflow: hidden;
   padding: 34px;
-  background: color-mix(in srgb, var(--accent) 55%, var(--ink));
+  background: color-mix(in srgb, var(--accent) 58%, var(--ink));
+  transition: background-color 220ms ease, box-shadow 220ms ease;
 }
 
 .product-cover::after {
@@ -476,8 +514,14 @@ img {
   transition: border-color 200ms ease;
 }
 
-.product-cover:hover::after {
+.product-cover:hover::after,
+.product-cover:focus-visible::after {
   border-color: var(--accent);
+}
+
+.product-cover:hover,
+.product-cover:focus-visible {
+  box-shadow: 0 18px 34px rgba(17, 29, 49, 0.16);
 }
 
 .product-cover img {
@@ -489,7 +533,8 @@ img {
   transition: transform 260ms var(--ease);
 }
 
-.product-cover:hover img {
+.product-cover:hover img,
+.product-cover:focus-visible img {
   transform: translateY(-8px) rotate(-1deg);
 }
 
@@ -511,7 +556,8 @@ img {
     transform 180ms var(--ease);
 }
 
-.product-cover:hover > span {
+.product-cover:hover > span,
+.product-cover:focus-visible > span {
   opacity: 1;
   transform: translateY(0);
 }
@@ -540,6 +586,12 @@ img {
   font-size: clamp(1.7rem, 2.3vw, 2.55rem);
   font-weight: 600;
   line-height: 0.96;
+  transition: color 180ms ease;
+}
+
+.product-copy > a:hover h2,
+.product-copy > a:focus-visible h2 {
+  color: color-mix(in srgb, var(--accent) 68%, var(--ink));
 }
 
 .product-author {
@@ -598,13 +650,21 @@ img {
   transition:
     background-color 180ms ease,
     color 180ms ease,
-    transform 180ms var(--ease);
+    transform 180ms var(--ease),
+    box-shadow 180ms ease;
 }
 
-.add-button:hover {
+.add-button:hover,
+.add-button:focus-visible {
   color: var(--ink);
   background: var(--accent, var(--coral));
+  box-shadow: var(--control-shadow);
   transform: translateY(-2px);
+}
+
+.add-button:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 .add-button--compact {
@@ -628,6 +688,7 @@ img {
   font-size: 1.2rem;
   line-height: 1;
   text-align: center;
+  transform: translateY(-0.03em);
 }
 
 .manifesto-strip {
@@ -712,6 +773,13 @@ img {
   background: transparent;
   font-weight: 800;
   cursor: pointer;
+  transition: color 180ms ease, transform 180ms var(--ease);
+}
+
+.newsletter-form button:hover,
+.newsletter-form button:focus-visible {
+  color: var(--yellow);
+  transform: translateX(4px);
 }
 
 .newsletter-form > p {
@@ -915,6 +983,13 @@ img {
   padding-bottom: 4px;
   font-size: 0.82rem;
   font-weight: 800;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: var(--coral);
+  border-color: var(--coral);
 }
 
 .detail-copy .eyebrow {
@@ -1386,10 +1461,11 @@ img {
 }
 
 .affiliate-action small {
-  color: var(--muted);
+  color: currentColor;
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
+  opacity: 0.68;
   text-transform: uppercase;
 }
 
@@ -2098,7 +2174,10 @@ img {
   transition: transform 180ms var(--ease), background-color 180ms ease, color 180ms ease;
 }
 
-.choice-row button:hover {
+.choice-row button:hover,
+.choice-row button:focus-visible,
+.filter-group button:hover,
+.filter-group button:focus-visible {
   transform: translateY(-2px);
 }
 
@@ -2397,6 +2476,13 @@ img {
   cursor: pointer;
   font-size: 0.78rem;
   font-weight: 800;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.filter-reset:hover,
+.filter-reset:focus-visible {
+  color: var(--coral);
+  border-color: var(--coral);
 }
 
 .catalog-results__header {

@@ -75,7 +75,7 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
           })}
         </div>
 
-        <article className="library-preview" aria-live="polite" style={{ "--book-accent": activeProduct.accent } as CSSProperties}>
+        <article className="library-preview" aria-live="polite" style={{ "--book-accent": activeProduct.accent } as CSSProperties} key={activeProduct.slug}>
           <div className="library-preview__cover">
             <Image
               src={activeProduct.cover}

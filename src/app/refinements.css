@@ -287,14 +287,17 @@
   position: relative;
   display: grid;
   justify-items: center;
-  transition: transform 280ms var(--ease);
+  outline-offset: 8px;
+  transition: transform 280ms var(--ease), filter 220ms ease;
 }
 
 .coru-shelf__book:nth-child(1) { transform: rotate(-1.8deg); }
 .coru-shelf__book:nth-child(2) { transform: translateY(-28px) rotate(1deg); }
 .coru-shelf__book:nth-child(3) { transform: rotate(1.5deg); }
-.coru-shelf__book:hover { transform: translateY(-22px) rotate(0); }
-.coru-shelf__book:nth-child(2):hover { transform: translateY(-50px) rotate(0); }
+.coru-shelf__book:hover,
+.coru-shelf__book:focus-visible { filter: saturate(1.08); transform: translateY(-22px) rotate(0); }
+.coru-shelf__book:nth-child(2):hover,
+.coru-shelf__book:nth-child(2):focus-visible { transform: translateY(-50px) rotate(0); }
 
 .coru-shelf__book img {
   width: auto;
@@ -302,6 +305,7 @@
   height: clamp(280px, 34vw, 470px);
   object-fit: contain;
   filter: drop-shadow(20px 24px 20px rgba(0, 0, 0, 0.34));
+  transition: filter 220ms ease;
 }
 
 .coru-shelf__stamp {
@@ -312,6 +316,7 @@
   font-size: 0.68rem;
   font-weight: 900;
   text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
 .coru-shelf__label {
@@ -322,6 +327,12 @@
   gap: 5px;
   border-top: 5px solid var(--accent);
   padding: 14px 8px;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.coru-shelf__book:hover .coru-shelf__label,
+.coru-shelf__book:focus-visible .coru-shelf__label {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .coru-shelf__label b {

@@ -254,6 +254,12 @@
   gap: clamp(30px, 5vw, 90px);
   align-items: center;
   padding: clamp(48px, 7vw, 104px);
+  animation: showcase-enter 420ms var(--ease) both;
+}
+
+@keyframes showcase-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .editorial-showcase__folio {
@@ -282,6 +288,12 @@
   object-fit: contain;
   filter: drop-shadow(22px 28px 18px rgba(4, 9, 17, 0.42));
   transform: rotate(-1.5deg);
+  transition: filter 260ms ease, transform 320ms var(--ease);
+}
+
+.editorial-showcase__cover:hover img {
+  filter: drop-shadow(25px 32px 20px rgba(4, 9, 17, 0.5)) saturate(1.06);
+  transform: translateY(-5px) rotate(-0.5deg);
 }
 
 .editorial-showcase__copy > p {
@@ -324,6 +336,20 @@
   border-bottom: 1px solid var(--accent);
   color: var(--accent);
   font-weight: 850;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.editorial-showcase__copy a span,
+.editorial-showcase__all span {
+  display: inline-block;
+  transition: transform 180ms var(--ease);
+}
+
+.editorial-showcase__copy a:hover span,
+.editorial-showcase__copy a:focus-visible span,
+.editorial-showcase__all:hover span,
+.editorial-showcase__all:focus-visible span {
+  transform: translateX(6px);
 }
 
 .editorial-showcase__stack {
@@ -367,6 +393,14 @@
   max-width: 60px;
   height: 90px;
   object-fit: contain;
+  filter: drop-shadow(5px 7px 5px rgba(4, 9, 17, 0.28));
+  transition: transform 220ms var(--ease);
+}
+
+.editorial-showcase__stack button:hover img,
+.editorial-showcase__stack button:focus-visible img,
+.editorial-showcase__stack button[aria-pressed="true"] img {
+  transform: rotate(-2deg) scale(1.04);
 }
 
 .editorial-showcase__stack span { display: grid; gap: 5px; }
@@ -384,6 +418,13 @@
   font-family: var(--display);
   font-size: 1.12rem;
   font-weight: 700;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.editorial-showcase__all:hover,
+.editorial-showcase__all:focus-visible {
+  color: var(--coral);
+  border-color: var(--coral);
 }
 
 /* 11B + 12A: book objects in a denser, archive-like gallery. */
@@ -917,6 +958,7 @@
   padding: 12px 0;
   font-family: var(--display);
   font-size: 1rem;
+  transition: color 180ms ease;
 }
 
 .site-header .primary-nav .library-link {
@@ -964,6 +1006,12 @@
 }
 
 .header-actions .cart-link:hover {
+  color: var(--ink);
+  background: var(--yellow);
+  transform: translateY(-2px);
+}
+
+.header-actions .cart-link:focus-visible {
   color: var(--ink);
   background: var(--yellow);
   transform: translateY(-2px);
@@ -1098,6 +1146,13 @@
     border-bottom: 1px solid var(--line);
     font-family: var(--display);
     font-size: 1.15rem;
+    transition: color 180ms ease, background-color 180ms ease, padding 180ms var(--ease);
+  }
+
+  .mobile-menu-panel > a:hover,
+  .mobile-menu-panel > a:focus-visible {
+    padding-left: 12px;
+    color: var(--coral);
   }
 
   .mobile-menu-panel .mobile-library-link {
@@ -1155,6 +1210,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .editorial-showcase__lead {
+    animation: none;
+  }
+
   .mobile-menu-toggle span,
   .header-actions .cart-link {
     transition: none;

@@ -24,7 +24,7 @@ export function EditorialShowcase({ products }: { products: Product[] }) {
       </header>
 
       <div className="editorial-showcase__stage" style={{ "--accent": activeProduct.accent } as CSSProperties}>
-        <article className="editorial-showcase__lead" aria-live="polite">
+        <article className="editorial-showcase__lead" aria-live="polite" key={activeProduct.slug}>
           <span className="editorial-showcase__folio">Selección {String(activeIndex + 1).padStart(2, "0")}</span>
           <div className="editorial-showcase__cover">
             <Image
