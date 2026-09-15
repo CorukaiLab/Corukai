@@ -10,6 +10,7 @@ import "./library-theme.css";
 import "./refinements.css";
 import "./selected-direction.css";
 import "./catalog-product-selection.css";
+import "./shelf-lists.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
