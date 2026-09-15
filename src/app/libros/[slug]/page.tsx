@@ -4,11 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AffiliateLink } from "@/components/affiliate-link";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
+import { AmazonPrice } from "@/components/amazon-price";
 import { ChapterTransition } from "@/components/chapter-transition";
 import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
 import { ProductViewTracker } from "@/components/product-view-tracker";
-import { formatPrice } from "@/lib/products";
 import { absoluteUrl } from "@/lib/site";
 import { getAllProducts, getCatalogProducts, getProductBySlug } from "@/sanity/lib/queries";
 
@@ -129,8 +129,7 @@ export default async function ProductPage({
             <div className="detail-commerce__heading">
               <p className="eyebrow">La edición de referencia</p>
               <div className="detail-price">
-                <strong>{formatPrice(product.priceCents)}</strong>
-                <span>precio orientativo</span>
+                <AmazonPrice product={product} />
               </div>
             </div>
             <dl className="detail-commerce__facts">

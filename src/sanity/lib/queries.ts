@@ -2,6 +2,7 @@ import { groq } from "next-sanity";
 import type { QueryParams } from "@sanity/client";
 import { client } from "@/sanity/lib/client";
 import type { Product } from "@/lib/products";
+import { attachAmazonOffers } from "@/lib/amazon/creators-api";
 
 export interface BookCardData {
   title: string;
@@ -95,6 +96,7 @@ const productFields = groq`
   "genre": genre->title,
   "mood": primaryEmotion->title,
   priceCents,
+  amazonAsin,
   "cover": coverImage.asset->url,
   "accent": coalesce(genre->color, "#17182B"),
   "hook": vibe,
@@ -127,16 +129,90 @@ const activeProductFilter = groq`
 `;
 
 export async function getAllProducts() {
-  return client.fetch<Product[]>(
+  const products = await client.fetch<Product[]>(
     groq`*[${activeProductFilter}] | order(catalogOrder asc) { ${productFields} }`,
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
+  return attachAmazonOffers(products);
 }
 
 export interface SitemapProduct {
   slug: string;
   updatedAt: string;
+}
+
+export interface ArticleSummary {
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string;
+  updatedAt: string;
+}
+
+export interface ArticleBlock {
+  _key: string;
+  _type: "block";
+  style?: "normal" | "h2";
+  children?: Array<{ _key: string; _type: "span"; text: string }>;
+}
+
+export interface ArticleDetail extends ArticleSummary {
+  body: ArticleBlock[];
+  seoTitle?: string;
+  seoDescription?: string;
+  relatedBooks: Product[];
+}
+
+export async function getArticles() {
+  return client.fetch<ArticleSummary[]>(
+    groq`*[_type == "article" && defined(slug.current) && defined(publishedAt)] | order(publishedAt desc) {
+      title, "slug": slug.current, excerpt, category, publishedAt, "updatedAt": _updatedAt
+    }`,
+    {},
+    { next: { revalidate: 300, tags: ["articles"] } },
+  );
+}
+
+export async function getArticleBySlug(slug: string) {
+  const article = await client.fetch<ArticleDetail | null>(
+    groq`*[_type == "article" && slug.current == $slug][0] {
+      title, "slug": slug.current, excerpt, category, publishedAt, "updatedAt": _updatedAt,
+      body, seoTitle, seoDescription,
+      "relatedBooks": relatedBooks[]->{ ${productFields} }
+    }`,
+    { slug },
+    { next: { revalidate: 300, tags: ["articles", `article:${slug}`] } },
+  );
+  if (!article) return null;
+  return { ...article, relatedBooks: await attachAmazonOffers(article.relatedBooks || []) };
+}
+
+export async function getRelatedArticles(slug: string, category: string) {
+  const articles = await client.fetch<ArticleSummary[]>(
+    groq`*[
+      _type == "article" &&
+      defined(slug.current) &&
+      defined(publishedAt) &&
+      slug.current != $slug
+    ] | order(publishedAt desc)[0...8] {
+      title, "slug": slug.current, excerpt, category, publishedAt, "updatedAt": _updatedAt
+    }`,
+    { slug, category },
+    { next: { revalidate: 300, tags: ["articles"] } },
+  );
+  return articles
+    .sort((left, right) => Number(right.category === category) - Number(left.category === category))
+    .slice(0, 3);
+}
+
+export async function getArticleSlugs() {
+  return client.fetch<string[]>(
+    groq`*[_type == "article" && defined(slug.current)].slug.current`,
+    {},
+    { next: { revalidate: 300, tags: ["articles"] } },
+  );
 }
 
 export async function getSitemapProducts() {
@@ -151,27 +227,31 @@ export async function getSitemapProducts() {
 }
 
 export async function getCatalogProducts() {
-  return client.fetch<Product[]>(
+  const products = await client.fetch<Product[]>(
     groq`*[${activeProductFilter} && coalesce(isCoruPick, false) == false] | order(catalogOrder asc) { ${productFields} }`,
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
+  return attachAmazonOffers(products);
 }
 
 export async function getCoruPicks() {
-  return client.fetch<Product[]>(
+  const products = await client.fetch<Product[]>(
     groq`*[${activeProductFilter} && isCoruPick == true] | order(catalogOrder asc) { ${productFields} }`,
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
+  return attachAmazonOffers(products);
 }
 
 export async function getProductBySlug(slug: string) {
-  return client.fetch<Product | null>(
+  const product = await client.fetch<Product | null>(
     groq`*[${activeProductFilter} && slug.current == $slug][0] { ${productFields} }`,
     { slug },
     { next: { revalidate: 60, tags: ["products", `product:${slug}`] } },
   );
+  if (!product) return null;
+  return (await attachAmazonOffers([product]))[0];
 }
 
 export async function getFeaturedBooks() {

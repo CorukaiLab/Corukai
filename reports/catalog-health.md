@@ -1,6 +1,6 @@
 # Salud del catálogo CoruKai
 
-Generado: 29 de agosto de 2026, 21:39
+Generado: 30 de agosto de 2026, 23:44
 
 ## Resultado
 
@@ -15,12 +15,13 @@ Generado: 29 de agosto de 2026, 21:39
 | Portadas válidas | 27 / 27 |
 | Enlaces configurados | 27 / 27 |
 | ISBN informados | 17 / 27 |
+| ASIN guardados | 0 / 27 |
 
-Los precios son orientativos y deben contrastarse manualmente con Amazon cuando se cambie una edición. La auditoría de redirecciones se ejecuta por separado con `npm run test:affiliates`.
+Los importes guardados son referencias internas para una futura venta directa y no se muestran como precios vigentes de Amazon. La auditoría de redirecciones se ejecuta por separado con `npm run test:affiliates`.
 
 ## Inventario
 
-| Orden | Libro | Autor | Género | Precio orientativo | ISBN | Sección |
+| Orden | Libro | Autor | Género | Referencia interna | ISBN | Sección |
 |---:|---|---|---|---:|---|---|
 | 0 | Hacia rutas salvajes | Jon Krakauer | Aventura | 12.95 € | 9788413141220 | Catálogo |
 | 1 | Shōgun | James Clavell | Aventura | 16.95 € | 9788466376983 | Catálogo |

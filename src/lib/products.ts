@@ -2,6 +2,14 @@ export type ReadingTime = "Una tarde" | "Varias noches" | "Sin prisa";
 export type ReadingPace = "Sereno" | "Envolvente" | "Intenso";
 export type StoryEntry = "Volver" | "Viajar" | "Sentir" | "Pensar" | "Crear";
 
+export interface AmazonOffer {
+  amount: number;
+  currency: string;
+  displayAmount: string;
+  availability?: string;
+  fetchedAt: string;
+}
+
 export type Product = {
   slug: string;
   title: string;
@@ -9,6 +17,8 @@ export type Product = {
   genre: string;
   mood: string;
   priceCents: number;
+  amazonAsin?: string;
+  amazonOffer?: AmazonOffer;
   cover: string;
   accent: string;
   hook: string;
@@ -34,4 +44,8 @@ export function formatPrice(priceCents: number) {
     style: "currency",
     currency: "EUR",
   }).format(priceCents / 100);
+}
+
+export function getAmazonPriceLabel(product: Product) {
+  return product.amazonOffer?.displayAmount || "Consultar en Amazon";
 }

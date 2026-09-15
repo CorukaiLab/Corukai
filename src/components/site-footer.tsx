@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { legalIdentity } from "@/lib/legal";
 
 export function SiteFooter() {
   return (
@@ -26,12 +27,13 @@ export function SiteFooter() {
             <strong>Descubrir</strong>
             <Link href="/#descubrir">Encuéntrame un libro</Link>
             <Link href="/tienda">Biblioteca</Link>
+            <Link href="/cuaderno">Cuaderno editorial</Link>
             <Link href="/cesta">Mi estante</Link>
           </nav>
           <nav aria-label="Información">
             <strong>Información</strong>
             <Link href="/afiliacion">Cómo funciona la compra</Link>
-            <a href="mailto:hola@corukai.com">Contacto</a>
+            <a href={`mailto:${legalIdentity.email}`}>Contacto</a>
           </nav>
           <nav aria-label="Legal">
             <strong>Legal</strong>

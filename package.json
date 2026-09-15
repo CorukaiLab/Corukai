@@ -10,6 +10,11 @@
     "test:clients": "node scripts/simulate-clients.mjs",
     "test:affiliates": "node --env-file=.env.local scripts/validate-affiliate-links.mjs",
     "audit:catalog": "sanity exec scripts/verify-beta-catalog.mjs --with-user-token && npm run test:affiliates",
+    "content:seed": "sanity exec scripts/seed-editorial-content.mjs --with-user-token",
+    "audit:amazon-api": "sanity exec scripts/audit-amazon-api-readiness.mjs --with-user-token",
+    "audit:amazon-asins": "sanity exec scripts/resolve-amazon-asins.mjs",
+    "sync:amazon-asins": "sanity exec scripts/resolve-amazon-asins.mjs --with-user-token -- --write",
+    "mailerlite:setup": "node scripts/configure-mailerlite.mjs",
     "sanity:dev": "sanity dev",
     "sanity:validate": "sanity schemas validate"
   },
@@ -18,10 +23,10 @@
     "@sanity/vision": "^6.3.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "next": "16.2.10",
+    "next": "16.3.3",
     "next-sanity": "^13.1.1",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sanity": "^6.3.0"
   },
   "devDependencies": {
@@ -30,7 +35,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

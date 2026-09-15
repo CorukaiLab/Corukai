@@ -15,7 +15,10 @@ export function NewsletterSignup() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const email = new FormData(form).get("email");
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    const consent = formData.get("consent") === "on";
+    const website = formData.get("website");
     setStatus("loading");
     setMessage("");
 
@@ -23,7 +26,7 @@ export function NewsletterSignup() {
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, consent, website }),
       });
       const data = await response.json() as NewsletterResponse;
       if (!response.ok) throw new Error(data.message || "No hemos podido guardar tu correo.");
@@ -50,6 +53,10 @@ export function NewsletterSignup() {
         </div>
       </div>
       <form className="newsletter-form" onSubmit={handleSubmit}>
+        <label className="newsletter-honeypot" aria-hidden="true">
+          No rellenes este campo
+          <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
         <label htmlFor="newsletter-email">Tu correo</label>
         <div className="newsletter-field">
           <input id="newsletter-email" name="email" type="email" autoComplete="email" placeholder="nombre@correo.com" required />

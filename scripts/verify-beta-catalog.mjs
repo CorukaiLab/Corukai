@@ -19,6 +19,7 @@ const books = await client.fetch(`*[
   publicationYear,
   pages,
   isbn,
+  amazonAsin,
   priceCents,
   format,
   vibe,
@@ -69,6 +70,7 @@ const duplicateLinks = duplicateValues("affiliateLink");
 const catalogue = books.filter((book) => !book.isCoruPick);
 const coruPicks = books.filter((book) => book.isCoruPick);
 const isbnCoverage = books.filter((book) => book.isbn).length;
+const asinCoverage = books.filter((book) => book.amazonAsin).length;
 
 const summary = {
   active: books.length,
@@ -78,6 +80,7 @@ const summary = {
   validCovers: books.length - weakCovers.length,
   affiliateLinks: books.length - invalidAffiliateLinks.length,
   isbnCoverage,
+  asinCoverage,
   duplicateSlugs,
   duplicateOrders,
   duplicateLinks,
@@ -117,12 +120,13 @@ Generado: ${generatedAt}
 | Portadas válidas | ${books.length - weakCovers.length} / ${books.length} |
 | Enlaces configurados | ${books.length - invalidAffiliateLinks.length} / ${books.length} |
 | ISBN informados | ${isbnCoverage} / ${books.length} |
+| ASIN guardados | ${asinCoverage} / ${books.length} |
 
-Los precios son orientativos y deben contrastarse manualmente con Amazon cuando se cambie una edición. La auditoría de redirecciones se ejecuta por separado con \`npm run test:affiliates\`.
+Los importes guardados son referencias internas para una futura venta directa y no se muestran como precios vigentes de Amazon. La auditoría de redirecciones se ejecuta por separado con \`npm run test:affiliates\`.
 
 ## Inventario
 
-| Orden | Libro | Autor | Género | Precio orientativo | ISBN | Sección |
+| Orden | Libro | Autor | Género | Referencia interna | ISBN | Sección |
 |---:|---|---|---|---:|---|---|
 ${rows}
 `;

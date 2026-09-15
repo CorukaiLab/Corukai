@@ -7,6 +7,7 @@ import { EditorialShowcase } from "@/components/editorial-showcase";
 import { InteractiveLibrary } from "@/components/interactive-library";
 import { CoruShelf } from "@/components/coru-shelf";
 import { NewsletterSignup } from "@/components/newsletter-signup";
+import { NEWSLETTER_ENABLED } from "@/lib/features";
 import type { Product } from "@/lib/products";
 import { absoluteUrl } from "@/lib/site";
 import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
@@ -59,6 +60,11 @@ export default async function Home() {
         url: absoluteUrl("/"),
         inLanguage: "es-ES",
         publisher: { "@id": absoluteUrl("/#organization") },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${absoluteUrl("/tienda")}?q={search_term_string}`,
+          "query-input": "required name=search_term_string",
+        },
       },
     ],
   };
@@ -112,7 +118,7 @@ export default async function Home() {
         <p>Empezamos con tres libros por género. Cada uno aporta una voz, una atmósfera o una forma distinta de mirar. Creceremos sin convertir la elección en ruido.</p>
       </section>
 
-      <NewsletterSignup />
+      {NEWSLETTER_ENABLED ? <NewsletterSignup /> : null}
     </main>
   );
 }

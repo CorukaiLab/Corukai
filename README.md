@@ -40,6 +40,18 @@ Copia los nombres de `.env.example` en `.env.local` y completa únicamente los v
 - `NEXT_PUBLIC_SITE_URL`
 - `CORUKAI_SITE_PASSWORD`
 - `STRIPE_SECRET_KEY`
+- `GOOGLE_SITE_VERIFICATION`
+- `NEWSLETTER_ENABLED` (`false` mientras la carta esté retirada)
+- `MAILERLITE_API_TOKEN`
+- `MAILERLITE_GROUP_ID`
+- `CORUKAI_LEGAL_NAME`
+- `CORUKAI_LEGAL_ID`
+- `CORUKAI_LEGAL_ADDRESS`
+- `CORUKAI_LEGAL_EMAIL`
+- `AMAZON_CREATORS_CLIENT_ID` (solo cuando Amazon habilite Creators API)
+- `AMAZON_CREATORS_CLIENT_SECRET` (solo cuando Amazon habilite Creators API)
+- `AMAZON_ASSOCIATE_TAG`
+- `AMAZON_MARKETPLACE`
 
 La clave de Stripe es privada y nunca debe empezar por `NEXT_PUBLIC_`.
 
@@ -50,6 +62,7 @@ npm run lint
 npm run build
 npm run sanity:validate
 npm run test:affiliates
+npm run audit:amazon-asins
 ```
 
 ## Producción

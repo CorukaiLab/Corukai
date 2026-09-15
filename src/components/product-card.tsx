@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { AmazonPrice } from "@/components/amazon-price";
 import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { TrackedBookLink } from "@/components/tracked-book-link";
-import { formatPrice, type Product } from "@/lib/products";
+import type { Product } from "@/lib/products";
 
 export function ProductCard({
   product,
@@ -53,7 +54,7 @@ export function ProductCard({
           <span>{product.pace}</span>
         </p>
         <div className="product-actions">
-          <strong>{formatPrice(product.priceCents)}</strong>
+          <AmazonPrice product={product} compact />
           <AddToCartButton slug={product.slug} placement="catalogo" compact />
         </div>
       </div>

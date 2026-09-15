@@ -190,10 +190,17 @@ export const book = defineType({
       type: "url",
     }),
     defineField({
+      name: "amazonAsin",
+      title: "Amazon ASIN",
+      type: "string",
+      description: "Identificador de 10 caracteres de la edición enlazada. No uses el código de un enlace corto.",
+      validation: (rule) => rule.regex(/^[A-Za-z0-9]{10}$/).warning("El ASIN debe tener 10 caracteres."),
+    }),
+    defineField({
       name: "priceCents",
-      title: "Price in cents",
+      title: "Internal price in cents",
       type: "number",
-      description: "Example: 1990 equals 19.90 EUR.",
+      description: "Referencia interna para una futura venta directa. Nunca se muestra como precio actual de Amazon.",
       validation: (rule) => rule.integer().positive(),
     }),
     defineField({
