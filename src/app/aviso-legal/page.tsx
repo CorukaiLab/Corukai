@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalDocument } from "@/components/legal-document";
-import { hasCompleteLegalIdentity, LEGAL_UPDATED_AT, legalIdentity } from "@/lib/legal";
+import { LEGAL_UPDATED_AT, legalIdentity } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Aviso legal",
@@ -15,7 +15,15 @@ export default function LegalNoticePage() {
       title="Aviso legal"
       introduction="CoruKai es una beta editorial para descubrir libros con menos presión y más contexto."
     >
-      <section><h2>Responsable del sitio</h2>{hasCompleteLegalIdentity ? <address><strong>{legalIdentity.name}</strong><br />NIF/CIF: {legalIdentity.taxId}<br />Domicilio: {legalIdentity.address}<br />Contacto: <a href={`mailto:${legalIdentity.email}`}>{legalIdentity.email}</a></address> : <address><strong>{legalIdentity.name}</strong><br />NIF y domicilio: pendientes de completar<br />Contacto: <a href={`mailto:${legalIdentity.email}`}>{legalIdentity.email}</a></address>}</section>
+      <section>
+        <h2>Responsable del sitio</h2>
+        <address>
+          <strong>{legalIdentity.name}</strong><br />
+          NIF: {legalIdentity.taxId}<br />
+          Domicilio: {legalIdentity.address || "pendiente de completar"}<br />
+          Contacto: <a href={`mailto:${legalIdentity.email}`}>{legalIdentity.email}</a>
+        </address>
+      </section>
       <section><h2>Qué ofrece CoruKai</h2><p>La web facilita descubrimiento, selección y recomendación de libros. Actualmente no procesa pagos ni envíos: cuando exista un enlace de compra, la operación se completará en la plataforma del vendedor indicada.</p></section>
       <section><h2>Afiliación y relaciones comerciales</h2><p>CoruKai participa en el Programa de Afiliados de Amazon.es. Algunos enlaces son enlaces pagados y pueden generar una comisión por compras adscritas que cumplan los requisitos aplicables, sin incrementar el precio para el usuario. La relación de compraventa se establece entre el usuario y Amazon.</p></section>
       <section><h2>Contenido editorial</h2><p>Las recomendaciones, clasificaciones emocionales y tiempos de lectura son criterios editoriales orientativos. Las cubiertas, títulos y marcas pertenecen a sus respectivos titulares.</p></section>
