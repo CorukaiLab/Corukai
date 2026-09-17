@@ -2,6 +2,22 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "corukai.vercel.app" }],
+        destination: "https://corukai.es/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.corukai.es" }],
+        destination: "https://corukai.es/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

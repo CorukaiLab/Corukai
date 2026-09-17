@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const chromePath = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const baseUrl = process.env.AUDIT_BASE_URL || "https://corukai.vercel.app";
+const baseUrl = process.env.AUDIT_BASE_URL || "https://corukai.es";
 const port = Number(process.env.AUDIT_DEBUG_PORT || 9333);
 const profileDir = await mkdtemp(join(tmpdir(), "corukai-a11y-"));
 const axeSource = await readFile(join(process.cwd(), "node_modules", "axe-core", "axe.min.js"), "utf8");
