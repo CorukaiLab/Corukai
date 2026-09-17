@@ -1,0 +1,110 @@
+/* Accessibility finish: preserve the editorial system while improving legibility and contrast. */
+:root {
+  --coral-readable: #a83f2d;
+  --coral-on-dark: #ff9d89;
+}
+
+.cart-link__count,
+.library-book__title,
+.library-opening__hint,
+.library-preview__copy > p,
+.catalog-entry__aisle-copy small,
+.catalog-bridge__result > div > span,
+.catalog-bridge__selection > span,
+.catalog-bridge__selection b,
+.catalog-grid .product-card--compact .product-kicker,
+.catalog-grid .product-card--compact .product-reading-signals span,
+.detail-signals dt,
+.detail-price small,
+.detail-commerce__facts dt,
+.detail-commerce__actions .affiliate-action small,
+.legal-hero > span,
+.legal-layout > nav strong,
+.editorial-showcase__stack small {
+  font-size: 0.75rem;
+}
+
+.header-actions .cart-link .cart-link__count,
+.mobile-menu-cart .cart-link__count {
+  font-size: 0.75rem;
+}
+
+.coru-shelf__book,
+.coru-shelf__stamp,
+.editorial-showcase__folio,
+.editorial-showcase__copy > p,
+.editorial-showcase__stack button,
+.editorial-showcase__stack button small {
+  color: var(--library-paper-bright);
+}
+
+.coru-shelf__label small {
+  color: rgba(255, 250, 243, 0.82);
+}
+
+.editorial-showcase__folio,
+.editorial-showcase__copy > p,
+.editorial-showcase__copy a {
+  color: var(--library-gold);
+}
+
+.editorial-showcase__copy > p {
+  font-size: 0.75rem;
+}
+
+.editorial-showcase__copy a {
+  border-color: var(--library-gold);
+}
+
+.journal-card > span,
+.detail-route span,
+.detail-act-marker:not(.detail-act-marker--dark) > span,
+.related-echo > p span {
+  color: var(--coral-readable);
+}
+
+.detail-act-marker--dark > span,
+.detail-route a:hover span,
+.detail-route a:focus-visible span {
+  color: var(--coral-on-dark);
+}
+
+.product-card--compact .add-button--compact,
+.catalog-grid .product-card--compact .add-button--compact {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (max-width: 760px) {
+  .shop-intro h1 {
+    max-width: 100%;
+    font-size: clamp(3rem, 13.25vw, 4.1rem);
+    line-height: 0.92;
+  }
+
+  .shop-intro > p:last-child {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .shop-intro .eyebrow {
+    max-width: 30ch;
+    line-height: 1.45;
+    white-space: normal;
+  }
+
+  .filter-mobile-trigger b {
+    color: var(--library-paper-bright);
+    font-size: 0.75rem;
+  }
+
+  .filter-mobile-trigger > span,
+  .filter-mobile-trigger strong,
+  .filter-close,
+  .filter-apply,
+  .product-card--compact .product-kicker,
+  .catalog-grid .product-card--compact .product-kicker {
+    font-size: 0.75rem;
+  }
+}

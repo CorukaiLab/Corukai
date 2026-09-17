@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { LEGAL_UPDATED_AT } from "@/lib/legal";
 
 interface LegalDocumentProps {
   eyebrow: string;
@@ -15,7 +16,7 @@ export function LegalDocument({ eyebrow, title, introduction, children }: LegalD
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p>{introduction}</p>
-        <span>Última revisión · 16 de agosto de 2026</span>
+        <span>Última revisión · {LEGAL_UPDATED_AT}</span>
       </header>
       <div className="legal-layout">
         <nav aria-label="Documentos legales">

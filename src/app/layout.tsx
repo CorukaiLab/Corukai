@@ -11,6 +11,7 @@ import "./refinements.css";
 import "./selected-direction.css";
 import "./catalog-product-selection.css";
 import "./shelf-lists.css";
+import "./accessibility.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
