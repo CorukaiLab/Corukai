@@ -1,6 +1,6 @@
 # Salud del catálogo CoruKai
 
-Generado: 30 de agosto de 2026, 23:44
+Generado: 18 de septiembre de 2026, 23:39
 
 ## Resultado
 
@@ -15,7 +15,7 @@ Generado: 30 de agosto de 2026, 23:44
 | Portadas válidas | 27 / 27 |
 | Enlaces configurados | 27 / 27 |
 | ISBN informados | 17 / 27 |
-| ASIN guardados | 0 / 27 |
+| ASIN guardados | 27 / 27 |
 
 Los importes guardados son referencias internas para una futura venta directa y no se muestran como precios vigentes de Amazon. La auditoría de redirecciones se ejecuta por separado con `npm run test:affiliates`.
 

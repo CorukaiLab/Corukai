@@ -143,6 +143,9 @@ async function auditPage(viewport, route) {
           .map((element) => ({ selector: element.className || element.tagName.toLowerCase(), text: element.textContent.trim().replace(/\\s+/g, ' ').slice(0, 70), fontSize: getComputedStyle(element).fontSize }));
         return {
           title: document.title,
+          url: location.href,
+          hasCoruKaiContent: document.body.innerText.includes('CoruKai'),
+          viewportMeta: document.querySelector('meta[name="viewport"]')?.getAttribute('content') || null,
           horizontalOverflow: root.scrollWidth > root.clientWidth + 1,
           documentWidth: root.scrollWidth,
           viewportWidth: root.clientWidth,
@@ -174,7 +177,7 @@ try {
     }
   }
 
-  const failures = results.filter((result) => result.horizontalOverflow || result.violations.length > 0 || result.tinyText.length > 0);
+  const failures = results.filter((result) => !result.hasCoruKaiContent || result.horizontalOverflow || result.violations.length > 0 || result.tinyText.length > 0);
   console.log(JSON.stringify({
     baseUrl,
     pagesAudited: results.length,

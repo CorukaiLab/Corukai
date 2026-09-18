@@ -1,4 +1,4 @@
-export const LEGAL_UPDATED_AT = "15 de septiembre de 2026";
+export const LEGAL_UPDATED_AT = "18 de septiembre de 2026";
 
 export const legalIdentity = {
   name: process.env.CORUKAI_LEGAL_NAME?.trim() || "Francisco Jose Coto Rueda",
