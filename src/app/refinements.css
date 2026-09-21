@@ -885,6 +885,69 @@
   background: var(--library-paper);
 }
 
+.not-found-page {
+  display: grid;
+  min-height: min(800px, calc(100svh - 76px));
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  gap: clamp(30px, 5vw, 100px);
+  padding: clamp(48px, 7vw, 110px) 5vw;
+  color: var(--library-paper-bright);
+  background: var(--library-blue);
+}
+
+.not-found-page__number {
+  align-self: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  max-width: 500px;
+  font-family: var(--display);
+  font-size: clamp(7rem, 17vw, 20rem);
+  line-height: 1;
+}
+
+.not-found-page__copy h1 {
+  max-width: 10ch;
+  margin: 20px 0;
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 7vw, 8rem);
+  font-weight: 500;
+  line-height: 0.9;
+}
+
+.not-found-page__copy > p:not(.eyebrow) {
+  max-width: 38ch;
+  line-height: 1.6;
+}
+
+.not-found-page__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  margin-top: 34px;
+}
+
+@media (max-width: 760px) {
+  .not-found-page {
+    grid-template-columns: 1fr;
+    align-content: center;
+    padding: 48px 22px 72px;
+  }
+
+  .not-found-page__number {
+    width: 126px;
+    font-size: 4rem;
+  }
+
+  .not-found-page__copy h1 {
+    font-size: clamp(3.4rem, 14vw, 5rem);
+  }
+}
+
 .legal-hero {
   display: grid;
   min-height: 520px;

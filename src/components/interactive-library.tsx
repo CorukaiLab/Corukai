@@ -36,8 +36,8 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
         <p className="eyebrow">Una biblioteca para entrar sin prisa</p>
         <h1 id="library-opening-title">Cada libro abre una forma de estar en el mundo.</h1>
         <p>
-          Pasa por los lomos. No hace falta saber qué buscas: basta con reconocer
-          la puerta que hoy te apetece abrir.
+          CoruKai es una librería online para elegir por cómo quieres sentirte.
+          Pasa por los lomos sin prisa: la compra se completa en Amazon.
         </p>
         <Link className="library-opening__search-link" href="#descubrir">
           ¿Qué te apetece sentir hoy? <span aria-hidden="true">↓</span>

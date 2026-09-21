@@ -25,8 +25,9 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return {};
+  const seoTitle = product.seoTitle?.replace(/\s*[|·]\s*CoruKai\s*$/i, "").trim() || product.title;
   return {
-    title: product.seoTitle || product.title,
+    title: seoTitle,
     description: product.seoDescription || product.hook,
     alternates: { canonical: `/libros/${product.slug}` },
     openGraph: {
@@ -113,6 +114,11 @@ export default async function ProductPage({
             sizes="(max-width: 760px) 72vw, 38vw"
           />
           <span>{product.year}</span>
+          {product.affiliateUrl && (
+            <a className="detail-cover-stage__jump" href="#compra">
+              Ver edición y compra <span aria-hidden="true">↓</span>
+            </a>
+          )}
         </div>
         <div className="detail-copy">
           <Link className="back-link" href="/tienda">← Volver a descubrir</Link>
@@ -125,7 +131,7 @@ export default async function ProductPage({
             <div><dt>Ritmo</dt><dd>{product.pace}</dd></div>
             <div><dt>Entrada</dt><dd>{product.entry}</dd></div>
           </dl>
-          <section className="detail-commerce" aria-label="Edición y compra">
+          <section className="detail-commerce" id="compra" aria-label="Edición y compra">
             <div className="detail-commerce__heading">
               <p className="eyebrow">La edición de referencia</p>
               <div className="detail-price">

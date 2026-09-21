@@ -3,6 +3,7 @@ import type { QueryParams } from "@sanity/client";
 import { client } from "@/sanity/lib/client";
 import type { Product } from "@/lib/products";
 import { attachAmazonOffers } from "@/lib/amazon/creators-api";
+import { correctCatalogLabel, correctProductLabels } from "@/lib/catalog-copy";
 
 export interface BookCardData {
   title: string;
@@ -134,7 +135,7 @@ export async function getAllProducts() {
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
-  return attachAmazonOffers(products);
+  return attachAmazonOffers(products.map(correctProductLabels));
 }
 
 export interface SitemapProduct {
@@ -186,7 +187,7 @@ export async function getArticleBySlug(slug: string) {
     { next: { revalidate: 300, tags: ["articles", `article:${slug}`] } },
   );
   if (!article) return null;
-  return { ...article, relatedBooks: await attachAmazonOffers(article.relatedBooks || []) };
+  return { ...article, relatedBooks: await attachAmazonOffers((article.relatedBooks || []).map(correctProductLabels)) };
 }
 
 export async function getRelatedArticles(slug: string, category: string) {
@@ -232,7 +233,7 @@ export async function getCatalogProducts() {
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
-  return attachAmazonOffers(products);
+  return attachAmazonOffers(products.map(correctProductLabels));
 }
 
 export async function getCoruPicks() {
@@ -241,7 +242,7 @@ export async function getCoruPicks() {
     {},
     { next: { revalidate: 60, tags: ["products"] } },
   );
-  return attachAmazonOffers(products);
+  return attachAmazonOffers(products.map(correctProductLabels));
 }
 
 export async function getProductBySlug(slug: string) {
@@ -251,7 +252,7 @@ export async function getProductBySlug(slug: string) {
     { next: { revalidate: 60, tags: ["products", `product:${slug}`] } },
   );
   if (!product) return null;
-  return (await attachAmazonOffers([product]))[0];
+  return (await attachAmazonOffers([correctProductLabels(product)]))[0];
 }
 
 export async function getFeaturedBooks() {
@@ -323,7 +324,7 @@ export async function getBookSlugs() {
 }
 
 export async function getGenres() {
-  return client.fetch<GenreFilterData[]>(
+  const genres = await client.fetch<GenreFilterData[]>(
     groq`*[_type == "genre" && defined(slug.current)] | order(title asc) {
       title,
       "slug": slug.current,
@@ -332,6 +333,7 @@ export async function getGenres() {
     {},
     { next: { revalidate: 60 } },
   );
+  return genres.map((genre) => ({ ...genre, title: correctCatalogLabel(genre.title) }));
 }
 
 export async function getCollections() {

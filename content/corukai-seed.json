@@ -11,7 +11,7 @@
   {
     "_id": "genre-fantasia",
     "_type": "genre",
-    "title": "Fantasia",
+    "title": "Fantasía",
     "slug": { "_type": "slug", "current": "fantasia" },
     "color": "#477C9E",
     "visualTone": "Azul bruma, bibliotecas antiguas, portales discretos, runas suaves y una magia elegante.",
@@ -65,7 +65,7 @@
   {
     "_id": "genre-ciencia-ficcion",
     "_type": "genre",
-    "title": "Ciencia ficcion",
+    "title": "Ciencia ficción",
     "slug": { "_type": "slug", "current": "ciencia-ficcion" },
     "color": "#2D8FA7",
     "visualTone": "Azul mineral luminoso, orbitas, futuro humano, maquinas silenciosas y asombro.",
@@ -98,7 +98,7 @@
   {
     "_id": "emotion-melancolia",
     "_type": "emotion",
-    "title": "Melancolia",
+    "title": "Melancolía",
     "slug": { "_type": "slug", "current": "melancolia" },
     "color": "#5CA7B0",
     "description": "Una emocion lenta, bella y un poco herida."
@@ -131,7 +131,7 @@
   {
     "_id": "author-angelica-gorodischer",
     "_type": "author",
-    "name": "Angelica Gorodischer",
+    "name": "Angélica Gorodischer",
     "slug": { "_type": "slug", "current": "angelica-gorodischer" },
     "country": "Argentina",
     "birthYear": 1928,
