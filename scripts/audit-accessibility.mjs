@@ -18,7 +18,9 @@ const routes = [
   "/cuaderno/como-elegir-un-libro-sin-mirar-rankings",
   "/aviso-legal",
   "/privacidad",
+  "/cookies",
   "/afiliacion",
+  "/ruta-que-no-existe-auditoria",
 ];
 
 const viewports = [
