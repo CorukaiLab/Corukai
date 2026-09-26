@@ -11,6 +11,9 @@ const axeSource = await readFile(join(process.cwd(), "node_modules", "axe-core",
 
 const routes = [
   "/",
+  "/descubrir",
+  "/descubrir?camino=guiado",
+  "/descubrir?camino=directo",
   "/tienda",
   "/libros/hacia-rutas-salvajes",
   "/cesta",

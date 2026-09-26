@@ -46,7 +46,7 @@ export function MobileNavigation() {
           <button className="mobile-menu-backdrop" type="button" aria-label="Cerrar menú" onClick={closeMenu} />
           <nav id="mobile-menu-panel" className="mobile-menu-panel" aria-label="Navegación móvil">
             <Link href="/" onClick={closeMenu}>Inicio</Link>
-            <Link href="/#descubrir" onClick={closeMenu}>Descubrir</Link>
+            <Link href="/descubrir" onClick={closeMenu}>Descubrir</Link>
             <Link className="mobile-library-link" href="/tienda" onClick={closeMenu}>
               Biblioteca <span aria-hidden="true">↗</span>
             </Link>

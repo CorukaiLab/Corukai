@@ -18,7 +18,7 @@ export function SiteHeader() {
       </Link>
       <nav className="primary-nav" aria-label="Navegación principal">
         <Link className="home-link" href="/">Inicio</Link>
-        <Link className="discovery-link" href="/#descubrir">
+        <Link className="discovery-link" href="/descubrir">
           Descubrir
         </Link>
         <Link className="library-link" href="/tienda">

@@ -39,8 +39,8 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
           CoruKai es una librería online para elegir por cómo quieres sentirte.
           Pasa por los lomos sin prisa: la compra se completa en Amazon.
         </p>
-        <Link className="library-opening__search-link" href="#descubrir">
-          ¿Qué te apetece sentir hoy? <span aria-hidden="true">↓</span>
+        <Link className="library-opening__search-link" href="/descubrir?camino=guiado">
+          ¿Qué te apetece sentir hoy? <span aria-hidden="true">↗</span>
         </Link>
       </div>
 

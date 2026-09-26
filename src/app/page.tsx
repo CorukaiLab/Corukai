@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ChapterTransition } from "@/components/chapter-transition";
-import { DiscoverySearch } from "@/components/discovery-search";
+import { DiscoveryGateway } from "@/components/discovery-gateway";
 import { EditorialShowcase } from "@/components/editorial-showcase";
 import { InteractiveLibrary } from "@/components/interactive-library";
 import { CoruShelf } from "@/components/coru-shelf";
@@ -11,6 +11,7 @@ import { NEWSLETTER_ENABLED } from "@/lib/features";
 import type { Product } from "@/lib/products";
 import { absoluteUrl } from "@/lib/site";
 import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
+import "./descubrir/discovery-paths.css";
 
 const entryPoints = [
   { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe", image: "/assets/editorial/curiosity-table.webp" },
@@ -76,7 +77,7 @@ export default async function Home() {
 
       <CoruShelf products={coruPicks} />
 
-      <DiscoverySearch products={products} />
+      <DiscoveryGateway />
 
       <section className="home-thesis" aria-label="La promesa CoruKai">
         <p>Sin rankings.</p><p>Sin prisa.</p><p>Con una razón para abrir cada libro.</p>

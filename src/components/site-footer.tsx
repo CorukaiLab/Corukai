@@ -25,7 +25,7 @@ export function SiteFooter() {
         <div className="footer-links">
           <nav aria-label="Descubrir">
             <strong>Descubrir</strong>
-            <Link href="/#descubrir">Encuéntrame un libro</Link>
+            <Link href="/descubrir">Encuéntrame un libro</Link>
             <Link href="/tienda">Biblioteca</Link>
             <Link href="/cuaderno">Cuaderno editorial</Link>
             <Link href="/cesta">Mi estante</Link>
