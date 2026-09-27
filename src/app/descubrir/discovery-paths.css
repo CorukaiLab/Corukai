@@ -45,8 +45,13 @@
 .finding-paths__closing { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin: 30px 0 0; padding-bottom: 22px; border-bottom: 1px solid rgba(23,24,43,.25); }
 .finding-paths__closing em { color: var(--lab-plum); font: italic 24px var(--display); }
 .finding-paths__closing span { color: #35364a; font-size: 13px; }
+.finding-paths__library-cta { display: inline-flex; min-height: 44px; align-items: center; gap: 12px; margin-top: 18px; color: var(--lab-ink); font: 700 14px/1.4 var(--sans); text-decoration: underline; text-underline-offset: 4px; }
 
 .finding-paths__workspace { max-width: 1500px; margin: 0 auto; padding: 28px 4.5vw 70px; }
+.finding-paths__wayfinder { position: sticky; z-index: 20; top: 76px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -28px 0 0; padding: 12px 0; border-bottom: 1px solid rgba(23,24,43,.25); background: var(--lab-paper); }
+.finding-paths__wayfinder button, .finding-paths__wayfinder a { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; padding: 7px 14px; border: 1px solid rgba(23,24,43,.35); border-radius: 100px; background: transparent; color: var(--lab-ink); font: 700 13px/1.3 var(--sans); text-align: center; text-decoration: none; }
+.finding-paths__wayfinder button[aria-current="page"] { border-color: var(--lab-ink); background: var(--lab-ink); color: var(--lab-white); }
+.finding-paths__wayfinder a { margin-left: auto; border-color: var(--lab-coral); background: var(--lab-coral); }
 .finding-paths__back { min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--lab-plum); font-size: 14px; text-decoration: none; }
 .finding-paths__back span { margin-left: 8px; text-decoration: underline; text-underline-offset: 4px; }
 .finding-paths__guided-top { display: grid; grid-template-columns: minmax(250px, .85fr) minmax(340px, 1fr); gap: clamp(35px, 7vw, 120px); padding: 35px 0 55px; }
@@ -88,7 +93,7 @@
 .finding-paths__empty button { min-height: 44px; padding: 0 18px; border: 0; background: var(--lab-ink); color: var(--lab-white); font-weight: 700; }
 
 .finding-paths__workspace--direct { max-width: none; padding: 0; }
-.finding-paths__workspace--direct > .finding-paths__back { margin: 15px 4.5vw 12px; }
+.finding-paths__workspace--direct > .finding-paths__wayfinder { margin: 0; padding-inline: 4.5vw; }
 .finding-paths__direct-layout { display: grid; grid-template-columns: minmax(270px, 27%) minmax(0, 1fr); border-top: 1px solid rgba(23,24,43,.18); }
 .finding-paths__direct-story { display: flex; min-height: 700px; flex-direction: column; padding: 50px clamp(24px, 3.4vw, 52px) 40px; background: var(--lab-ink); color: var(--lab-white); }
 .finding-paths__direct-story .finding-paths__eyebrow { color: var(--lab-aloe); }
@@ -141,6 +146,10 @@
   .finding-paths__closing em { font-size: 18px; }
   .finding-paths__closing span { display: none; }
   .finding-paths__workspace { padding: 21px 24px 60px; }
+  .finding-paths__wayfinder { top: 65px; gap: 6px; margin-top: -21px; padding: 8px 0; }
+  .finding-paths__wayfinder button, .finding-paths__wayfinder a { min-height: 42px; padding: 6px 10px; font-size: 12px; }
+  .finding-paths__wayfinder button:first-child { width: 100%; justify-content: flex-start; border: 0; padding-inline: 0; }
+  .finding-paths__wayfinder a { margin-left: 0; }
   .finding-paths__guided-top { display: block; padding: 25px 0 38px; }
   .finding-paths__guided-intro h1 { margin: 17px 0 10px; font-size: clamp(33px, 9vw, 42px); }
   .finding-paths__guided-intro > p:last-child { margin-bottom: 22px; font-size: 13px; }
@@ -159,7 +168,7 @@
   .finding-paths__reason { display: -webkit-box; overflow: hidden; margin-top: 6px; font-size: 12px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
   .finding-paths__book-link { grid-column: 2; justify-self: start; min-width: 0; min-height: 22px; margin: -1px 0 0; text-align: left; }
   .finding-paths__workspace--direct { padding: 0; }
-  .finding-paths__workspace--direct > .finding-paths__back { margin: 14px 24px; }
+  .finding-paths__workspace--direct > .finding-paths__wayfinder { padding: 8px 24px; }
   .finding-paths__direct-layout { display: block; border: 0; }
   .finding-paths__direct-story { display: none; }
   .finding-paths__direct-main { padding: 10px 24px 60px; }

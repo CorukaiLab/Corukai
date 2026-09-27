@@ -80,6 +80,28 @@ export function DiscoveryPaths({ books, initialPath }: DiscoveryPathsProps) {
   const [visibleCount, setVisibleCount] = useState(6);
   const lastTrackedSearch = useRef("");
 
+  useEffect(() => {
+    const resetFromNavigation = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element) || !target.closest('a[href="/descubrir"]')) return;
+      setPath("entrada");
+      setFeeling(null);
+      setQuery("");
+      setGenre("");
+      setVisibleCount(6);
+    };
+    const syncFromHistory = () => {
+      const next = new URLSearchParams(window.location.search).get("camino");
+      setPath(next === "guiado" || next === "directo" ? next : "entrada");
+    };
+    document.addEventListener("click", resetFromNavigation);
+    window.addEventListener("popstate", syncFromHistory);
+    return () => {
+      document.removeEventListener("click", resetFromNavigation);
+      window.removeEventListener("popstate", syncFromHistory);
+    };
+  }, []);
+
   const genres = useMemo(() => [...new Set(books.map((book) => book.genre))]
     .sort((a, b) => (GENRE_ORDER.indexOf(a) === -1 ? 99 : GENRE_ORDER.indexOf(a)) - (GENRE_ORDER.indexOf(b) === -1 ? 99 : GENRE_ORDER.indexOf(b))), [books]);
 
@@ -121,6 +143,11 @@ export function DiscoveryPaths({ books, initialPath }: DiscoveryPathsProps) {
     if (next !== "entrada") trackCoruEvent("discovery_path", { path: next });
     setPath(next);
     setVisibleCount(6);
+    if (next === "entrada") {
+      setFeeling(null);
+      setQuery("");
+      setGenre("");
+    }
     window.history.replaceState(window.history.state, "", next === "entrada" ? "/descubrir" : `/descubrir?camino=${next}`);
     window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }
@@ -166,10 +193,16 @@ export function DiscoveryPaths({ books, initialPath }: DiscoveryPathsProps) {
             </button>
           </div>
           <p className="finding-paths__closing"><em>Leer debería sentirse bien.</em><span>Dos maneras de entrar. Ninguna te mete prisa.</span></p>
+          <Link className="finding-paths__library-cta" href="/tienda">¿Prefieres verlo todo? Ir a la biblioteca completa <span aria-hidden="true">→</span></Link>
         </div>
       ) : (
         <div className={`finding-paths__workspace finding-paths__workspace--${path}`}>
-          <button type="button" className="finding-paths__back" onClick={() => selectPath("entrada")}>← <span>Cambiar camino</span></button>
+          <nav className="finding-paths__wayfinder" aria-label="Formas de explorar libros">
+            <button type="button" onClick={() => selectPath("entrada")}>← Empezar de nuevo</button>
+            <button type="button" aria-current={path === "guiado" ? "page" : undefined} onClick={() => selectPath("guiado")}>Por cómo me siento</button>
+            <button type="button" aria-current={path === "directo" ? "page" : undefined} onClick={() => selectPath("directo")}>Buscar directamente</button>
+            <Link href="/tienda">Biblioteca completa <span aria-hidden="true">↗</span></Link>
+          </nav>
           {path === "guiado" ? (
             <>
               <section className="finding-paths__guided-top" aria-labelledby="discovery-question">
