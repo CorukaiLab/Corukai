@@ -5,7 +5,7 @@ import "./discovery-paths.css";
 
 export const metadata: Metadata = {
   title: "Encuentra un libro a tu manera",
-  description: "Déjate guiar por cómo quieres sentirte o busca directamente un libro, autor o género. Dos caminos para descubrir sin prisa.",
+  description: "Empieza por tu momento de hoy o ve directo al libro que tienes en mente. Dos caminos para descubrir sin prisa.",
   alternates: { canonical: "/descubrir" },
   openGraph: { url: "/descubrir" },
 };
@@ -19,6 +19,8 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
     genre: product.genre,
     mood: product.mood,
     pace: product.pace,
+    readingTime: product.readingTime,
+    pages: product.pages,
     entry: product.entry,
     isbn: product.isbn,
     cover: product.cover,
