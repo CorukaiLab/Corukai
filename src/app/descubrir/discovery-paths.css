@@ -154,7 +154,6 @@
   .finding-paths__wayfinder button:nth-child(2) { grid-column: 1; grid-row: 2; }
   .finding-paths__wayfinder button:nth-child(3) { grid-column: 2; grid-row: 2; }
   .finding-paths__wayfinder a { grid-column: 2; grid-row: 1; margin-left: 0; }
-  .finding-paths__wayfinder-detail { display: none; }
   .finding-paths__guided-top { display: block; padding: 25px 0 38px; }
   .finding-paths__guided-intro h1 { margin: 17px 0 10px; font-size: clamp(33px, 9vw, 42px); }
   .finding-paths__guided-intro > p:last-child { margin-bottom: 22px; font-size: 13px; }

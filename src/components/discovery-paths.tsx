@@ -220,7 +220,7 @@ export function DiscoveryPaths({ books, initialPath }: DiscoveryPathsProps) {
             <button type="button" onClick={() => selectPath("entrada")}>← Empezar de nuevo</button>
             <button type="button" aria-current={path === "guiado" ? "page" : undefined} onClick={() => selectPath("guiado")}>Por cómo me siento</button>
             <button type="button" aria-current={path === "directo" ? "page" : undefined} onClick={() => selectPath("directo")}>Ya tengo una pista</button>
-            <Link href="/tienda" aria-label="Biblioteca: todos los libros y filtros">Biblioteca <span className="finding-paths__wayfinder-detail">· todos los filtros</span> <span aria-hidden="true">↗</span></Link>
+            <Link href="/tienda">Biblioteca <span aria-hidden="true">↗</span></Link>
           </nav>
           {path === "guiado" ? (
             <>
