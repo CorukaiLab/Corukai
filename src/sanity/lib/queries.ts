@@ -99,6 +99,7 @@ const productFields = groq`
   priceCents,
   amazonAsin,
   "cover": coverImage.asset->url,
+  "coverAlt": coverImage.alt,
   "accent": coalesce(genre->color, "#17182B"),
   "hook": vibe,
   "description": shortDescription,
@@ -161,6 +162,11 @@ export interface ArticleBlock {
 
 export interface ArticleDetail extends ArticleSummary {
   body: ArticleBlock[];
+  heroImageUrl?: string;
+  heroImageAlt?: string;
+  heroImageCaption?: string;
+  heroImageWidth?: number;
+  heroImageHeight?: number;
   seoTitle?: string;
   seoDescription?: string;
   relatedBooks: Product[];
@@ -181,6 +187,11 @@ export async function getArticleBySlug(slug: string) {
     groq`*[_type == "article" && slug.current == $slug][0] {
       title, "slug": slug.current, excerpt, category, publishedAt, "updatedAt": _updatedAt,
       body, seoTitle, seoDescription,
+      "heroImageUrl": heroImage.asset->url,
+      "heroImageAlt": heroImage.alt,
+      "heroImageCaption": heroImage.caption,
+      "heroImageWidth": heroImage.asset->metadata.dimensions.width,
+      "heroImageHeight": heroImage.asset->metadata.dimensions.height,
       "relatedBooks": relatedBooks[]->{ ${productFields} }
     }`,
     { slug },

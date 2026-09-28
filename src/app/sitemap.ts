@@ -5,7 +5,16 @@ import { getArticles, getSitemapProducts } from "@/sanity/lib/queries";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, articles] = await Promise.all([getSitemapProducts(), getArticles()]);
   const staticPages: MetadataRoute.Sitemap = [
-    { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
+    {
+      url: absoluteUrl("/"),
+      changeFrequency: "weekly",
+      priority: 1,
+      images: [
+        absoluteUrl("/assets/editorial/library-wall-desktop.webp"),
+        absoluteUrl("/assets/editorial/curiosity-table.webp"),
+        absoluteUrl("/assets/editorial/libro-abierto-taza-ceramica-corukai.webp"),
+      ],
+    },
     { url: absoluteUrl("/descubrir"), changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/tienda"), changeFrequency: "weekly", priority: 0.9 },
     { url: absoluteUrl("/cuaderno"), changeFrequency: "weekly", priority: 0.8 },

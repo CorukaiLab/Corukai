@@ -20,6 +20,7 @@ export type Product = {
   amazonAsin?: string;
   amazonOffer?: AmazonOffer;
   cover: string;
+  coverAlt?: string;
   accent: string;
   hook: string;
   description: string;
@@ -48,4 +49,8 @@ export function formatPrice(priceCents: number) {
 
 export function getAmazonPriceLabel(product: Product) {
   return product.amazonOffer?.displayAmount || "Consultar en Amazon";
+}
+
+export function getProductCoverAlt(product: Pick<Product, "title" | "author" | "coverAlt">) {
+  return product.coverAlt?.trim() || `Portada de ${product.title}, de ${product.author}`;
 }

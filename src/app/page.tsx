@@ -15,7 +15,7 @@ import "./descubrir/discovery-paths.css";
 
 const entryPoints = [
   { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe", image: "/assets/editorial/curiosity-table.webp" },
-  { number: "02", title: "Necesito salir", text: "Lugares, ideas y decisiones para cambiar de aire sin convertirlo en una huida.", href: "/tienda?entry=Viajar", className: "entry--yellow", image: "/assets/editorial/hero-ritual.png" },
+  { number: "02", title: "Necesito salir", text: "Lugares, ideas y decisiones para cambiar de aire sin convertirlo en una huida.", href: "/tienda?entry=Viajar", className: "entry--yellow", image: "/assets/editorial/libro-abierto-taza-ceramica-corukai.webp" },
   { number: "03", title: "Quiero crear", text: "Libros que dejan una pregunta, una imagen o el comienzo de algo que todavía no existe.", href: "/tienda?entry=Crear", className: "entry--coral", image: "/assets/editorial/library-wall-mobile.webp" },
 ];
 

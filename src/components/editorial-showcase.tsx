@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, type CSSProperties } from "react";
 import { trackCoruEvent } from "@/lib/analytics";
-import type { Product } from "@/lib/products";
+import { getProductCoverAlt, type Product } from "@/lib/products";
 
 export function EditorialShowcase({ products }: { products: Product[] }) {
   const [activeSlug, setActiveSlug] = useState(products[0]?.slug ?? "");
@@ -29,7 +29,7 @@ export function EditorialShowcase({ products }: { products: Product[] }) {
           <div className="editorial-showcase__cover">
             <Image
               src={activeProduct.cover}
-              alt={`Portada de ${activeProduct.title}`}
+              alt={getProductCoverAlt(activeProduct)}
               width={420}
               height={630}
               sizes="(max-width: 760px) 62vw, 34vw"

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { trackCoruEvent } from "@/lib/analytics";
-import type { ReadingPace, ReadingTime, StoryEntry } from "@/lib/products";
+import { getProductCoverAlt, type ReadingPace, type ReadingTime, type StoryEntry } from "@/lib/products";
 
 interface LabBook {
   slug: string;
@@ -18,6 +18,7 @@ interface LabBook {
   entry: StoryEntry;
   isbn?: string;
   cover: string;
+  coverAlt?: string;
   hook: string;
   idealMoment: string;
 }
@@ -78,7 +79,7 @@ function BookRow({ book, reason, placement }: { book: LabBook; reason: string; p
   return (
     <article className="finding-paths__book">
       <Link className="finding-paths__cover-link" href={`/libros/${book.slug}`} aria-label={`Ver ${book.title}, de ${book.author}`} onClick={trackOpen}>
-        <Image src={book.cover} alt={`Portada de ${book.title}`} width={100} height={148} sizes="(max-width: 600px) 78px, 100px" />
+        <Image src={book.cover} alt={getProductCoverAlt(book)} width={100} height={148} sizes="(max-width: 600px) 78px, 100px" />
       </Link>
       <div className="finding-paths__book-copy">
         <p className="finding-paths__book-meta">{book.mood} · {book.genre}</p>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { TrackedBookLink } from "@/components/tracked-book-link";
-import type { Product } from "@/lib/products";
+import { getProductCoverAlt, type Product } from "@/lib/products";
 
 export function CoruShelf({ products }: { products: Product[] }) {
   return (
@@ -26,7 +26,7 @@ export function CoruShelf({ products }: { products: Product[] }) {
             <span className="coru-shelf__stamp">Recomendación de Coru</span>
             <Image
               src={product.cover}
-              alt={`Portada de ${product.title}`}
+              alt={getProductCoverAlt(product)}
               width={280}
               height={420}
               sizes="(max-width: 720px) 58vw, 24vw"

@@ -9,6 +9,29 @@ export const article = defineType({
     defineField({ name: "slug", title: "Slug", type: "slug", options: { source: "title" }, validation: (rule) => rule.required() }),
     defineField({ name: "excerpt", title: "Entradilla", type: "text", rows: 3, validation: (rule) => rule.required().max(240) }),
     defineField({
+      name: "heroImage",
+      title: "Imagen editorial principal",
+      type: "image",
+      options: { hotspot: true },
+      description: "Opcional. Usa una imagen propia o con derechos verificados y relacionada de verdad con la nota; esta página será su destino al compartirla.",
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Texto alternativo",
+          type: "string",
+          description: "Describe lo visible sin repetir el título ni acumular palabras clave.",
+          validation: (rule) => rule.required().max(160),
+        }),
+        defineField({
+          name: "caption",
+          title: "Pie de imagen",
+          type: "string",
+          description: "Contexto o crédito que el lector debe ver junto a la imagen, si procede.",
+          validation: (rule) => rule.max(240),
+        }),
+      ],
+    }),
+    defineField({
       name: "category",
       title: "Sección",
       type: "string",

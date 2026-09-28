@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
 import { trackCoruEvent } from "@/lib/analytics";
-import type { Product } from "@/lib/products";
+import { getProductCoverAlt, type Product } from "@/lib/products";
 
 const shelfShape = [
   { height: 238, width: 46, tilt: -1 },
@@ -32,6 +32,18 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
 
   return (
     <section className="library-opening" aria-labelledby="library-opening-title">
+      <picture className="library-opening__art">
+        <source media="(max-width: 760px)" srcSet="/assets/editorial/library-wall-mobile.webp" />
+        <Image
+          src="/assets/editorial/library-wall-desktop.webp"
+          alt="Estantes de madera con plantas y objetos de lectura sobre una pared azul noche"
+          width={1672}
+          height={941}
+          unoptimized
+          loading="eager"
+          fetchPriority="high"
+        />
+      </picture>
       <div className="library-opening__copy">
         <p className="eyebrow">Una biblioteca para entrar sin prisa</p>
         <h1 id="library-opening-title">Cada libro abre una forma de estar en el mundo.</h1>
@@ -79,7 +91,7 @@ export function InteractiveLibrary({ products }: InteractiveLibraryProps) {
           <div className="library-preview__cover">
             <Image
               src={activeProduct.cover}
-              alt={`Portada de ${activeProduct.title}`}
+              alt={getProductCoverAlt(activeProduct)}
               width={180}
               height={270}
               priority

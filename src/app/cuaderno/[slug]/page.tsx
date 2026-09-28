@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
@@ -16,7 +17,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.excerpt,
     alternates: { canonical: `/cuaderno/${article.slug}` },
-    openGraph: { title: article.title, description: article.excerpt, url: `/cuaderno/${article.slug}`, type: "article" },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      url: `/cuaderno/${article.slug}`,
+      type: "article",
+      ...(article.heroImageUrl && article.heroImageAlt?.trim()
+        ? { images: [{ url: article.heroImageUrl, alt: article.heroImageAlt }] }
+        : {}),
+    },
   };
 }
 
@@ -35,6 +44,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     mainEntityOfPage: absoluteUrl(`/cuaderno/${article.slug}`),
     author: { "@type": "Organization", name: "CoruKai" },
     publisher: { "@type": "Organization", name: "CoruKai", url: absoluteUrl("/") },
+    ...(article.heroImageUrl && article.heroImageAlt?.trim() ? { image: article.heroImageUrl } : {}),
   };
 
   return (
@@ -47,6 +57,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <p>{article.excerpt}</p>
         <time dateTime={article.publishedAt}>{new Intl.DateTimeFormat("es-ES", { dateStyle: "long" }).format(new Date(article.publishedAt))}</time>
       </header>
+      {article.heroImageUrl && article.heroImageAlt ? (
+        <figure className="article-visual">
+          <Image
+            src={article.heroImageUrl}
+            alt={article.heroImageAlt}
+            width={article.heroImageWidth || 1200}
+            height={article.heroImageHeight || 800}
+            sizes="(max-width: 760px) calc(100vw - 40px), 91vw"
+          />
+          {article.heroImageCaption ? <figcaption>{article.heroImageCaption}</figcaption> : null}
+        </figure>
+      ) : null}
       <article className="article-body">
         {article.body.map((block) => {
           const text = block.children?.map((child) => child.text).join("") || "";

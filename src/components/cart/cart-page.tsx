@@ -7,7 +7,7 @@ import { AmazonPrice } from "@/components/amazon-price";
 import { AffiliateLink } from "@/components/affiliate-link";
 import { STANDARD_SHELF_LISTS, useCart } from "@/components/cart/cart-context";
 import { trackCoruEvent } from "@/lib/analytics";
-import type { Product } from "@/lib/products";
+import { getProductCoverAlt, type Product } from "@/lib/products";
 
 export function CartPage({ products }: { products: Product[] }) {
   const { items, lists, setStatus, toggleCustomList, remove, clear, addList, removeList } = useCart();
@@ -106,7 +106,7 @@ export function CartPage({ products }: { products: Product[] }) {
               {visibleLines.length ? visibleLines.map(({ product, statusId, customListIds }) => (
                 <article className="cart-line shelf-line" key={product.slug}>
                   <Link className="shelf-line__cover" href={`/libros/${product.slug}`}>
-                    <Image src={product.cover} alt={`Portada de ${product.title}`} width={110} height={165} />
+                    <Image src={product.cover} alt={getProductCoverAlt(product)} width={110} height={165} />
                   </Link>
                   <div className="shelf-line__copy">
                     <p>{product.genre} · {product.mood}</p>

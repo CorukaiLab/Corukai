@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { trackCoruEvent } from "@/lib/analytics";
-import type { Product, ReadingTime, StoryEntry } from "@/lib/products";
+import { getProductCoverAlt, type Product, type ReadingTime, type StoryEntry } from "@/lib/products";
 
 const timeOptions: ReadingTime[] = ["Una tarde", "Varias noches", "Sin prisa"];
 const moodOptions = ["Calidez", "Asombro", "Curiosidad", "Inquietud", "Melancolía"];
@@ -103,7 +103,7 @@ export function DiscoverySearch({ products }: { products: Product[] }) {
       <div className="discovery-result" aria-live="polite">
         <div className="discovery-result__number" aria-hidden="true">{hasChoices ? "Tu libro" : "¿?"}</div>
         <div className="discovery-result__cover">
-          <Image src={lead.cover} alt={`Portada de ${lead.title}`} width={300} height={450} sizes="(max-width: 700px) 42vw, 18vw" />
+          <Image src={lead.cover} alt={getProductCoverAlt(lead)} width={300} height={450} sizes="(max-width: 700px) 42vw, 18vw" />
         </div>
         <div className="discovery-result__copy">
           <p className="eyebrow">{hasChoices ? "Tu primera puerta" : "Una puerta para empezar"}</p>

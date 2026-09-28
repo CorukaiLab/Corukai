@@ -10,6 +10,7 @@ import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
 import { ProductViewTracker } from "@/components/product-view-tracker";
 import { absoluteUrl } from "@/lib/site";
+import { getProductCoverAlt } from "@/lib/products";
 import { getAllProducts, getCatalogProducts, getProductBySlug } from "@/sanity/lib/queries";
 
 export async function generateStaticParams() {
@@ -34,7 +35,7 @@ export async function generateMetadata({
       title: `${product.title} · ${product.author}`,
       description: product.seoDescription || product.hook,
       url: `/libros/${product.slug}`,
-      images: [{ url: product.cover, alt: `Portada de ${product.title}` }],
+      images: [{ url: product.cover, alt: getProductCoverAlt(product) }],
       type: "book",
     },
   };
@@ -82,7 +83,11 @@ export default async function ProductPage({
     author: { "@type": "Person", name: product.author },
     genre: product.genre,
     datePublished: String(product.year),
-    image: product.cover,
+    image: {
+      "@type": "ImageObject",
+      url: product.cover,
+      caption: getProductCoverAlt(product),
+    },
     description: product.seoDescription || product.hook,
     inLanguage: "es",
     ...(product.isbn ? { isbn: product.isbn } : {}),
@@ -106,7 +111,7 @@ export default async function ProductPage({
           <p>{product.genre}</p>
           <Image
             src={product.cover}
-            alt={`Portada de ${product.title}`}
+            alt={getProductCoverAlt(product)}
             width={520}
             height={780}
             loading="eager"
