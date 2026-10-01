@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { LegalDocument } from "@/components/legal-document";
+import { createSocialMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Cómo funciona la compra y la afiliación",
   description: "Cómo elige libros CoruKai, qué significa un enlace pagado y qué parte de la compra se realiza en Amazon.",
   alternates: { canonical: "/afiliacion" },
+  ...createSocialMetadata({
+    title: "Cómo funciona la compra y la afiliación · CoruKai",
+    description: "Cómo elige libros CoruKai, qué significa un enlace pagado y qué parte de la compra se realiza en Amazon.",
+    path: "/afiliacion",
+  }),
 };
 
 export default function AffiliateInfoPage() {

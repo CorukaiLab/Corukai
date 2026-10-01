@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
+import { createSocialMetadata } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/site";
 import { getArticleBySlug, getArticleSlugs, getRelatedArticles } from "@/sanity/lib/queries";
 
@@ -17,15 +18,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: article.seoTitle || article.title,
     description: article.seoDescription || article.excerpt,
     alternates: { canonical: `/cuaderno/${article.slug}` },
-    openGraph: {
+    ...createSocialMetadata({
       title: article.title,
       description: article.excerpt,
-      url: `/cuaderno/${article.slug}`,
+      path: `/cuaderno/${article.slug}`,
       type: "article",
       ...(article.heroImageUrl && article.heroImageAlt?.trim()
-        ? { images: [{ url: article.heroImageUrl, alt: article.heroImageAlt }] }
+        ? { image: { url: article.heroImageUrl, alt: article.heroImageAlt } }
         : {}),
-    },
+    }),
   };
 }
 

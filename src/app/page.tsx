@@ -9,6 +9,7 @@ import { CoruShelf } from "@/components/coru-shelf";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { NEWSLETTER_ENABLED } from "@/lib/features";
 import type { Product } from "@/lib/products";
+import { createSocialMetadata } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/site";
 import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
 import "./descubrir/discovery-paths.css";
@@ -21,7 +22,11 @@ const entryPoints = [
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  openGraph: { url: "/" },
+  ...createSocialMetadata({
+    title: "CoruKai · Leer debería sentirse bien",
+    description: "Una librería online para descubrir libros por cómo quieres sentirte, con criterio, calma y una compra sencilla.",
+    path: "/",
+  }),
 };
 
 function selectProducts(products: Product[], slugs: string[]) {
@@ -72,6 +77,8 @@ export default async function Home() {
 
   return (
     <main>
+      <link rel="preload" as="image" href="/assets/editorial/library-wall-desktop.webp" media="(min-width: 761px)" fetchPriority="high" />
+      <link rel="preload" as="image" href="/assets/editorial/library-wall-mobile.webp" media="(max-width: 760px)" fetchPriority="high" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <InteractiveLibrary products={librarySelection} />
 

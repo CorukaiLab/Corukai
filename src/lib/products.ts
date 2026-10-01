@@ -24,6 +24,8 @@ export type Product = {
   accent: string;
   hook: string;
   description: string;
+  forWhom?: string;
+  notForWhom?: string;
   idealMoment: string;
   format: string;
   year: number;
@@ -39,13 +41,6 @@ export type Product = {
   affiliateUrl?: string;
   isCoruPick: boolean;
 };
-
-export function formatPrice(priceCents: number) {
-  return new Intl.NumberFormat("es-ES", {
-    style: "currency",
-    currency: "EUR",
-  }).format(priceCents / 100);
-}
 
 export function getAmazonPriceLabel(product: Product) {
   return product.amazonOffer?.displayAmount || "Consultar en Amazon";

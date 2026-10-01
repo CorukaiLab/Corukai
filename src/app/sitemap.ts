@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: product.updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+      ...(product.cover ? { images: [product.cover] } : {}),
     })),
     ...articles.map((article) => ({
       url: absoluteUrl(`/cuaderno/${article.slug}`),

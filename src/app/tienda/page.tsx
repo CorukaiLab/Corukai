@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { CatalogExplorer } from "@/components/catalog-explorer";
+import { createSocialMetadata } from "@/lib/metadata";
 import { getCatalogProducts } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Descubrir libros por cómo quieres sentirte",
-  description: "Explora 24 libros seleccionados por emoción, tiempo, ritmo, género e intención de lectura.",
+  title: "Biblioteca de libros por género y momento",
+  description: "Explora la selección de CoruKai por género, sensación, tiempo y ritmo. Encuentra una lectura para tu momento, sin rankings ni prisas.",
   alternates: { canonical: "/tienda" },
-  openGraph: { url: "/tienda" },
+  ...createSocialMetadata({
+    title: "Biblioteca de libros por género y momento · CoruKai",
+    description: "Explora la selección de CoruKai por género, sensación, tiempo y ritmo. Encuentra una lectura para tu momento, sin rankings ni prisas.",
+    path: "/tienda",
+  }),
 };
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ q?: string; mood?: string; genre?: string; time?: string; pace?: string; entry?: string }> }) {

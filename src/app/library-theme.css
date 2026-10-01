@@ -395,23 +395,6 @@ body {
   transform: rotate(-0.35deg);
 }
 
-.discovery-lab {
-  background: var(--library-blue);
-}
-
-.discovery-lab__intro {
-  background: var(--library-green);
-}
-
-.choice-row button[aria-pressed="true"] {
-  border-color: var(--library-gold);
-  background: var(--library-gold);
-}
-
-.discovery-result {
-  background: var(--library-blue-soft);
-}
-
 .editorial-pick {
   background: var(--library-green);
 }

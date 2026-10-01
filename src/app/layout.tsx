@@ -62,22 +62,6 @@ export default function RootLayout({
 
   return (
     <html lang="es" data-scroll-behavior="smooth">
-      <head>
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/editorial/library-wall-desktop.webp"
-          media="(min-width: 761px)"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/editorial/library-wall-mobile.webp"
-          media="(max-width: 760px)"
-          fetchPriority="high"
-        />
-      </head>
       <body>
         <CartProvider>
           <SiteHeader />

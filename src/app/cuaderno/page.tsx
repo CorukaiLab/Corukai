@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createSocialMetadata } from "@/lib/metadata";
 import { getArticles } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Cuaderno editorial",
-  description: "Guías y notas para elegir libros desde la curiosidad, el momento y las ganas reales de leer.",
+  title: "Guías para elegir qué leer · Cuaderno",
+  description: "Ideas y selecciones pequeñas para empezar a leer, recuperar la curiosidad y encontrar una historia que encaje contigo.",
   alternates: { canonical: "/cuaderno" },
+  ...createSocialMetadata({
+    title: "Guías para elegir qué leer · Cuaderno CoruKai",
+    description: "Ideas y selecciones pequeñas para empezar a leer, recuperar la curiosidad y encontrar una historia que encaje contigo.",
+    path: "/cuaderno",
+  }),
 };
 
 export default async function JournalPage() {

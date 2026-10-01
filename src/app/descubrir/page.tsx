@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DiscoveryPaths } from "@/components/discovery-paths";
+import { createSocialMetadata } from "@/lib/metadata";
 import { getCatalogProducts } from "@/sanity/lib/queries";
 import "./discovery-paths.css";
 
@@ -7,7 +8,11 @@ export const metadata: Metadata = {
   title: "Encuentra un libro a tu manera",
   description: "Empieza por tu momento de hoy o ve directo al libro que tienes en mente. Dos caminos para descubrir sin prisa.",
   alternates: { canonical: "/descubrir" },
-  openGraph: { url: "/descubrir" },
+  ...createSocialMetadata({
+    title: "Encuentra un libro a tu manera · CoruKai",
+    description: "Empieza por tu momento de hoy o ve directo al libro que tienes en mente. Dos caminos para descubrir sin prisa.",
+    path: "/descubrir",
+  }),
 };
 
 export default async function DiscoverPage({ searchParams }: { searchParams: Promise<{ camino?: string }> }) {

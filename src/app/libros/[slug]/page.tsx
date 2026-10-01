@@ -9,6 +9,7 @@ import { ChapterTransition } from "@/components/chapter-transition";
 import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductCard } from "@/components/product-card";
 import { ProductViewTracker } from "@/components/product-view-tracker";
+import { createSocialMetadata } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/site";
 import { getProductCoverAlt } from "@/lib/products";
 import { getAllProducts, getCatalogProducts, getProductBySlug } from "@/sanity/lib/queries";
@@ -31,13 +32,13 @@ export async function generateMetadata({
     title: seoTitle,
     description: product.seoDescription || product.hook,
     alternates: { canonical: `/libros/${product.slug}` },
-    openGraph: {
+    ...createSocialMetadata({
       title: `${product.title} · ${product.author}`,
       description: product.seoDescription || product.hook,
-      url: `/libros/${product.slug}`,
-      images: [{ url: product.cover, alt: getProductCoverAlt(product) }],
+      path: `/libros/${product.slug}`,
+      image: { url: product.cover, alt: getProductCoverAlt(product) },
       type: "book",
-    },
+    }),
   };
 }
 
@@ -195,15 +196,13 @@ export default async function ProductPage({
         <div>
           <p className="eyebrow">Para quién sí</p>
           <p>
-            Para quien busca {product.mood.toLocaleLowerCase("es")} y prefiere
-            una recomendación con contexto antes que una puntuación.
+            {product.forWhom?.trim() || `Para quien busca ${product.mood.toLocaleLowerCase("es")} y prefiere una recomendación con contexto antes que una puntuación.`}
           </p>
         </div>
         <div>
           <p className="eyebrow">Quizá no ahora</p>
           <p>
-            Si necesitas acción inmediata, lectura muy ligera o una historia
-            parecida a la última que terminaste.
+            {product.notForWhom?.trim() || "Si necesitas acción inmediata, lectura muy ligera o una historia parecida a la última que terminaste."}
           </p>
         </div>
       </section>
