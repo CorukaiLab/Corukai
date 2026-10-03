@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { DiscoveryPaths } from "@/components/discovery-paths";
 import { createSocialMetadata } from "@/lib/metadata";
-import { getCatalogProducts } from "@/sanity/lib/queries";
+import { getAllProducts } from "@/sanity/lib/queries";
 import "./discovery-paths.css";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DiscoverPage({ searchParams }: { searchParams: Promise<{ camino?: string }> }) {
-  const [{ camino }, products] = await Promise.all([searchParams, getCatalogProducts()]);
+  const [{ camino }, products] = await Promise.all([searchParams, getAllProducts()]);
   const books = products.map((product) => ({
     slug: product.slug,
     title: product.title,
