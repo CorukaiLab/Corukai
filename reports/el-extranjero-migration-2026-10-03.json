@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-03T12:24:37.319Z",
+  "backup": "reports/el-extranjero-backup-2026-10-03T12-24-35-203Z.json",
+  "total": 28,
+  "permanent": 25,
+  "picks": [
+    "Siddhartha",
+    "El extranjero",
+    "Mendel el de los libros"
+  ],
+  "existingBooksAndAffiliateLinksPreserved": true,
+  "edition": "9788466356138",
+  "affiliateLink": "https://link.amazon/B08RTY0qq",
+  "trackingId": "ramecoru06-21",
+  "coverSource": "https://www.penguinlibros.com/es/1968338-large_default/el-extranjero.webp",
+  "affiliateLinkOpened": false
+}

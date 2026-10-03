@@ -2,14 +2,14 @@ import Image from "next/image";
 import { TrackedBookLink } from "@/components/tracked-book-link";
 import { getProductCoverAlt, type Product } from "@/lib/products";
 
-export function CoruShelf({ products }: { products: Product[] }) {
+export function CoruShelf({ products, catalogCount }: { products: Product[]; catalogCount: number }) {
   return (
     <section className="coru-shelf" id="balda-coru" aria-labelledby="coru-shelf-title">
       <header className="coru-shelf__heading">
         <div className="coru-shelf__portrait" aria-hidden="true">C</div>
         <div>
           <p className="eyebrow">La balda de Coru · Selección temporal</p>
-          <h2 id="coru-shelf-title">Tres libros fuera de los 24.</h2>
+          <h2 id="coru-shelf-title">Tres libros fuera de los {catalogCount}.</h2>
         </div>
         <p>Durante unas semanas, Coru deja tres hallazgos junto al catálogo fijo. Después llegarán otros.</p>
       </header>

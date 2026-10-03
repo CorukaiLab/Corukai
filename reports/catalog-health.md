@@ -1,6 +1,6 @@
 # Salud del catálogo CoruKai
 
-Generado: 18 de septiembre de 2026, 23:39
+Generado: 3 de octubre de 2026, 14:26
 
 ## Resultado
 
@@ -8,14 +8,14 @@ Generado: 18 de septiembre de 2026, 23:39
 
 | Comprobación | Resultado |
 |---|---:|
-| Libros activos | 27 / 27 |
-| Catálogo permanente | 24 / 24 |
+| Libros activos | 28 / 28 |
+| Catálogo permanente | 25 / 25 |
 | Recomendaciones de Coru | 3 / 3 |
-| Fichas completas | 27 / 27 |
-| Portadas válidas | 27 / 27 |
-| Enlaces configurados | 27 / 27 |
-| ISBN informados | 17 / 27 |
-| ASIN guardados | 27 / 27 |
+| Fichas completas | 28 / 28 |
+| Portadas válidas | 28 / 28 |
+| Enlaces configurados | 28 / 28 |
+| ISBN informados | 18 / 28 |
+| ASIN guardados | 28 / 28 |
 
 Los importes guardados son referencias internas para una futura venta directa y no se muestran como precios vigentes de Amazon. La auditoría de redirecciones se ejecuta por separado con `npm run test:affiliates`.
 
@@ -26,9 +26,9 @@ Los importes guardados son referencias internas para una futura venta directa y 
 | 0 | Hacia rutas salvajes | Jon Krakauer | Aventura | 12.95 € | 9788413141220 | Catálogo |
 | 1 | Shōgun | James Clavell | Aventura | 16.95 € | 9788466376983 | Catálogo |
 | 2 | La ciudad de las bestias | Isabel Allende | Aventura | 9.95 € | 9788497935692 | Catálogo |
-| 3 | El imperio final | Brandon Sanderson | Fantasia | 16.95 € | 9788413149813 | Catálogo |
-| 4 | Piranesi | Susanna Clarke | Fantasia | 19.90 € | 9788418363283 | Catálogo |
-| 5 | Kalpa Imperial | Angelica Gorodischer | Fantasia | 18.90 € | Pendiente | Catálogo |
+| 3 | El imperio final | Brandon Sanderson | Fantasía | 16.95 € | 9788413149813 | Catálogo |
+| 4 | Piranesi | Susanna Clarke | Fantasía | 19.90 € | 9788418363283 | Catálogo |
+| 5 | Kalpa Imperial | Angélica Gorodischer | Fantasía | 18.90 € | Pendiente | Catálogo |
 | 6 | Nosotros en la luna | Alice Kellen | Romance | 10.95 € | 9788408237389 | Catálogo |
 | 7 | Seda | Alessandro Baricco | Romance | 13.90 € | 9788433908407 | Catálogo |
 | 8 | Carta de una desconocida | Stefan Zweig | Romance | 12.90 € | Pendiente | Catálogo |
@@ -38,15 +38,16 @@ Los importes guardados son referencias internas para una futura venta directa y 
 | 12 | El infinito en un junco | Irene Vallejo | Ensayo | 13.95 € | Pendiente | Catálogo |
 | 13 | La utilidad de lo inútil | Nuccio Ordine | Ensayo | 13.90 € | Pendiente | Catálogo |
 | 14 | Una historia de la lectura | Alberto Manguel | Ensayo | 24.90 € | 9788420608907 | Catálogo |
-| 15 | El problema de los tres cuerpos | Cixin Liu | Ciencia ficcion | 14.95 € | 9788413143415 | Catálogo |
-| 16 | Proyecto Hail Mary | Andy Weir | Ciencia ficcion | 23.90 € | 9788418037016 | Catálogo |
-| 17 | Estación de tránsito | Clifford D. Simak | Ciencia ficcion | 16.90 € | 9788476340370 | Catálogo |
-| 18 | La península de las casas vacías | David Uclés | Historica | 26.00 € | 9788419942319 | Catálogo |
-| 19 | Hamnet | Maggie O’Farrell | Historica | 23.95 € | 9788417977580 | Catálogo |
-| 20 | El samurái | Shūsaku Endō | Historica | 19.90 € | Pendiente | Catálogo |
+| 15 | El problema de los tres cuerpos | Cixin Liu | Ciencia ficción | 14.95 € | 9788413143415 | Catálogo |
+| 16 | Proyecto Hail Mary | Andy Weir | Ciencia ficción | 23.90 € | 9788418037016 | Catálogo |
+| 17 | Estación de tránsito | Clifford D. Simak | Ciencia ficción | 16.90 € | 9788476340370 | Catálogo |
+| 18 | La península de las casas vacías | David Uclés | Histórica | 26.00 € | 9788419942319 | Catálogo |
+| 19 | Hamnet | Maggie O’Farrell | Histórica | 23.95 € | 9788417977580 | Catálogo |
+| 20 | El samurái | Shūsaku Endō | Histórica | 19.90 € | Pendiente | Catálogo |
 | 21 | Nuestra parte de noche | Mariana Enríquez | Terror | 24.90 € | 9788433998859 | Catálogo |
 | 22 | Cadáver exquisito | Agustina Bazterrica | Terror | 18.90 € | Pendiente | Catálogo |
 | 23 | Los sauces | Algernon Blackwood | Terror | 11.90 € | Pendiente | Catálogo |
-| 24 | La conquista de la felicidad | Bertrand Russell | Ensayo | 12.95 € | 9788467062779 | Coru |
+| 24 | La conquista de la felicidad | Bertrand Russell | Ensayo | 12.95 € | 9788467062779 | Catálogo |
 | 25 | Siddhartha | Hermann Hesse | Clásico | 19.50 € | 9788435009027 | Coru |
-| 26 | Mendel el de los libros | Stefan Zweig | Relato | 10.00 € | 9788496834903 | Coru |
+| 26 | El extranjero | Albert Camus | Clásico | 12.95 € | 9788466356138 | Coru |
+| 27 | Mendel el de los libros | Stefan Zweig | Relato | 10.00 € | 9788496834903 | Coru |

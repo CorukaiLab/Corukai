@@ -2,8 +2,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { getCliClient } from "sanity/cli";
 
-const EXPECTED_PRODUCTS = 27;
-const EXPECTED_CATALOGUE = 24;
+const EXPECTED_PRODUCTS = 28;
+const EXPECTED_CATALOGUE = 25;
 const EXPECTED_CORU_PICKS = 3;
 const client = getCliClient({ apiVersion: "2026-07-04" });
 

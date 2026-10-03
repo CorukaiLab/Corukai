@@ -82,7 +82,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       <InteractiveLibrary products={librarySelection} />
 
-      <CoruShelf products={coruPicks} />
+      <CoruShelf products={coruPicks} catalogCount={products.length} />
 
       <DiscoveryGateway />
 
@@ -121,7 +121,7 @@ export default async function Home() {
       <EditorialShowcase products={selected} />
 
       <section className="human-curation">
-        <p className="human-curation__number">24</p>
+        <p className="human-curation__number">{products.length}</p>
         <div><p className="eyebrow">Pequeño a propósito</p><h2>Un catálogo mayor no sirve si nadie te ayuda a atravesarlo.</h2></div>
         <p>Empezamos con tres libros por género. Cada uno aporta una voz, una atmósfera o una forma distinta de mirar. Creceremos sin convertir la elección en ruido.</p>
       </section>

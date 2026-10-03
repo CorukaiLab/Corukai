@@ -20,7 +20,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
   return (
     <main className="shop-page">
       <section className="shop-intro">
-        <p className="eyebrow">24 historias · 8 géneros · ninguna obligación</p>
+        <p className="eyebrow">{products.length} historias · {new Set(products.map((product) => product.genre)).size} géneros · ninguna obligación</p>
         <h1>Busca menos.<br />Encuentra mejor.</h1>
         <p>Combina una sensación, el tiempo que tienes y lo que quieres que haga la historia. El género es una pista, no una frontera.</p>
       </section>
