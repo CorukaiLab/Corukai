@@ -6,6 +6,7 @@ import { AddToCartButton } from "@/components/cart/add-to-cart-button";
 import { AmazonPrice } from "@/components/amazon-price";
 import { CreativeSparkCard } from "@/components/creative-spark-card";
 import { ProductViewTracker } from "@/components/product-view-tracker";
+import { AUTHOR_PROFILES } from "@/lib/author-profiles";
 import { getProductCoverAlt, type Product } from "@/lib/products";
 
 interface EditorialBookProps {
@@ -51,23 +52,30 @@ function CultureCards({ product, related }: EditorialBookProps) {
 }
 
 function AuthorPanel({ product }: { product: Product }) {
-  if (product.slug !== "el-extranjero") return (
+  const profile = AUTHOR_PROFILES[product.author];
+  if (!profile) return (
     <aside className="editorial-book__author editorial-book__author--general" aria-label="Datos del libro">
       <p className="editorial-book__eyebrow">Una voz para descubrir</p>
       <h2>{product.author}</h2>
       <dl><div><dt>Género</dt><dd>{product.genre}</dd></div><div><dt>Primera publicación</dt><dd>{product.year}</dd></div><div><dt>Ritmo</dt><dd>{product.pace}</dd></div><div><dt>Entrada</dt><dd>{product.entry}</dd></div></dl>
     </aside>
   );
+  const isCamus = product.author === "Albert Camus";
   return (
-    <aside className="editorial-book__author" aria-label="Acerca de Albert Camus">
-      <p className="editorial-book__eyebrow">El lugar de origen</p>
-      <svg className="editorial-book__map" viewBox="-10 -39 24 22" role="img" aria-label="Contorno de Argelia"><polygon points={algeriaOutline.map(([longitude, latitude]) => `${longitude},${-latitude}`).join(" ")} /></svg>
-      <p className="editorial-book__map-caption">Norte de África</p>
-      <h2>Argelia</h2>
-      <p>Mondovi, hoy Dréan.<br />Entonces, Argelia francesa.</p>
-      <Image src="/assets/editorial/albert-camus-sandbox.webp" alt="Retrato de Albert Camus. Fuente: Penguin Libros." width={66} height={78} className="editorial-book__portrait" />
-      <strong>Albert Camus</strong><p>7 noviembre 1913 — 1960</p>
-      <a href="https://www.nobelprize.org/prizes/literature/1957/camus/biographical/" target="_blank" rel="noopener noreferrer">Conocer al autor ↗</a>
+    <aside className="editorial-book__author" aria-label={`Acerca de ${product.author}`}>
+      <p className="editorial-book__eyebrow">Lugar de nacimiento</p>
+      {isCamus ? (
+        <svg className="editorial-book__map" viewBox="-10 -39 24 22" role="img" aria-label="Contorno de Argelia"><polygon points={algeriaOutline.map(([longitude, latitude]) => `${longitude},${-latitude}`).join(" ")} /></svg>
+      ) : (
+        <svg className="editorial-book__origin-mark" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="35" r="28" /><path d="M7 35h56M35 7c-13 14-13 42 0 56M35 7c13 14 13 42 0 56M14 22h42M14 48h42" /><circle className="editorial-book__origin-dot" cx="35" cy="35" r="5" /></svg>
+      )}
+      <p className="editorial-book__map-caption">Un punto de partida</p>
+      <h2>{profile.country}</h2>
+      <p>{profile.birthplace}{profile.context && <><br />{profile.context}</>}</p>
+      {isCamus ? <Image src="/assets/editorial/albert-camus-sandbox.webp" alt="Retrato de Albert Camus. Fuente: Penguin Libros." width={66} height={78} className="editorial-book__portrait" /> : <span className="editorial-book__author-monogram" aria-hidden="true">{product.author.split(" ").map((part) => part[0]).filter(Boolean).slice(0, 2).join("")}</span>}
+      <strong>{product.author}</strong>
+      {isCamus && <p>1913 — 1960</p>}
+      <a href={profile.sourceUrl} target="_blank" rel="noopener noreferrer">Conocer al autor ↗</a>
     </aside>
   );
 }
