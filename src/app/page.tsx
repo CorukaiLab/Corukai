@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ChapterTransition } from "@/components/chapter-transition";
 import { DiscoveryGateway } from "@/components/discovery-gateway";
 import { EditorialShowcase } from "@/components/editorial-showcase";
-import { InteractiveLibrary } from "@/components/interactive-library";
+import { BookRibbon } from "@/components/book-ribbon";
 import { CoruShelf } from "@/components/coru-shelf";
 import { NewsletterSignup } from "@/components/newsletter-signup";
 import { NEWSLETTER_ENABLED } from "@/lib/features";
@@ -13,6 +13,7 @@ import { createSocialMetadata } from "@/lib/metadata";
 import { absoluteUrl } from "@/lib/site";
 import { getCatalogProducts, getCoruPicks } from "@/sanity/lib/queries";
 import "./descubrir/discovery-paths.css";
+import "./book-ribbon.css";
 
 const entryPoints = [
   { number: "01", title: "Quiero volver", text: "Una historia que te reciba sin pedirte que seas más lector de lo que hoy puedes ser.", href: "/tienda?entry=Volver", className: "entry--aloe", image: "/assets/editorial/curiosity-table.webp" },
@@ -39,16 +40,6 @@ export default async function Home() {
     getCoruPicks(),
   ]);
   const selected = selectProducts(products, ["piranesi", "seda", "proyecto-hail-mary", "paciente-silenciosa"]);
-  const librarySelection = selectProducts(products, [
-    "hacia-rutas-salvajes",
-    "imperio-final",
-    "nosotros-en-la-luna",
-    "paciente-silenciosa",
-    "infinito-junco",
-    "problema-tres-cuerpos",
-    "peninsula-casas-vacias",
-    "nuestra-parte-noche",
-  ]);
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -77,10 +68,8 @@ export default async function Home() {
 
   return (
     <main>
-      <link rel="preload" as="image" href="/assets/editorial/library-wall-desktop.webp" media="(min-width: 761px)" fetchPriority="high" />
-      <link rel="preload" as="image" href="/assets/editorial/library-wall-mobile.webp" media="(max-width: 760px)" fetchPriority="high" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-      <InteractiveLibrary products={librarySelection} />
+      <BookRibbon products={products} />
 
       <CoruShelf products={coruPicks} catalogCount={products.length} />
 
